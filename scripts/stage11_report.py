@@ -97,6 +97,11 @@ def build_report(
             report.mark_skipped(rec)
         elif imp.get("status") == "success":
             report.mark_success(rec)
+        elif dry_run:
+            # A dry run imports nothing, so a missing result is expected, not a problem.
+            rec.stage = "dry_run"
+            rec.reason = "Dry run: not imported"
+            report.mark_skipped(rec)
         else:
             rec.stage = "unknown"
             rec.reason = "No import result found"
