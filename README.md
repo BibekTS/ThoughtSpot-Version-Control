@@ -101,13 +101,13 @@ Dispatch **Actions → ThoughtSpot Migration → Run workflow** with an `org` ke
 |---|---|---|
 | Stages 1–6 (extract, export, commit to `ts-dev`) | Run, **including the commit to `ts-dev`** | Run |
 | Stage 7 (promote PR) | Runs and opens the PR **with auto-merge on**; it is not dry-run aware | Runs |
-| Stage 8 (variables, connections, validate) | Runs | Runs |
+| Stage 8 (variables, connections, validate) | Runs, **and can create variable definitions or set org values in the target** | Runs |
 | Stage 9 (TML import) | Skipped | Runs |
 | Stage 9b (memory) | Validates and logs counts, writes nothing | Validates, then applies |
 | Stage 9c (instructions) | Reads the target and logs `would replace`, writes nothing | Applies |
 | Stage 10 (untag source) | Skipped | Runs |
 
-A dry run never writes to the target org, but it does write to this repository.
+A dry run does not import any objects, memory or instructions, but it is not write-free: Stages 6–7 write to this repository, and Stage 8 can create variable definitions and set org-scoped values in the target when your config calls for it.
 
 Stage 8 prints one line per issue it finds, for example `[STAGE 8] ERROR [<variable>]: <message>`. It only records issues in `prod_prep.json`: it does not exclude objects or block the import, and Stage 11 treats only errors that name a connection as failures.
 
