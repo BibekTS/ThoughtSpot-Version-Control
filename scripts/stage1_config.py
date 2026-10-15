@@ -67,9 +67,9 @@ def load_and_validate_config(config_path: str) -> dict:
     # ts_variable_name is required when a variable block is present.
     # source_value and target_value are optional: when blank, the pipeline verifies
     # the variable exists in ThoughtSpot and assumes it is already configured there.
-    variables = cfg.get("variables", {})
-    db_var = variables.get("database", {})
-    schema_var = variables.get("schema", {})
+    variables = cfg.get("variables") or {}
+    db_var = variables.get("database") or {}
+    schema_var = variables.get("schema") or {}
 
     if db_var and not db_var.get("ts_variable_name"):
         raise ConfigError(

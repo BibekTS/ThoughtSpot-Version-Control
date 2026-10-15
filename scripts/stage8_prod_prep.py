@@ -29,16 +29,16 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -
     Returns list of issues.
     """
     issues = []
-    variables_cfg = cfg.get("variables", {})
+    variables_cfg = cfg.get("variables") or {}
 
     # Build map from ts_variable_name -> config entry
     var_map: dict[str, dict] = {}
     for field in ("database", "schema"):
-        v = variables_cfg.get(field, {})
+        v = variables_cfg.get(field) or {}
         name = v.get("ts_variable_name")
         if name:
             var_map[name] = {"type": "TABLE_MAPPING", **v}
-    for extra in variables_cfg.get("extra", []):
+    for extra in variables_cfg.get("extra") or []:
         name = extra.get("ts_variable_name")
         if name:
             var_map[name] = extra

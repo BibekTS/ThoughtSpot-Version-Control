@@ -16,6 +16,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.variables import variable_config
 from lib.tml_utils import (
     parse_tml, to_tml_string, sanitize,
     get_table_db_schema, is_variable_bound,
@@ -30,8 +31,8 @@ def sanitize_all(
     repo_root: Path,
 ) -> dict:
     migration_tag = cfg["migration_tag"]
-    src_db = cfg["variables"]["database"]["source_value"]
-    src_schema = cfg["variables"]["schema"]["source_value"]
+    src_db = variable_config(cfg, "database")["source_value"]
+    src_schema = variable_config(cfg, "schema")["source_value"]
 
     warnings = []
     var_sync_set: set[str] = set()

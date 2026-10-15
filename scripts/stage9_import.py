@@ -23,6 +23,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.ts_client import TSClient
+from lib.variables import variable_config
 from lib.tml_utils import (
     parse_tml, to_tml_string,
     path_b_substitute, get_table_db_schema, is_variable_bound,
@@ -49,12 +50,10 @@ def import_tier(
     failed_obj_ids: set[str],
 ) -> list[dict]:
     results = []
-    src_db = cfg["variables"]["database"]["source_value"]
-    tgt_db = cfg["variables"]["database"]["target_value"]
-    src_schema = cfg["variables"]["schema"]["source_value"]
-    tgt_schema = cfg["variables"]["schema"]["target_value"]
-    db_var = cfg["variables"]["database"]["ts_variable_name"]
-    schema_var = cfg["variables"]["schema"]["ts_variable_name"]
+    db_cfg, schema_cfg = variable_config(cfg, "database"), variable_config(cfg, "schema")
+    src_db, tgt_db = db_cfg["source_value"], db_cfg["target_value"]
+    src_schema, tgt_schema = schema_cfg["source_value"], schema_cfg["target_value"]
+    db_var, schema_var = db_cfg["ts_variable_name"], schema_cfg["ts_variable_name"]
 
     for entry in tier_entries:
         obj_id = entry["obj_id"]
@@ -295,8 +294,8 @@ def main():
             safety_gate(
                 target_client,
                 [r for r in tier_results if r["status"] == "success"],
-                cfg["variables"]["database"]["source_value"],
-                cfg["variables"]["schema"]["source_value"],
+                variable_config(cfg, "database")["source_value"],
+                variable_config(cfg, "schema")["source_value"],
                 failed_obj_ids,
             )
 
