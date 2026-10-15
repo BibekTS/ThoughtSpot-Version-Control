@@ -22,7 +22,7 @@ This pipeline migrates ThoughtSpot content (Tables, Models, Answers, Liveboards,
 The pipeline:
 - Exports tagged objects as TML into the `ts-dev` GitHub branch
 - Exports Spotter model memory and model NL instructions alongside the TML
-- Opens a PR into `ts-prod` with auto-merge enabled, as a record of what was promoted. The `import` job does **not** wait for this PR to merge; the approval gate is the `prod` GitHub Environment's required reviewers (if configured)
+- Opens a PR into `ts-prod` with auto-merge enabled (not on dry runs), as a record of what was promoted. The `import` job does **not** wait for this PR to merge; the approval gate is the `prod` GitHub Environment's required reviewers (if configured)
 - Imports TML, then model memory and NL instructions, into the target cluster
 - Removes the migration tag from successfully migrated objects
 - Produces a full report per run
@@ -123,7 +123,7 @@ Configure the `ts-prod` branch with:
 - **Require status checks to pass** (add the `migrate` job from `ts-migration.yml`)
 - **Restrict who can push**: only the `GH_AUTOMATION_TOKEN` user (for auto-merge) and admins
 
-**Auto-merge requirement:** The `GH_AUTOMATION_TOKEN` PAT must belong to a user with write access to the repo. Without it, the pipeline falls back to `GITHUB_TOKEN`, which cannot merge its own PRs — in that case, a human must merge the PR before the import job runs.
+**Auto-merge requirement:** The `GH_AUTOMATION_TOKEN` PAT must belong to a user with write access to the repo. Without it, the pipeline falls back to `GITHUB_TOKEN`, which cannot merge its own PRs — in that case the promote PR will not merge itself and a human must merge it. The `import` job does not wait for the PR either way.
 
 ---
 
@@ -142,7 +142,7 @@ Each org runs in its own job with its own concurrency group (`ts-migration-<org_
 | Job | Stage | Environment | What it does |
 |-----|-------|-------------|-------------|
 | `extract` | 1–6 (incl. 4b, 4c) | `dev` | Config, auth, discover, export TML, export Spotter memory (4b) and NL instructions (4c), sanitize, commit to ts-dev |
-| `promote` | 7 | — | Create promote branch, open PR into ts-prod with auto-merge enabled |
+| `promote` | 7 | — | Create promote branch, open PR into ts-prod with auto-merge enabled (dry run: PR titled `[DRY RUN]`, no auto-merge) |
 | `import` | 8–9c | `prod` | Sync variables, connection preflight, validate, import TML (9), import memory (9b), set NL instructions (9c) |
 | `untag_source` | 10 | `dev` | Post-check, remove migration tag from successes |
 | `report` | 11 | — | Generate all report files (runs even on failure) |
@@ -234,7 +234,7 @@ Because matching is done by `obj_id`, re-running **updates** the existing target
 A dry run runs Stages 1–8 and the read-only forms of 9b and 9c. It does **not** import objects, memory or instructions into the target, and it does not remove source tags. It is **not** write-free:
 
 - **Stage 6** still commits the exports to `ts-dev`.
-- **Stage 7** still opens the promote PR **with auto-merge enabled**; it has no dry-run handling.
+- **Stage 7** still pushes a `promote/<org>/<run_id>` branch and opens the PR, titled `[DRY RUN]`, but does **not** enable auto-merge. Close the PR when you are done inspecting it, or merge it only if you intend to promote that content.
 - **Stage 8** still runs as normal. It can create missing variable definitions and set org-scoped values in the target when your config provides a `target_value` (or the variable is not a TABLE_MAPPING).
 
 What is skipped or read-only:

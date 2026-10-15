@@ -6,6 +6,10 @@ Creates branch promote/<org_key>/<run_id> from ts-prod,
 cherry-picks only orgs/<org_key>/ from ts-dev,
 opens a PR into ts-prod, and auto-merges when checks pass.
 
+Dry run (DRY_RUN=true): the PR is still opened so the export can be inspected, but it
+is titled "[DRY RUN]" and auto-merge is NOT enabled, so dry-run content never lands on
+ts-prod unless a person merges it.
+
 Requires GH_AUTOMATION_TOKEN (PAT with contents:write + pull-requests:write).
 GITHUB_TOKEN cannot merge its own PRs — use GH_AUTOMATION_TOKEN.
 """
@@ -30,7 +34,8 @@ def run(cmd: list[str], check: bool = True, capture: bool = False,
     return subprocess.run(cmd, check=check, capture_output=capture, text=True, env=merged_env)
 
 
-def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".") -> str:
+def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".",
+            dry_run: bool = False) -> str:
     """Create promote branch, apply org TML changes, open PR. Returns PR URL."""
     gh_token = (
         os.environ.get("GH_AUTOMATION_TOKEN")
@@ -83,7 +88,15 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
         counts[e["type"]] = counts.get(e["type"], 0) + 1
     counts_lines = "\n".join(f"- {t}: {n}" for t, n in sorted(counts.items()))
 
-    pr_body = textwrap.dedent(f"""\
+    dry_banner = ""
+    if dry_run:
+        dry_banner = textwrap.dedent("""\
+            > **DRY RUN.** Auto-merge is not enabled on this PR. It exists so the export
+            > can be inspected. Close it, or merge it only if you intend to promote this
+            > content.
+
+        """)
+    pr_body = dry_banner + textwrap.dedent(f"""\
         ## ThoughtSpot TML Promotion
 
         **Org:** `{org_key}`  
@@ -101,7 +114,7 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
          "--repo", GH_REPO,
          "--head", promote_branch,
          "--base", PROD_BRANCH,
-         "--title", f"[{org_key}] Promote TML run {run_id}",
+         "--title", f"{'[DRY RUN] ' if dry_run else ''}[{org_key}] Promote TML run {run_id}",
          "--body", pr_body],
         env={"GH_TOKEN": gh_token},
         capture=True,
@@ -109,9 +122,12 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
     pr_url = result.stdout.strip()
     print(f"[STAGE 7] PR created: {pr_url}")
 
-    # Enable auto-merge
-    run(["gh", "pr", "merge", pr_url, "--auto", "--squash"],
-        env={"GH_TOKEN": gh_token}, check=False)
+    if dry_run:
+        print("[STAGE 7] DRY_RUN=true — auto-merge NOT enabled on the promote PR.")
+    else:
+        # Enable auto-merge
+        run(["gh", "pr", "merge", pr_url, "--auto", "--squash"],
+            env={"GH_TOKEN": gh_token}, check=False)
 
     return pr_url
 
@@ -122,7 +138,8 @@ def main():
     manifest_path = os.environ.get("MANIFEST_OUT", f"/tmp/ts_migration_{org_key}_manifest.json")
     repo_root = os.environ.get("REPO_ROOT", ".")
     manifest = json.loads(Path(manifest_path).read_text())
-    promote(org_key, run_id, manifest, repo_root)
+    dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
+    promote(org_key, run_id, manifest, repo_root, dry_run=dry_run)
 
 
 if __name__ == "__main__":
