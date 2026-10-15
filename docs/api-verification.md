@@ -30,7 +30,7 @@ Base path: `https://<cluster>/api/rest/2.0/`
 | **Key request fields** | `tag_identifiers[]` (name or GUID), `type` (LIVEBOARD/ANSWER/LOGICAL_TABLE/COLLECTION), `subtypes[]` (TABLE/WORKSHEET/SQL_VIEW/AGGR_WORKSHEET), `include_dependent_objects`, `record_size`, `record_offset` |
 | **Response fields** | `metadata_id` (GUID), `metadata_name`, `metadata_type`, `metadata_obj_id` (Custom object ID / obj_id — available 10.8.0.cl+), `dependent_objects`, `metadata_header` |
 | **Returns `obj_id`?** | Yes — in `metadata_obj_id`. Requires Object ID feature enabled by ThoughtSpot Support (confirmed enabled). |
-| **Returns dependents?** | Yes — via `include_dependent_objects: true` |
+| **Returns dependents?** | Yes — via `include_dependent_objects: true`, but "dependents" are the objects that depend ON the one searched (e.g. the liveboards and answers built on a worksheet), the opposite of what migration needs. Stage 3 does not use it: it reads an object's prerequisites from its TML `obj_id` references instead. |
 | **Pagination** | `record_size` / `record_offset` supported on `tag_identifiers` filter |
 | **Verified against** | Spotter MCP docs |
 | **Notes** | Objects without `metadata_obj_id` are excluded from migration and recorded as failures at stage `discover`. Do not auto-assign obj_ids. |

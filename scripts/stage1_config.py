@@ -57,6 +57,13 @@ def load_and_validate_config(config_path: str) -> dict:
             f"must be one of: {sorted(ALLOWED_DEPENDENCY_MODES)}"
         )
 
+    # dependency_exclude: optional list of obj_ids that are never migrated as dependencies.
+    exclude = cfg.get("dependency_exclude")
+    if exclude is not None and (
+        not isinstance(exclude, list) or not all(isinstance(x, str) and x.strip() for x in exclude)
+    ):
+        raise ConfigError("dependency_exclude must be a list of obj_id strings")
+
     # ts_variable_name is required when a variable block is present.
     # source_value and target_value are optional: when blank, the pipeline verifies
     # the variable exists in ThoughtSpot and assumes it is already configured there.

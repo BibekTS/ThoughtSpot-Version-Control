@@ -52,6 +52,7 @@ target:
   org_id: 3                              # ThoughtSpot org ID on the target cluster
 
 dependency_mode: include  # include | skip_if_exists | require_tagged
+# dependency_exclude: [TSBIServer-eaab6de7]  # obj_ids never pulled in as dependencies
 
 variables:
   database:
@@ -66,6 +67,10 @@ variables:
     # Optional: formula variables, connection properties used in RLS, etc.
     # - { ts_variable_name: region_filter, type: FORMULA_VARIABLE, target_value: "EMEA" }
 ```
+
+**Dependencies.** Stage 3 finds what a tagged object is built on by exporting its TML and following the `obj_id` references in it (a liveboard's model, a model's tables, joined tables), repeatedly. It does not use the search API's `dependent_objects`, which lists the opposite direction (what depends on an object). `dependency_mode` controls what happens next: `include` pulls them all; `skip_if_exists` leaves out those already in the target; `require_tagged` pulls nothing and excludes (and reports) any tagged object that depends on an untagged one. Connections are never followed.
+
+**`dependency_exclude`** lists `obj_id`s that must never be pulled in as dependencies. Built-in objects such as `TS: BI Server` or the sample retail data show up as dependencies of real content but exist everywhere; add their `obj_id`s here. A dry run prints every dependency (`[STAGE 3] Dependency: ...`) so you can check the list before a live run.
 
 **`target_value` is optional.** If it is blank, the variable must already exist in the target org (with the same type); the pipeline checks this in Stage 8 and records an error if not. Provide a value only if you want the pipeline to create the variable and manage its org value.
 

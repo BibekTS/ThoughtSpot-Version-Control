@@ -136,6 +136,44 @@ def scan_ts_var_references(tml_dict: dict) -> set[str]:
     return set(_TS_VAR_RE.findall(text))
 
 
+def extract_refs(tml_dict: dict) -> list[dict]:
+    """
+    Objects this TML depends on, found by their obj_id.
+
+    Requires the TML to be exported with include_obj_id_ref=True. In real exports a
+    reference is a nested dict that carries an `obj_id`, for example:
+      answer.tables[]                              (what an answer is built on)
+      liveboard.visualizations[].answer.tables[]   (what a liveboard is built on)
+      model.model_tables[]                         (the tables of a model)
+      table.joins_with[].destination               (a joined table)
+
+    Not returned: the object's own obj_id, and connections (`connection`), which are not
+    migrated (Stage 8 checks that they exist in the target).
+    Returns [{"obj_id", "name"}], de-duplicated, in first-seen order.
+    """
+    own = tml_dict.get("obj_id")
+    refs: list[dict] = []
+    seen: set[str] = set()
+
+    def walk(node: Any, parent_key: str | None) -> None:
+        if isinstance(node, dict):
+            if parent_key == "connection":
+                return
+            oid = node.get("obj_id")
+            if parent_key is not None and isinstance(oid, str) and oid and oid != own \
+                    and oid not in seen:
+                seen.add(oid)
+                refs.append({"obj_id": oid, "name": node.get("name", "") or ""})
+            for key, value in node.items():
+                walk(value, key)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item, parent_key)
+
+    walk(tml_dict, None)
+    return refs
+
+
 def extract_connection_name(tml_dict: dict) -> str | None:
     """
     Extract the connection name from a LOGICAL_TABLE TML.

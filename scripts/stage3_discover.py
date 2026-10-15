@@ -5,6 +5,21 @@ Stage 3: Discover tagged objects in the source org.
 Finds all objects tagged with <migration_tag> across all in-scope types,
 resolves dependencies per dependency_mode, and writes manifest.json.
 
+Dependencies are what a tagged object is built on (a liveboard's model, a model's tables,
+a table's joined tables). They are found from the object's own TML, which references them
+by obj_id, so they are NOT taken from the search API's `dependent_objects`: that field
+lists the opposite direction (objects that depend ON the one searched).
+
+dependency_mode:
+  include         pull every dependency that is not already in the manifest
+  skip_if_exists  as include, but leave out dependencies that already exist in the target
+  require_tagged  pull nothing; a tagged object with an untagged dependency is excluded
+                  (and reported), as is anything that depends on an excluded object
+
+dependency_exclude (optional list of obj_ids): never treated as a dependency in any mode.
+Use it for objects that exist everywhere and must not be migrated, such as ThoughtSpot's
+built-in "TS: BI Server" worksheet or sample data. A dry run lists every dependency pulled.
+
 Objects without obj_id are recorded as failures and excluded.
 """
 from __future__ import annotations
@@ -12,11 +27,13 @@ from __future__ import annotations
 import json
 import os
 import sys
+from collections import deque
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.ts_client import TSClient
 from lib.report import RunReport, ObjectRecord
+from lib.tml_utils import parse_tml, extract_refs
 
 # Types to search — one API call per main metadata_type.
 # Subtype classification happens client-side from metadata_header.type.
@@ -65,7 +82,8 @@ def _resolve_tag_id(source_client: TSClient, tag_name: str, cfg: dict) -> str:
     return tag_name
 
 
-def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict]:
+def discover(source_client: TSClient, cfg: dict, report: RunReport,
+             target_client: TSClient | None = None) -> list[dict]:
     tag = cfg["migration_tag"]
     dep_mode = cfg.get("dependency_mode", "include")
     manifest: list[dict] = []
@@ -122,46 +140,182 @@ def discover(source_client: TSClient, cfg: dict, report: RunReport) -> list[dict
             )
             report.add_pulled(pulled_rec)
 
-            # Resolve dependencies
-            if dep_mode == "include":
-                deps = obj.get("dependent_objects") or {}
-                for dep_type, dep_list in deps.items():
-                    for dep in (dep_list or []):
-                        dep_guid = dep.get("id") or dep.get("metadata_id", "")
-                        if dep_guid in seen_guids:
-                            continue
-                        seen_guids.add(dep_guid)
-                        dep_obj_id = dep.get("metadata_obj_id") or dep.get("obj_id", "")
-                        dep_name = dep.get("name") or dep.get("metadata_name", "")
-                        if not dep_obj_id:
-                            rec = ObjectRecord(
-                                obj_type=dep_type, name=dep_name,
-                                obj_id="", source_guid=dep_guid,
-                                reason=f"dependency_of:{obj_id}",
-                                stage="discover", status="failed",
-                                error="Dependency has no obj_id.",
-                                suggested_action="Assign obj_id to this dependency.",
-                            )
-                            report.mark_failed(rec)
-                            continue
-                        dep_entry = {
-                            "type": dep_type,
-                            "folder": _folder_for_object(dep_type, dep),
-                            "name": dep_name,
-                            "obj_id": dep_obj_id,
-                            "source_guid": dep_guid,
-                            "reason": f"dependency_of:{obj_id}",
-                            "other_tags": [],
-                        }
-                        manifest.append(dep_entry)
-                        dep_rec = ObjectRecord(
-                            obj_type=dep_type, name=dep_name, obj_id=dep_obj_id,
-                            source_guid=dep_guid,
-                            reason=f"dependency_of:{obj_id}",
-                        )
-                        report.add_pulled(dep_rec)
+    exclude = {str(x) for x in (cfg.get("dependency_exclude") or [])}
+    return apply_dependency_mode(source_client, manifest, dep_mode, report, target_client,
+                                 exclude)
 
+
+def _export_refs(client: TSClient, guid: str) -> list[dict]:
+    """Export an object's TML (same flags as Stage 4) and return the objects it references."""
+    resp = client.export_tml(
+        metadata=[{"identifier": guid}],
+        include_obj_id=True,
+        include_obj_id_ref=True,
+        include_guid=False,
+        export_with_feedbacks=False,
+    )
+    edocs = resp if isinstance(resp, list) else resp.get("object", [resp])
+    if not edocs:
+        return []
+    raw = edocs[0].get("edoc") or edocs[0].get("content")
+    tml = parse_tml(raw) if isinstance(raw, str) else raw
+    return extract_refs(tml) if isinstance(tml, dict) else []
+
+
+def _lookup_logical_table(client: TSClient, obj_id: str) -> dict | None:
+    """Find a table / view / model in the source by its obj_id; None if it is not there."""
+    resp = client.post("/metadata/search", {
+        "metadata": [{"type": "LOGICAL_TABLE", "obj_identifier": obj_id}],
+        "include_headers": True,
+        "record_size": 5,
+        "record_offset": 0,
+    })
+    if resp.status_code != 200:
+        return None
+    for item in _unwrap_response(resp.json()):
+        if item.get("metadata_obj_id") == obj_id and item.get("metadata_id"):
+            return item
+    return None
+
+
+def apply_dependency_mode(
+    source_client: TSClient,
+    manifest: list[dict],
+    dep_mode: str,
+    report: RunReport,
+    target_client: TSClient | None = None,
+    exclude: set[str] | None = None,
+) -> list[dict]:
+    """Return the final manifest for dep_mode (see the module docstring)."""
+    exclude = exclude or set()
+    if dep_mode == "require_tagged":
+        return _require_tagged(source_client, manifest, report, exclude)
+    if dep_mode in ("include", "skip_if_exists"):
+        if dep_mode == "skip_if_exists" and target_client is None:
+            print("[WARN] dependency_mode=skip_if_exists but no target client; "
+                  "treating as 'include'.", file=sys.stderr)
+        return manifest + _collect_dependencies(
+            source_client, manifest, dep_mode, report, target_client, exclude)
     return manifest
+
+
+def _collect_dependencies(
+    source_client: TSClient,
+    manifest: list[dict],
+    dep_mode: str,
+    report: RunReport,
+    target_client: TSClient | None,
+    exclude: set[str],
+) -> list[dict]:
+    """Walk the dependency graph from the tagged objects; return the entries to add."""
+    known = {e["obj_id"] for e in manifest}
+    left_out: set[str] = set()      # already looked at and not added (missing / in target)
+    added: list[dict] = []
+    queue = deque(manifest)
+
+    while queue:
+        parent = queue.popleft()
+        try:
+            refs = _export_refs(source_client, parent["source_guid"])
+        except Exception as exc:
+            print(f"[WARN] Could not read dependencies of {parent['type']} "
+                  f"'{parent['name']}' ({parent['obj_id']}): {exc}", file=sys.stderr)
+            continue
+
+        for ref in refs:
+            oid = ref["obj_id"]
+            if oid in known or oid in left_out:
+                continue
+            if oid in exclude:
+                left_out.add(oid)
+                print(f"[STAGE 3] Dependency '{ref['name']}' ({oid}) is in "
+                      "dependency_exclude; skipping.")
+                continue
+            item = _lookup_logical_table(source_client, oid)
+            if item is None:
+                left_out.add(oid)
+                print(f"[WARN] '{parent['name']}' ({parent['obj_id']}) depends on obj_id "
+                      f"'{oid}' ({ref['name']}), which was not found in the source; "
+                      "it will not be migrated.", file=sys.stderr)
+                continue
+            if dep_mode == "skip_if_exists" and target_client is not None \
+                    and target_client.find_model_guid(oid):
+                left_out.add(oid)
+                print(f"[STAGE 3] Dependency '{ref['name']}' ({oid}) already exists in the "
+                      "target; skipping (skip_if_exists).")
+                continue
+
+            name = item.get("metadata_name") or ref["name"]
+            entry = {
+                "type": "LOGICAL_TABLE",
+                "folder": _folder_for_object("LOGICAL_TABLE", item),
+                "name": name,
+                "obj_id": oid,
+                "source_guid": item["metadata_id"],
+                "reason": f"dependency_of:{parent['obj_id']}",
+                "other_tags": [],
+            }
+            known.add(oid)
+            added.append(entry)
+            queue.append(entry)     # its own dependencies (e.g. a model's tables) come next
+            report.add_pulled(ObjectRecord(
+                obj_type="LOGICAL_TABLE", name=name, obj_id=oid,
+                source_guid=entry["source_guid"], reason=entry["reason"],
+            ))
+            print(f"[STAGE 3] Dependency: {entry['folder']} '{name}' ({oid}) "
+                  f"<- {parent['obj_id']}")
+
+    return added
+
+
+def _require_tagged(source_client: TSClient, manifest: list[dict],
+                    report: RunReport, exclude: set[str]) -> list[dict]:
+    """
+    Exclude tagged objects that depend on something that is not tagged, and anything that
+    depends on an excluded object. Objects whose dependencies cannot be read are kept.
+    """
+    tagged_ids = {e["obj_id"] for e in manifest}
+    deps_of: dict[str, set[str]] = {}
+    untagged_of: dict[str, list[dict]] = {}
+
+    for entry in manifest:
+        try:
+            refs = [r for r in _export_refs(source_client, entry["source_guid"])
+                    if r["obj_id"] not in exclude]
+        except Exception as exc:
+            print(f"[WARN] Could not read dependencies of {entry['type']} "
+                  f"'{entry['name']}' ({entry['obj_id']}): {exc}; keeping it.",
+                  file=sys.stderr)
+            continue
+        deps_of[entry["obj_id"]] = {r["obj_id"] for r in refs}
+        untagged_of[entry["obj_id"]] = [r for r in refs if r["obj_id"] not in tagged_ids]
+
+    excluded = {oid for oid, bad in untagged_of.items() if bad}
+    while True:   # an object that depends on an excluded one cannot be migrated either
+        more = {oid for oid, deps in deps_of.items() if oid not in excluded and deps & excluded}
+        if not more:
+            break
+        excluded |= more
+
+    kept = []
+    for entry in manifest:
+        oid = entry["obj_id"]
+        if oid not in excluded:
+            kept.append(entry)
+            continue
+        untagged = [f"'{r['name']}' ({r['obj_id']})" for r in untagged_of.get(oid, [])]
+        why = (f"depends on untagged object(s): {', '.join(untagged)}" if untagged
+               else "depends on an object that was excluded")
+        report.mark_failed(ObjectRecord(
+            obj_type=entry["type"], name=entry["name"], obj_id=oid,
+            source_guid=entry["source_guid"], reason="dependency_not_tagged",
+            stage="discover", status="failed",
+            error=f"dependency_mode=require_tagged: {why}.",
+            suggested_action="Tag the dependency too, or use dependency_mode 'include'.",
+        ))
+        print(f"[SKIP] {entry['type']} '{entry['name']}' ({oid}) excluded "
+              f"(require_tagged): {why}.", file=sys.stderr)
+    return kept
 
 
 def _search_by_tag(
@@ -229,11 +383,23 @@ def main():
         migration_tag=cfg["migration_tag"],
     )
 
-    manifest = discover(source_client, cfg, report)
+    target_client = None
+    if cfg.get("dependency_mode") == "skip_if_exists":
+        tgt = cfg["target"]
+        target_client = TSClient(
+            tgt["base_url"], tgt["org_id"],
+            os.environ["TS_TARGET_USERNAME"],
+            os.environ["TS_TARGET_SECRET_KEY"],
+        )
+        target_client.authenticate()
+
+    manifest = discover(source_client, cfg, report, target_client)
 
     out_path = os.environ.get("MANIFEST_OUT", f"/tmp/ts_migration_{org_key}_manifest.json")
     Path(out_path).write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    print(f"[STAGE 3] Discovered {len(manifest)} objects -> {out_path}")
+    n_deps = sum(1 for e in manifest if str(e.get("reason", "")).startswith("dependency_of:"))
+    print(f"[STAGE 3] Discovered {len(manifest)} objects "
+          f"({len(manifest) - n_deps} tagged, {n_deps} dependencies) -> {out_path}")
     if report.failed:
         print(f"[WARN] {len(report.failed)} objects excluded (no obj_id). See failures.",
               file=sys.stderr)

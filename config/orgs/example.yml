@@ -26,6 +26,12 @@ target:
 #   require_tagged   — fail if a dependency is not itself tagged for migration
 dependency_mode: include
 
+# Optional: obj_ids that are never pulled in as dependencies, in any mode. Use for objects that
+# exist in every org and must not be migrated, such as ThoughtSpot's built-in "TS: BI Server"
+# worksheet or sample data. A dry run prints every dependency Stage 3 pulls.
+# dependency_exclude:
+#   - TSBIServer-eaab6de7
+
 # Variable mappings for database/schema parameterization.
 # source_value is used ONLY to detect Path B literals and for safety-gate checks.
 # target_value is the only value ever written to the target cluster.

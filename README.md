@@ -30,7 +30,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 |---|---|---|
 | 1 | `stage1_config` | Load and validate `config/orgs/<org>.yml` |
 | 2 | `stage2_auth` | Trusted-auth tokens for source and target; abort on org mismatch |
-| 3 | `stage3_discover` | Find objects with the migration tag, plus dependencies (per `dependency_mode`). Objects without an `obj_id` are excluded and reported |
+| 3 | `stage3_discover` | Find objects with the migration tag, then what they are built on (a liveboard's model, a model's tables, joined tables), read from their TML and handled per `dependency_mode`. Objects without an `obj_id` are excluded and reported |
 | 4 | `stage4_export` | Export TML (obj_id included, GUIDs excluded, coaching feedback included) |
 | 4b | `stage4b_export_memory` | Export Spotter memory for each model |
 | 4c | `stage4c_export_instructions` | Export NL instructions for each model |
@@ -125,12 +125,23 @@ source: { base_url: https://dev-ts.example.com,  org_id: 12 }
 target: { base_url: https://prod-ts.example.com, org_id: 3 }   # same cluster, different org_id is fine
 
 dependency_mode: include   # include | skip_if_exists | require_tagged
+# dependency_exclude: [TSBIServer-eaab6de7]   # obj_ids never pulled in as dependencies
 
 variables:                 # TABLE_MAPPING variables for table database / schema
   database: { ts_variable_name: ts_db_name,     source_value: DEV_DB,     target_value: PROD_DB }
   schema:   { ts_variable_name: ts_schema_name, source_value: DEV_SCHEMA, target_value: PROD_SCHEMA }
   extra: []
 ```
+
+**Dependencies.** For each tagged object Stage 3 exports its TML and follows the `obj_id` references it contains, repeatedly, so a tagged liveboard brings its model and the model brings its tables. Connections are not followed (they must already exist in the target).
+
+| `dependency_mode` | Behavior |
+|---|---|
+| `include` | Pull every dependency that is not already in the manifest |
+| `skip_if_exists` | As `include`, but leave out dependencies that already exist in the target (matched by `obj_id`) |
+| `require_tagged` | Pull nothing. A tagged object that depends on an untagged object is excluded and reported, and so is anything that depends on an excluded object |
+
+`dependency_exclude` is an optional list of `obj_id`s that are never treated as dependencies, in any mode. Use it for objects that exist everywhere and must not be migrated, such as ThoughtSpot's built-in `TS: BI Server` worksheet or sample data. **Do a dry run first:** the `extract` log prints every dependency it pulls (`[STAGE 3] Dependency: ...`), so you can see what a liveboard really depends on before anything is imported.
 
 If `target_value` is blank, the variable must already exist in the target org. Stage 8 reports an error when it is missing or has a different type.
 
