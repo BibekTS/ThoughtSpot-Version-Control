@@ -96,7 +96,19 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
             > content.
 
         """)
-    pr_body = dry_banner + textwrap.dedent(f"""\
+    if dry_run:
+        what_this_is = ("This PR holds the exports from a dry run (TML, plus Spotter memory and "
+                        "NL instructions where present).")
+        dry_note = " On a dry run it validates only and imports nothing."
+    else:
+        what_this_is = ("This PR records what this run promoted to `ts-prod` (TML, plus Spotter "
+                        "memory and NL instructions where present). Auto-merge is enabled, so "
+                        "GitHub merges it once its merge requirements are met.")
+        dry_note = ""
+    # Dedent the template BEFORE substituting: counts_lines is multi-line, and substituting
+    # first leaves its later lines unindented, which defeats dedent and makes GitHub render
+    # the whole body as an indented code block.
+    pr_body = dry_banner + textwrap.dedent("""\
         ## ThoughtSpot TML Promotion
 
         **Org:** `{org_key}`  
@@ -105,9 +117,13 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
         ### Manifest summary
         {counts_lines}
 
-        Merge this PR to trigger the `import` job which will load the TML into the
-        production ThoughtSpot cluster (requires `prod` environment approval if configured).
-    """)
+        {what_this_is}
+
+        The `import` job does **not** wait for this PR. It starts as soon as this PR is
+        opened and is gated only by the `prod` environment's required reviewers (if
+        configured).{dry_note}
+    """).format(org_key=org_key, run_id=run_id, counts_lines=counts_lines,
+                what_this_is=what_this_is, dry_note=dry_note)
 
     result = run(
         ["gh", "pr", "create",

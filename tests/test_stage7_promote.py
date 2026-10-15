@@ -79,3 +79,54 @@ def test_main_reads_dry_run_env(calls, tmp_path, monkeypatch):
 def test_empty_manifest_still_does_nothing_in_dry_run(calls, tmp_path):
     assert s7.promote("o", "run1", [], str(tmp_path), dry_run=True) == ""
     assert calls == []
+
+
+# --- PR body must not claim that merging the PR triggers the import ----------------
+
+def _body(calls):
+    return _arg(_gh(calls, "create")[0], "--body")
+
+
+@pytest.mark.parametrize("dry_run", [False, True])
+def test_body_does_not_claim_merging_triggers_import(calls, tmp_path, dry_run):
+    s7.promote("o", "run1", MANIFEST, str(tmp_path), dry_run=dry_run)
+    body = _body(calls)
+    assert "Merge this PR to trigger" not in body
+    assert "does **not** wait for this PR" in body
+    assert "`prod` environment's required reviewers" in body
+
+
+def test_live_body_describes_auto_merge_and_dry_body_does_not(calls, tmp_path):
+    s7.promote("o", "run1", MANIFEST, str(tmp_path), dry_run=False)
+    live = _body(calls)
+    assert "Auto-merge is enabled" in live and "imports nothing" not in live
+    calls.clear()
+    s7.promote("o", "run1", MANIFEST, str(tmp_path), dry_run=True)
+    dry = _body(calls)
+    assert "imports nothing" in dry and "Auto-merge is enabled" not in dry
+    assert "Auto-merge is not enabled" in dry     # the dry-run banner
+
+
+def test_body_keeps_org_run_and_manifest_summary(calls, tmp_path):
+    s7.promote("o", "run1", MANIFEST, str(tmp_path))
+    body = _body(calls)
+    assert "**Org:** `o`" in body and "**Run:** `run1`" in body
+    assert "- LOGICAL_TABLE: 1" in body
+
+
+MULTI = [{"type": "LOGICAL_TABLE", "folder": "tables", "name": "T", "obj_id": "t1", "source_guid": "g"},
+         {"type": "LOGICAL_TABLE", "folder": "models", "name": "M", "obj_id": "m1", "source_guid": "g"},
+         {"type": "ANSWER", "folder": "answers", "name": "A", "obj_id": "a1", "source_guid": "g"},
+         {"type": "LIVEBOARD", "folder": "liveboards", "name": "L", "obj_id": "l1", "source_guid": "g"}]
+
+
+@pytest.mark.parametrize("dry_run", [False, True])
+def test_body_is_not_indented_so_github_does_not_render_a_code_block(calls, tmp_path, dry_run):
+    # Regression: with 2+ object types the multi-line manifest list defeated textwrap.dedent
+    # and every line of the real PR body (e.g. run 38745048765) was indented 8 spaces.
+    s7.promote("o", "run1", MULTI, str(tmp_path), dry_run=dry_run)
+    lines = [l for l in _body(calls).splitlines() if l.strip()]
+    indented = [l for l in lines if l[0].isspace()]
+    assert indented == [], indented
+    assert "- ANSWER: 1" in lines and "- LIVEBOARD: 1" in lines and "- LOGICAL_TABLE: 2" in lines
+    assert any(l.startswith("## ThoughtSpot TML Promotion") for l in lines)
