@@ -170,9 +170,16 @@ The docs do not specify whether exported TML for a parameterized table carries:
 
 **Collections are in scope.** Exported as TML type `COLLECTION`, imported with the same obj_id-matching policy.
 
-### Memories
+### Model memory and NL instructions (Spotter)
 
-**Not found in the REST API v2 documentation.** Memories appear to be Spotter conversation history stored per-user, not migratable metadata objects. Logged as unsupported in each run report.
+| Content | Export (Stage 4b / 4c) | Import (Stage 9b / 9c) | Available since |
+|---|---|---|---|
+| Model memory (RULE / RECIPE) | `POST /api/rest/2.0/ai/memory/export` | `POST /api/rest/2.0/ai/memory/import` (replaces target memory; validated with `dry_run` first) | 26.8.0.cl (beta) |
+| Model NL instructions | `POST /api/rest/2.0/ai/instructions/get` (`getNLInstructions`) | `POST /api/rest/2.0/ai/instructions/set` (`setNLInstructions`; replaces target instructions) | 10.15.0.cl (beta) |
+
+- Both require Spotter. NL instructions need `CAN_USE_SPOTTER` plus view access (get) or edit access / `SPOTTER_COACHING_PRIVILEGE` (set) on the model. Only `GLOBAL` scope exists today.
+- Exports are written as `orgs/<org>/memory/memory__<TIMESTAMP>.yaml` and `orgs/<org>/instructions/instructions__<TIMESTAMP>.json`. The import job reads only the file carrying **its own run's** `TIMESTAMP`; it never falls back to an older run's file.
+- Per-user Spotter conversation history is not migrated and is logged as unsupported in each run report.
 
 ---
 

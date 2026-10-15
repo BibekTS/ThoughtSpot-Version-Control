@@ -117,8 +117,9 @@ def build_report(
 
     # Unsupported
     report.add_unsupported(
-        "Memories",
-        "Spotter conversation history is per-user session data, not migratable metadata.",
+        "Spotter conversation history",
+        "Per-user session data, not migratable metadata. Model-level memory (Stage 4b/9b) "
+        "and NL instructions (Stage 4c/9c) are migrated.",
     )
 
     report.finish()

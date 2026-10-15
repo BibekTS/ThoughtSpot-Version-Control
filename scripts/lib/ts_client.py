@@ -383,5 +383,35 @@ class TSClient:
             },
         )
 
+    def find_model_guid(self, obj_id: str) -> str | None:
+        """Resolve a model's GUID in this org from its custom obj_id; None if absent."""
+        resp = self.post("/metadata/search", {
+            "metadata": [{"type": "LOGICAL_TABLE", "obj_identifier": obj_id}],
+            "include_headers": False,
+            "record_size": 5,
+            "record_offset": 0,
+        })
+        if resp.status_code != 200:
+            return None
+        for item in resp.json() or []:
+            if item.get("metadata_obj_id") == obj_id and item.get("metadata_id"):
+                return item["metadata_id"]
+        return None
+
+    def get_nl_instructions(self, data_source_identifier: str) -> requests.Response:
+        """Beta (10.15.0.cl+, Spotter). Returns the raw response so callers can branch on 403."""
+        return self.post("/ai/instructions/get", {
+            "data_source_identifier": data_source_identifier,
+        })
+
+    def set_nl_instructions(
+        self, data_source_identifier: str, nl_instructions_info: list[dict]
+    ) -> requests.Response:
+        """Beta (10.15.0.cl+, Spotter). Needs edit access or SPOTTER_COACHING_PRIVILEGE."""
+        return self.post("/ai/instructions/set", {
+            "data_source_identifier": data_source_identifier,
+            "nl_instructions_info": nl_instructions_info,
+        })
+
     def search_collections(self, record_size: int = -1) -> list[dict]:
         return self.post_json("/collections/search", {"record_size": record_size})

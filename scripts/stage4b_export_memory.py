@@ -21,6 +21,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.artifacts import memory_is_empty
 from lib.ts_client import TSClient
 
 MODEL_FOLDERS = {"models"}
@@ -70,7 +71,7 @@ def export_memory(
     except Exception:
         memory_yaml = resp.text or ""
 
-    if not memory_yaml or not memory_yaml.strip():
+    if memory_is_empty(memory_yaml):
         print("[STAGE 4b] Memory export returned empty content — no memory to migrate.")
         return {"skipped": True, "reason": "empty_memory", "model_count": len(model_ids)}
 
