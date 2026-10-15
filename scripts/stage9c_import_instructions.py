@@ -30,6 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.artifacts import resolve_export_file
+from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
 from lib.ts_client import TSClient
 
 
@@ -68,6 +69,11 @@ def import_instructions(target_client: TSClient, payload: dict, dry_run: bool) -
                   "Skipping instructions import (non-blocking).", file=sys.stderr)
             return {"skipped": True, "reason": "spotter_not_enabled", "http_status": 403,
                     "dry_run": dry_run}
+        if cur.status_code in ENDPOINT_UNAVAILABLE_STATUSES:
+            print(f"[STAGE 9c] HTTP {cur.status_code} — the NL instructions API is not available "
+                  "on this cluster. Skipping instructions import (non-blocking).", file=sys.stderr)
+            return {"skipped": True, "reason": "endpoint_unavailable",
+                    "http_status": cur.status_code, "dry_run": dry_run}
         existing: list[dict] = []
         if cur.status_code == 200:
             try:

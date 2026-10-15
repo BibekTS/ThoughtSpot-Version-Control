@@ -34,11 +34,11 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 4 | `stage4_export` | Export TML (obj_id included, GUIDs excluded, coaching feedback included) |
 | 4b | `stage4b_export_memory` | Export Spotter memory for each model |
 | 4c | `stage4c_export_instructions` | Export NL instructions for each model |
-| 5 | `stage5_sanitize` | Strip GUIDs and the migration tag, find `ts_var()` references |
+| 5 | `stage5_sanitize` | Strip GUIDs and the migration tag, find `ts_var(name)` references (quoted or not; built-in variables like `ts_user_timezone` are ignored) |
 | 6 | `stage6_commit` | Commit `orgs/<org>/` to `ts-dev` (retries on concurrent pushes) |
 | 7 | `stage7_promote` | PR into `ts-prod`, auto-merge enabled (not on dry runs) |
 | 8 | `stage8_prod_prep` | Create or check variables, check connections exist in the target, validate-only import |
-| 9 | `stage9_import` | Import TML in dependency order; substitute table db/schema values and rebind variables |
+| 9 | `stage9_import` | Import TML in dependency order; substitute table db/schema values, then bind each table's database and schema to their own variables (by GUID). A failed bind is a warning on that table in `stage9_import.json` |
 | 9b | `stage9b_import_memory` | Import model memory |
 | 9c | `stage9c_import_instructions` | Set model NL instructions |
 | 10 | `stage10_postcheck` | Post-check and remove the migration tag from successes |
@@ -80,7 +80,7 @@ Rules that apply to both:
 - **Content in dev replaces the target.** Both imports replace what is on the target model. Anything typed directly into a target model is overwritten on the next run that has content for that model.
 - **Nothing in dev means the target is left alone.** A model with no memory or no instructions in dev is never cleared on the target. This is enforced in the code, not just by convention.
 - **Each run imports its own export.** The import reads the file stamped with the same `TIMESTAMP` as the run and never falls back to an older run's file, so stale content cannot overwrite the target.
-- **Never blocking.** A 403 (Spotter off or insufficient permission), an API error, or a missing export is logged and skipped. The job still passes.
+- **Not-applicable cases are quiet, real failures are not.** Spotter not enabled (403), a model with no memory or no instructions, and a model that is not in the target yet are logged and skipped (Spotter-off is listed as a note in the report). Anything else, such as an export or validation error, a failed memory apply, or a failed instruction set, is listed in the run report, makes the run red, and **keeps the migration tag** on the affected models (all models for a memory failure) so the next run retries them.
 - **Instructions are matched by `obj_id`.** The target model's GUID is looked up from the `obj_id`. A model that is not in the target yet is skipped.
 
 What to look for in the `import` job log:

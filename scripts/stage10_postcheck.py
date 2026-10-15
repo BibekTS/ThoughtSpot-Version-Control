@@ -21,6 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.ts_client import TSClient
+from lib.spotter_results import load_json, spotter_outcome
 
 
 def _scan_by_type(
@@ -154,9 +155,16 @@ def cleanup_tags(
     import_results: list[dict],
     post_check_mismatches: list[dict],
     migration_tag: str,
+    blocked_ids: set[str] | None = None,
 ) -> dict:
+    """
+    blocked_ids: obj_ids whose tag must stay because something besides the TML did not
+    migrate (a model's Spotter memory or NL instructions). They are retried on the next run.
+    """
     import_map = {r["obj_id"]: r for r in import_results}
     mismatch_ids = {m["obj_id"] for m in post_check_mismatches}
+    blocked_ids = blocked_ids or set()
+    kept_for_spotter = 0
 
     to_remove = []
     to_retain = []
@@ -170,7 +178,10 @@ def cleanup_tags(
             continue
 
         result = import_map.get(obj_id, {})
-        if result.get("status") == "success" and obj_id not in mismatch_ids:
+        if obj_id in blocked_ids and result.get("status") == "success":
+            kept_for_spotter += 1
+            to_retain.append(entry)
+        elif result.get("status") == "success" and obj_id not in mismatch_ids:
             to_remove.append(entry)
         else:
             to_retain.append(entry)
@@ -187,9 +198,14 @@ def cleanup_tags(
             removed = len(to_remove)
             print(f"[STAGE 10] Removed migration tag from {removed} objects.")
         except Exception as e:
-            print(f"[ERROR] Tag removal failed: {e}", file=sys.stderr)
+            # The tags stay on the source objects, so a re-run will pick them up again.
+            print(f"[ERROR] Tag removal failed; tags were NOT removed: {e}", file=sys.stderr)
 
-    return {"removed": removed, "retained": len(to_retain)}
+    if kept_for_spotter:
+        print(f"[STAGE 10] Kept the migration tag on {kept_for_spotter} object(s) whose Spotter "
+              "memory or NL instructions did not migrate, so a re-run retries them.")
+    return {"removed": removed, "retained": len(to_retain),
+            "kept_for_spotter": kept_for_spotter}
 
 
 def main():
@@ -231,9 +247,22 @@ def main():
     )
     source_client.authenticate()
 
+    spotter = spotter_outcome(
+        load_json(os.environ.get("MEMORY_EXPORT_OUT",
+                                 f"/tmp/ts_migration_{org_key}_memory_export.json"), {}),
+        load_json(os.environ.get("MEMORY_IMPORT_OUT",
+                                 f"/tmp/ts_migration_{org_key}_memory_import.json"), {}),
+        load_json(os.environ.get("INSTRUCTIONS_EXPORT_OUT",
+                                 f"/tmp/ts_migration_{org_key}_instructions_export.json"), {}),
+        load_json(os.environ.get("INSTRUCTIONS_IMPORT_OUT",
+                                 f"/tmp/ts_migration_{org_key}_instructions_import.json"), {}),
+    )
+    blocked = set(spotter["blocked_obj_ids"])
+    if spotter["blocked_all_models"]:      # memory is one payload: every model is affected
+        blocked |= {e["obj_id"] for e in manifest if e.get("folder") == "models"}
     cleanup_result = cleanup_tags(
         source_client, manifest, import_results,
-        check_result["mismatches"], cfg["migration_tag"],
+        check_result["mismatches"], cfg["migration_tag"], blocked,
     )
 
     out = {"post_check": check_result, "tag_cleanup": cleanup_result}

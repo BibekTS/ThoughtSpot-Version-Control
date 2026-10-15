@@ -66,6 +66,7 @@ jobs:
       SANITIZE_OUT: sanitize_results.json
       MEMORY_EXPORT_OUT: stage4b_memory_export.json
       INSTRUCTIONS_EXPORT_OUT: stage4c_instructions_export.json
+      DISCOVER_OUT: stage3_discover_failures.json
     steps:
       - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4
@@ -144,6 +145,7 @@ jobs:
             sanitize_results.json
             stage4b_memory_export.json
             stage4c_instructions_export.json
+            stage3_discover_failures.json
             orgs/${{ inputs.org_key }}/
           if-no-files-found: warn
           retention-days: 90
@@ -301,6 +303,12 @@ jobs:
       MANIFEST_OUT: manifest.json
       IMPORT_OUT: stage9_import.json
       POSTCHECK_OUT: stage10_postcheck.json
+      # Spotter results (written by stages 4b/4c/9b/9c): Stage 10 keeps tags and Stage 11
+      # reports failures based on them.
+      MEMORY_EXPORT_OUT: stage4b_memory_export.json
+      MEMORY_IMPORT_OUT: stage9b_memory_import.json
+      INSTRUCTIONS_EXPORT_OUT: stage4c_instructions_export.json
+      INSTRUCTIONS_IMPORT_OUT: stage9c_instructions_import.json
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -358,6 +366,13 @@ jobs:
       PROD_PREP_OUT: prod_prep.json
       IMPORT_OUT: stage9_import.json
       POSTCHECK_OUT: stage10_postcheck.json
+      # Spotter results (written by stages 4b/4c/9b/9c): Stage 10 keeps tags and Stage 11
+      # reports failures based on them.
+      MEMORY_EXPORT_OUT: stage4b_memory_export.json
+      MEMORY_IMPORT_OUT: stage9b_memory_import.json
+      INSTRUCTIONS_EXPORT_OUT: stage4c_instructions_export.json
+      INSTRUCTIONS_IMPORT_OUT: stage9c_instructions_import.json
+      DISCOVER_OUT: stage3_discover_failures.json
     steps:
       - name: Checkout ts-dev (TML storage)
         uses: actions/checkout@v4

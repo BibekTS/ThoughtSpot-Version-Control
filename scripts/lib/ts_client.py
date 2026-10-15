@@ -29,6 +29,20 @@ class AuthError(RuntimeError):
     pass
 
 
+class ApiError(RuntimeError):
+    """A ThoughtSpot REST call returned a non-2xx status."""
+
+    def __init__(self, what: str, status_code: int, body: str = ""):
+        self.what, self.status_code, self.body = what, status_code, (body or "")[:300]
+        super().__init__(f"{what} failed: HTTP {status_code} {self.body}".strip())
+
+
+def raise_for_api_error(resp: requests.Response, what: str) -> None:
+    """Raise ApiError unless resp is 2xx. Use for calls whose success the caller reports."""
+    if not 200 <= resp.status_code < 300:
+        raise ApiError(what, resp.status_code, getattr(resp, "text", ""))
+
+
 class TSClient:
     """
     One instance per (cluster, org). Use source_client / target_client.
@@ -315,10 +329,16 @@ class TSClient:
         return self.create_tag(name)["id"]
 
     def assign_tags(self, metadata: list[dict], tag_identifiers: list[str]) -> None:
-        self.post("/tags/assign", {"metadata": metadata, "tag_identifiers": tag_identifiers})
+        """`metadata[].identifier` must be a GUID or name (not an obj_id). Raises ApiError."""
+        raise_for_api_error(
+            self.post("/tags/assign", {"metadata": metadata, "tag_identifiers": tag_identifiers}),
+            "tags/assign")
 
     def unassign_tags(self, metadata: list[dict], tag_identifiers: list[str]) -> None:
-        self.post("/tags/unassign", {"metadata": metadata, "tag_identifiers": tag_identifiers})
+        """`metadata[].identifier` must be a GUID or name (not an obj_id). Raises ApiError."""
+        raise_for_api_error(
+            self.post("/tags/unassign", {"metadata": metadata, "tag_identifiers": tag_identifiers}),
+            "tags/unassign")
 
     def search_connections(self, name: str | None = None) -> list[dict]:
         body: dict[str, Any] = {"record_size": -1, "record_offset": 0}
@@ -354,13 +374,13 @@ class TSClient:
         Set org-scoped value for a TABLE_MAPPING or CONNECTION_PROPERTY variable.
         Uses REPLACE to overwrite any existing org-level value.
         """
-        self.post(
+        raise_for_api_error(self.post(
             f"/template/variables/{requests.utils.quote(identifier, safe='')}/update-values",
             {
                 "operation": "REPLACE",
                 "values": [{"value": value}],
             },
-        )
+        ), "variables/update-values")
 
     def parameterize_fields(
         self,
@@ -370,9 +390,11 @@ class TSClient:
     ) -> None:
         """
         Bind databaseName / schemaName / tableName on a LOGICAL_TABLE to a variable.
-        Requires ThoughtSpot 26.5.0.cl+.
+        Requires ThoughtSpot 26.5.0.cl+. One call binds ALL of field_names to ONE variable,
+        so bind databaseName and schemaName in separate calls. table_identifier must be a
+        GUID or name (not an obj_id). Raises ApiError.
         """
-        self.post(
+        raise_for_api_error(self.post(
             "/metadata/parameterize-fields",
             {
                 "metadata_type": "LOGICAL_TABLE",
@@ -381,12 +403,16 @@ class TSClient:
                 "field_names": field_names,
                 "variable_identifier": variable_identifier,
             },
-        )
+        ), "metadata/parameterize-fields")
 
-    def find_model_guid(self, obj_id: str) -> str | None:
-        """Resolve a model's GUID in this org from its custom obj_id; None if absent."""
+    def find_guid_by_obj_id(self, obj_type: str, obj_id: str) -> str | None:
+        """
+        Resolve an object's GUID in this org from its custom obj_id; None if absent.
+        Most write APIs (tags, parameterize) take a GUID or name, not an obj_id.
+        obj_type is LOGICAL_TABLE / ANSWER / LIVEBOARD / COLLECTION.
+        """
         resp = self.post("/metadata/search", {
-            "metadata": [{"type": "LOGICAL_TABLE", "obj_identifier": obj_id}],
+            "metadata": [{"type": obj_type, "obj_identifier": obj_id}],
             "include_headers": False,
             "record_size": 5,
             "record_offset": 0,
@@ -397,6 +423,10 @@ class TSClient:
             if item.get("metadata_obj_id") == obj_id and item.get("metadata_id"):
                 return item["metadata_id"]
         return None
+
+    def find_model_guid(self, obj_id: str) -> str | None:
+        """Resolve a table / view / model's GUID from its obj_id; None if absent."""
+        return self.find_guid_by_obj_id("LOGICAL_TABLE", obj_id)
 
     def get_nl_instructions(self, data_source_identifier: str) -> requests.Response:
         """Beta (10.15.0.cl+, Spotter). Returns the raw response so callers can branch on 403."""

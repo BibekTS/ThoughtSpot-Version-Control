@@ -22,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.artifacts import memory_is_empty
+from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
 from lib.ts_client import TSClient
 
 MODEL_FOLDERS = {"models"}
@@ -59,6 +60,11 @@ def export_memory(
         print("[STAGE 4b] HTTP 403 — Spotter not enabled or insufficient permissions. "
               "Skipping memory export (non-blocking).", file=sys.stderr)
         return {"skipped": True, "reason": "spotter_not_enabled", "http_status": 403}
+
+    if resp.status_code in ENDPOINT_UNAVAILABLE_STATUSES:
+        print(f"[STAGE 4b] HTTP {resp.status_code} — the memory API is not available on this "
+              "cluster (needs 26.8.0.cl+). Skipping memory export (non-blocking).", file=sys.stderr)
+        return {"skipped": True, "reason": "endpoint_unavailable", "http_status": resp.status_code}
 
     if resp.status_code != 200:
         print(f"[STAGE 4b] Memory export returned HTTP {resp.status_code} — "

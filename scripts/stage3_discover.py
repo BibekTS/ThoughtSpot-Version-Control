@@ -28,6 +28,7 @@ import json
 import os
 import sys
 from collections import deque
+from dataclasses import asdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -220,6 +221,13 @@ def _collect_dependencies(
         except Exception as exc:
             print(f"[WARN] Could not read dependencies of {parent['type']} "
                   f"'{parent['name']}' ({parent['obj_id']}): {exc}", file=sys.stderr)
+            report.mark_failed(ObjectRecord(
+                obj_type=parent["type"], name=parent["name"], obj_id=parent["obj_id"],
+                source_guid=parent["source_guid"], reason="dependencies_unreadable",
+                stage="discover",
+                error=f"Could not read this object's dependencies: {exc}",
+                suggested_action="Its dependencies may be missing from the migration; re-run.",
+            ))
             continue
 
         for ref in refs:
@@ -237,6 +245,15 @@ def _collect_dependencies(
                 print(f"[WARN] '{parent['name']}' ({parent['obj_id']}) depends on obj_id "
                       f"'{oid}' ({ref['name']}), which was not found in the source; "
                       "it will not be migrated.", file=sys.stderr)
+                report.mark_failed(ObjectRecord(
+                    obj_type="LOGICAL_TABLE", name=ref["name"] or oid, obj_id=oid,
+                    reason=f"dependency_missing: needed by {parent['obj_id']}",
+                    stage="discover",
+                    error=(f"'{parent['name']}' ({parent['obj_id']}) depends on obj_id '{oid}', "
+                           "which was not found in the source org."),
+                    suggested_action="If it is a built-in object, add its obj_id to "
+                                     "dependency_exclude; otherwise check that it exists.",
+                ))
                 continue
             if dep_mode == "skip_if_exists" and target_client is not None \
                     and target_client.find_model_guid(oid):
@@ -394,6 +411,14 @@ def main():
         target_client.authenticate()
 
     manifest = discover(source_client, cfg, report, target_client)
+
+    # Stage 3's report object is otherwise discarded, which hid every discovery failure
+    # (objects without an obj_id, missing dependencies, require_tagged exclusions) from the
+    # run report. Stage 11 reads this file.
+    failures_path = os.environ.get("DISCOVER_OUT",
+                                   f"/tmp/ts_migration_{org_key}_discover_failures.json")
+    Path(failures_path).write_text(
+        json.dumps([asdict(r) for r in report.failed], indent=2), encoding="utf-8")
 
     out_path = os.environ.get("MANIFEST_OUT", f"/tmp/ts_migration_{org_key}_manifest.json")
     Path(out_path).write_text(json.dumps(manifest, indent=2), encoding="utf-8")

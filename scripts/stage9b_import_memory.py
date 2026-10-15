@@ -31,6 +31,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.artifacts import memory_is_empty, resolve_export_file
+from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
 from lib.ts_client import TSClient
 
 
@@ -43,6 +44,9 @@ def import_memory(target_client: TSClient, memory_yaml: str, dry_run: bool) -> d
         if resp.status_code == 403:
             return {"_http_status": 403, "status": "SKIPPED",
                     "_reason": "Spotter not enabled or insufficient permissions"}
+        if resp.status_code in ENDPOINT_UNAVAILABLE_STATUSES:
+            return {"_http_status": resp.status_code, "status": "SKIPPED",
+                    "_reason": "Spotter memory API not available on this cluster"}
         if resp.status_code != 200:
             return {"_http_status": resp.status_code, "status": "FAILED",
                     "_reason": f"HTTP {resp.status_code}"}

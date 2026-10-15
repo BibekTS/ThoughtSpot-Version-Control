@@ -170,7 +170,7 @@ Behavior:
 - **Content in dev replaces the target.** Anything typed directly into a target model's memory or instructions is overwritten on the next run that has content for that model.
 - **Nothing in dev means the target is left alone.** A model with no memory or no instructions in dev is never cleared in the target.
 - **Each run imports its own export** (same `TIMESTAMP`). An older run's file is never used, so stale content cannot overwrite the target.
-- **Never blocking.** A 403, API error, missing export, or a model that is not in the target yet is logged and skipped; the job still passes. Models are matched by `obj_id`.
+- **Not-applicable cases are quiet, real failures are not.** Spotter not enabled (403), a model with no memory or no instructions, and a model that is not in the target yet are logged and skipped. Anything else (an export or validation error, a failed memory apply, a failed instruction set) is listed under FAILED in the run report as `SPOTTER_MEMORY` / `SPOTTER_INSTRUCTIONS`, makes the run red, and **keeps the migration tag** on the affected models (every model for a memory failure), so re-running retries them. Models are matched by `obj_id`.
 
 What to look for in the `import` job log:
 
@@ -205,7 +205,7 @@ The commit runs even when the run had failures. It is best-effort and never fail
 
 ### Summary sections
 
-1. **PULLED** — objects identified for migration (tagged + dependencies)
+1. **PULLED** — objects identified for migration (tagged + dependencies). Problems found while discovering them (no `obj_id`, a dependency that cannot be found, a `require_tagged` exclusion) appear under FAILED with stage `discover`
 2. **SUCCEEDED** — imported and post-check confirmed
 3. **FAILED** — import failed; see `failures_report.txt` for details
 4. **SKIPPED** — excluded due to missing obj_id, failed dependency, missing connection, etc.
@@ -281,12 +281,13 @@ Stage 8 prints one line per issue, e.g. `[STAGE 8] ERROR [bat_db_var]: ...`. A c
 Stage 8 only records issues in `prod_prep.json`. It does not exclude objects or block the import, and Stage 11 only treats errors that name a connection as failures. Variable errors matter when you migrate tables that depend on those variables.
 
 ### Memory or NL instructions were not migrated
-Check the Stage 4b / 4c / 9b / 9c lines in the job logs. The usual reasons, all non-blocking:
+Check the Stage 4b / 4c / 9b / 9c lines in the job logs and the FAILED section of the report. The usual reasons that are *not* failures (nothing to do):
 - Spotter is off or the user lacks `CAN_USE_SPOTTER` (HTTP 403).
-- The cluster is older than 26.8.0.cl (memory) or 10.15.0.cl (instructions).
+- The cluster is older than 26.8.0.cl (memory) or 10.15.0.cl (instructions): the API answers 404 / 405 / 501 and the stage is skipped with a note.
 - The model has no memory or no instructions in dev (the target is left alone on purpose).
 - The model does not exist in the target yet (for example, a dry run before the first import).
-- Setting instructions needs edit access or `SPOTTER_COACHING_PRIVILEGE` on the target model.
+
+These **are** failures (listed in the report, run red, tag kept): the export or validation returned an error, the memory apply did not succeed, or setting instructions was refused. A common cause of the last one is that setting instructions needs edit access or `SPOTTER_COACHING_PRIVILEGE` on the target model.
 
 ### Stage 9 skipped unexpectedly
 Check that `dry_run` is set to `false` in the workflow dispatch inputs.

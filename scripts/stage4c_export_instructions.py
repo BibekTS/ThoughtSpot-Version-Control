@@ -25,6 +25,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
 from lib.ts_client import TSClient
 
 MODEL_FOLDERS = {"models"}
@@ -60,6 +61,13 @@ def export_instructions(
             print("[STAGE 4c] HTTP 403 — Spotter not enabled or missing CAN_USE_SPOTTER / "
                   "view access. Skipping instructions export (non-blocking).", file=sys.stderr)
             return {"skipped": True, "reason": "spotter_not_enabled", "http_status": 403}
+
+        if resp.status_code in ENDPOINT_UNAVAILABLE_STATUSES:
+            print(f"[STAGE 4c] HTTP {resp.status_code} — the NL instructions API is not available "
+                  "on this cluster (needs 10.15.0.cl+). Skipping instructions export "
+                  "(non-blocking).", file=sys.stderr)
+            return {"skipped": True, "reason": "endpoint_unavailable",
+                    "http_status": resp.status_code, "failed": failed}
 
         if resp.status_code != 200:
             failed.append({"obj_id": obj_id, "name": name, "error": f"HTTP {resp.status_code}"})

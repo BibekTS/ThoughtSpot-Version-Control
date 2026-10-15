@@ -16,7 +16,12 @@ import json
 import re
 from typing import Any
 
-_TS_VAR_RE = re.compile(r"ts_var\(['\"]([^'\"]+)['\"]\)")
+# ThoughtSpot writes a variable reference without quotes, e.g. ts_var(country_var) or
+# ts_var (ts_user_timezone); quotes are accepted too. Names are word characters.
+_TS_VAR_RE = re.compile(r"\bts_var\s*\(\s*['\"]?(\w+)['\"]?\s*\)")
+
+# Built-in variables that exist everywhere and must not be created by the pipeline.
+_SYSTEM_VARIABLES = {"ts_user_timezone"}
 _GUID_RE = re.compile(
     r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
     re.IGNORECASE,
@@ -129,11 +134,26 @@ def _substitute_in_table(obj: Any, src_db: str, tgt_db: str,
 
 def scan_ts_var_references(tml_dict: dict) -> set[str]:
     """
-    Find all ts_var('name') references in the TML (used in RLS rules, formulas).
-    Returns a set of variable names.
+    Find all ts_var(name) references in the TML (RLS rules, formulas).
+    Returns the set of variable names, without built-in system variables.
+
+    Scans the string values directly: serializing the whole TML to JSON first escapes
+    double quotes and would hide references written with them.
     """
-    text = json.dumps(tml_dict)
-    return set(_TS_VAR_RE.findall(text))
+    found: set[str] = set()
+
+    def walk(node: Any) -> None:
+        if isinstance(node, str):
+            found.update(_TS_VAR_RE.findall(node))
+        elif isinstance(node, dict):
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(tml_dict)
+    return found - _SYSTEM_VARIABLES
 
 
 def extract_refs(tml_dict: dict) -> list[dict]:

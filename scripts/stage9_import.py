@@ -116,19 +116,25 @@ def import_tier(
                     _type_for_tag = _ts_type_for_tag(obj_type)
                     if _type_for_tag:
                         try:
+                            # The tags API takes a GUID or name; look the target GUID up by obj_id.
+                            tgt_guid = target_client.find_guid_by_obj_id(_type_for_tag, obj_id)
+                            if not tgt_guid:
+                                raise RuntimeError("object not found in target by obj_id")
                             target_client.assign_tags(
-                                [{"type": _type_for_tag, "identifier": obj_id}],
+                                [{"type": _type_for_tag, "identifier": tgt_guid}],
                                 other_tags,
                             )
                         except Exception as tag_err:
-                            print(f"[WARN] Failed to reapply tags for '{name}': {tag_err}")
+                            print(f"[WARN] Failed to reapply tags for '{name}': {tag_err}",
+                                  file=sys.stderr)
 
                 # Path B: bind variables after table import
                 if obj_type == "LOGICAL_TABLE" and entry["folder"] == "tables":
-                    _parameterize_table(
-                        target_client, obj_id, db_var, schema_var,
-                        tgt_db, tgt_schema, results,
-                    )
+                    warnings = _parameterize_table(target_client, obj_id, db_var, schema_var)
+                    if warnings:
+                        # The table imported (with the target db/schema literals) but is not
+                        # bound to its variables; keep it visible in stage9_import.json.
+                        results[-1]["warnings"] = warnings
 
             else:
                 failed_obj_ids.add(obj_id)
@@ -169,20 +175,35 @@ def _ts_type_for_tag(meta_type: str) -> str | None:
 
 
 def _parameterize_table(
-    client: TSClient, obj_id: str,
-    db_var: str, schema_var: str,
-    tgt_db: str, tgt_schema: str,
-    results: list,
-) -> None:
-    try:
-        client.parameterize_fields(
-            table_identifier=obj_id,
-            field_names=["databaseName", "schemaName"],
-            variable_identifier=db_var,
-        )
-        print(f"[PARAMETERIZE] Bound db/schema on table {obj_id} to variable '{db_var}'.")
-    except Exception as e:
-        print(f"[WARN] Failed to parameterize table {obj_id}: {e}")
+    client: TSClient, obj_id: str, db_var: str, schema_var: str,
+) -> list[str]:
+    """
+    Bind a just-imported table's databaseName and schemaName to their variables.
+
+    One parameterize call binds every field in it to ONE variable, so the database and the
+    schema need separate calls (binding both to the database variable would be wrong). The
+    API also wants the table's GUID or name, not its obj_id, so look the GUID up first.
+    Returns warnings; an empty list means everything configured was bound.
+    """
+    bindings = [(f, v) for f, v in (("databaseName", db_var), ("schemaName", schema_var)) if v]
+    if not bindings:
+        return []
+    guid = client.find_guid_by_obj_id("LOGICAL_TABLE", obj_id)
+    if not guid:
+        msg = f"table {obj_id} not found in the target by obj_id; not parameterized"
+        print(f"[WARN] {msg}", file=sys.stderr)
+        return [msg]
+    warnings: list[str] = []
+    for field, var in bindings:
+        try:
+            client.parameterize_fields(
+                table_identifier=guid, field_names=[field], variable_identifier=var)
+            print(f"[PARAMETERIZE] Bound {field} on table {obj_id} to variable '{var}'.")
+        except Exception as e:
+            warnings.append(f"{field} -> '{var}': {e}")
+            print(f"[WARN] Failed to bind {field} on table {obj_id} to '{var}': {e}",
+                  file=sys.stderr)
+    return warnings
 
 
 def safety_gate(
