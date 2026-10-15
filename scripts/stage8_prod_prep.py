@@ -165,6 +165,17 @@ def validate_import(target_client: TSClient, tml_strings: list[str]) -> list[dic
         return [{"severity": "ERROR", "message": f"Validate-only import failed: {e}"}]
 
 
+def format_issue(issue: dict, max_len: int = 300) -> str:
+    """One log line per issue: severity, what it is about, and the message."""
+    subject = (issue.get("variable") or issue.get("connection")
+               or issue.get("obj_id") or "")
+    msg = str(issue.get("message", "")).replace("\n", " ")
+    if len(msg) > max_len:
+        msg = msg[:max_len] + "..."
+    prefix = f"[STAGE 8] {issue.get('severity', 'UNKNOWN')}"
+    return f"{prefix} [{subject}]: {msg}" if subject else f"{prefix}: {msg}"
+
+
 def main():
     org_key = os.environ["ORG_KEY"]
     cfg_path = os.environ.get("CONFIG_OUT", f"/tmp/ts_migration_{org_key}_config.json")
@@ -211,9 +222,15 @@ def main():
     fatal = [i for i in all_issues if i.get("severity") in ("FATAL", "ERROR")]
     print(f"[STAGE 8] Prod prep complete. {len(fatal)} errors, "
           f"{len(all_issues) - len(fatal)} warnings/info.")
+    for issue in all_issues:
+        loud = issue.get("severity") != "INFO"
+        print(format_issue(issue), file=sys.stderr if loud else sys.stdout)
     if fatal:
-        print(f"[WARN] {len(fatal)} issues found. Affected objects will be excluded.",
-              file=sys.stderr)
+        # Stage 8 only records issues in prod_prep.json. Stage 9 does not read it, so
+        # nothing is excluded here; Stage 11 reports only connection-related errors.
+        print(f"[WARN] {len(fatal)} error(s) recorded in {Path(out_path).name}. Stage 8 does "
+              "not exclude objects or block the import; Stage 11 reports only errors that "
+              "name a connection as failures.", file=sys.stderr)
 
 
 if __name__ == "__main__":
