@@ -22,6 +22,14 @@ target:
 # require_tagged: only migrate explicitly tagged objects (no auto-deps)
 dependency_mode: include
 
+# obj_ids that are never pulled in as dependencies. These are built-in objects that exist in
+# every org: real content depends on them, but they must not be migrated.
+#   TSBIServer-eaab6de7             "TS: BI Server" worksheet (used by the Mike's Demo liveboard)
+#   SampleRetail-Apparel-cd252e5c   "(Sample) Retail - Apparel" sample data (used by one answer)
+dependency_exclude:
+  - TSBIServer-eaab6de7
+  - SampleRetail-Apparel-cd252e5c
+
 variables:
   # ts_variable_name: name of the ThoughtSpot variable (required).
   # source_value / target_value: optional overrides.
