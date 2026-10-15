@@ -18,8 +18,17 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
 from lib.ts_client import TSClient
 from lib.tml_utils import parse_tml
+
+
+def _http_status(exc: Exception) -> int | None:
+    """HTTP status carried by an ApiError or a requests HTTPError, if any."""
+    status = getattr(exc, "status_code", None)
+    if status is None:
+        status = getattr(getattr(exc, "response", None), "status_code", None)
+    return status
 
 
 def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -> list[dict]:
@@ -48,21 +57,28 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -
         if name not in var_map:
             var_map[name] = {"ts_variable_name": name, "type": "FORMULA_VARIABLE"}
 
-    # Check variable API availability
+    # Check variable API availability. Whatever goes wrong here is recorded as an issue and
+    # variable sync is skipped: the connection check and validation must still run.
     try:
         target_client.search_variables()
     except Exception as e:
-        msg = str(e)
-        if "403" in msg or "not enabled" in msg.lower():
+        status = _http_status(e)
+        if status == 403 or status in ENDPOINT_UNAVAILABLE_STATUSES or "not enabled" in str(e).lower():
             issues.append({
                 "severity": "WARNING",
-                "message": "Variable API not enabled on target cluster. "
-                           "Contact ThoughtSpot Support to enable it (26.4.0.cl+). "
+                "message": "Variable API not available on target cluster (or not permitted). "
+                           "It needs 26.4.0.cl+ and the variable-management permission. "
                            "Variable sync skipped.",
             })
-            print("[WARN] Variable API not enabled — skipping variable sync.", file=sys.stderr)
-            return issues
-        raise
+            print("[WARN] Variable API not available — skipping variable sync.", file=sys.stderr)
+        else:
+            issues.append({
+                "severity": "ERROR",
+                "message": f"Could not read variables from the target (HTTP {status or 'n/a'}): "
+                           f"{e}. Variable sync skipped.",
+            })
+            print(f"[WARN] Variable lookup failed — skipping variable sync: {e}", file=sys.stderr)
+        return issues
 
     for name, v in var_map.items():
         var_type = v.get("type", "TABLE_MAPPING")
@@ -70,7 +86,12 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -
         is_sensitive = v.get("is_sensitive", False)
 
         # Check if variable exists
-        existing = target_client.search_variables(name_pattern=name)
+        try:
+            existing = target_client.search_variables(name_pattern=name)
+        except Exception as e:
+            issues.append({"severity": "ERROR", "variable": name,
+                           "message": f"Could not look up variable '{name}' in the target: {e}"})
+            continue
         found = next((x for x in existing if x.get("name") == name), None)
 
         if found:
