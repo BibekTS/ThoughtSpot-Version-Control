@@ -426,7 +426,8 @@ def main():
     print(f"[STAGE 3] Discovered {len(manifest)} objects "
           f"({len(manifest) - n_deps} tagged, {n_deps} dependencies) -> {out_path}")
     if report.failed:
-        print(f"[WARN] {len(report.failed)} objects excluded (no obj_id). See failures.",
+        print(f"[WARN] {len(report.failed)} object(s) excluded or failed "
+              "(missing obj_id or dependencies). See the failures report.",
               file=sys.stderr)
 
     tagged_count = sum(1 for e in manifest if e.get("reason") == "tagged")

@@ -156,6 +156,10 @@ def scan_ts_var_references(tml_dict: dict) -> set[str]:
     return found - _SYSTEM_VARIABLES
 
 
+# Keys whose nested obj_ids are not dependencies.
+_NON_DEPENDENCY_KEYS = {"connection", "views"}
+
+
 def extract_refs(tml_dict: dict) -> list[dict]:
     """
     Objects this TML depends on, found by their obj_id.
@@ -167,8 +171,9 @@ def extract_refs(tml_dict: dict) -> list[dict]:
       model.model_tables[]                         (the tables of a model)
       table.joins_with[].destination               (a joined table)
 
-    Not returned: the object's own obj_id, and connections (`connection`), which are not
-    migrated (Stage 8 checks that they exist in the target).
+    Not returned: the object's own obj_id, connections (`connection`), which are not
+    migrated (Stage 8 checks that they exist in the target), and a liveboard's saved views
+    (`liveboard.views[]`), which carry their own obj_id but are part of the liveboard.
     Returns [{"obj_id", "name"}], de-duplicated, in first-seen order.
     """
     own = tml_dict.get("obj_id")
@@ -177,7 +182,7 @@ def extract_refs(tml_dict: dict) -> list[dict]:
 
     def walk(node: Any, parent_key: str | None) -> None:
         if isinstance(node, dict):
-            if parent_key == "connection":
+            if parent_key in _NON_DEPENDENCY_KEYS:
                 return
             oid = node.get("obj_id")
             if parent_key is not None and isinstance(oid, str) and oid and oid != own \

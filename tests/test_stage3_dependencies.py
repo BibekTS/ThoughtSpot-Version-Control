@@ -273,3 +273,13 @@ def test_extract_refs_on_real_exported_tml():
         d = json.loads(Path(t).read_text())
         conn = (d.get("table", {}).get("connection") or {}).get("obj_id")
         assert conn not in {r["obj_id"] for r in extract_refs(d)}
+
+
+def test_extract_refs_ignores_liveboard_saved_views():
+    """Saved views carry their own obj_id (e.g. 'Midwest-8ac8e1f6') but are not dependencies."""
+    lb = {"obj_id": "LB-1", "liveboard": {
+        "views": [{"name": "Mike View"},
+                  {"name": "Midwest", "obj_id": "Midwest-8ac8e1f6", "view_guid": "g"}],
+        "visualizations": [{"answer": {"tables": [{"id": "Model", "name": "Model", "obj_id": "M-1"}]}}],
+    }}
+    assert [r["obj_id"] for r in extract_refs(lb)] == ["M-1"]
