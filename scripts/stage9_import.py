@@ -26,7 +26,7 @@ from lib.ts_client import TSClient
 from lib.variables import variable_config
 from lib.tml_utils import (
     parse_tml, to_tml_string,
-    path_b_substitute, get_table_db_schema, is_variable_bound,
+    path_b_substitute, get_table_db_schema, is_variable_bound, extract_refs,
 )
 
 IMPORT_TIERS = [
@@ -62,18 +62,6 @@ def import_tier(
         tml_path_rel = entry.get("tml_path", "")
         other_tags = entry.get("other_tags", [])
 
-        # Skip if a dependency failed
-        dep_reason = entry.get("reason", "")
-        if dep_reason.startswith("dependency_of:"):
-            parent_id = dep_reason.split(":", 1)[1]
-            if parent_id in failed_obj_ids:
-                results.append({
-                    "obj_id": obj_id, "name": name, "type": obj_type,
-                    "status": "skipped",
-                    "reason": f"dependency {parent_id} failed",
-                })
-                continue
-
         if not tml_path_rel:
             results.append({"obj_id": obj_id, "name": name, "type": obj_type,
                             "status": "skipped", "reason": "no tml_path"})
@@ -87,6 +75,21 @@ def import_tier(
 
         try:
             tml_dict = parse_tml(tml_path.read_text(encoding="utf-8"))
+
+            # Don't import an object whose dependencies failed: it would be missing what
+            # it is built on. Tiers run dependencies first, so their failures are known.
+            broken = [r["obj_id"] for r in extract_refs(tml_dict)
+                      if r["obj_id"] in failed_obj_ids]
+            if broken:
+                failed_obj_ids.add(obj_id)      # so whatever depends on this one is skipped too
+                results.append({
+                    "obj_id": obj_id, "name": name, "type": obj_type,
+                    "status": "skipped",
+                    "reason": f"dependency {', '.join(broken)} failed",
+                })
+                print(f"[STAGE 9] Skipping '{name}': dependency {', '.join(broken)} failed.",
+                      file=sys.stderr)
+                continue
 
             # Path B substitution (in-memory only, never persisted)
             if obj_type == "LOGICAL_TABLE" and entry["folder"] == "tables":
