@@ -73,7 +73,12 @@ def import_instructions(target_client: TSClient, payload: dict, dry_run: bool) -
             try:
                 existing = cur.json().get("nl_instructions_info") or []
             except Exception:
-                existing = []
+                print(f"[STAGE 9c][WARN] '{name}': could not parse target instructions; "
+                      "treating as none.", file=sys.stderr)
+        else:
+            # Without this, a failed read is indistinguishable from "target has 0".
+            print(f"[STAGE 9c][WARN] '{name}': reading target instructions returned HTTP "
+                  f"{cur.status_code}; treating as none.", file=sys.stderr)
 
         n_new = sum(len(i.get("instructions") or []) for i in desired)
         n_old = sum(len(i.get("instructions") or []) for i in existing)
@@ -98,6 +103,8 @@ def import_instructions(target_client: TSClient, payload: dict, dry_run: bool) -
             except Exception:
                 ok = False
         if ok:
+            print(f"[STAGE 9c] '{name}': APPLIED — {n_new} instruction(s) set on target "
+                  f"(HTTP {resp.status_code}, success=true).")
             results.append({**rec, "status": "applied", "existing_count": n_old,
                             "instruction_count": n_new})
         else:
@@ -106,11 +113,18 @@ def import_instructions(target_client: TSClient, payload: dict, dry_run: bool) -
             results.append({**rec, "status": "failed", "http_status": resp.status_code,
                             "error": resp.text[:200]})
 
+    counts = {s: sum(1 for r in results if r["status"] == s)
+              for s in ("applied", "dry_run", "unchanged", "skipped", "failed")}
+    print(f"[STAGE 9c] Summary ({'DRY RUN' if dry_run else 'LIVE'}): "
+          f"{len(results)} model(s) — {counts['applied']} applied, "
+          f"{counts['dry_run']} would change, {counts['unchanged']} unchanged, "
+          f"{counts['skipped']} skipped, {counts['failed']} failed.")
+
     return {
         "skipped": False,
         "dry_run": dry_run,
-        "applied": sum(1 for r in results if r["status"] == "applied"),
-        "failed": sum(1 for r in results if r["status"] == "failed"),
+        "applied": counts["applied"],
+        "failed": counts["failed"],
         "results": results,
     }
 

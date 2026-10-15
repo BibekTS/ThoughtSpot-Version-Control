@@ -222,3 +222,43 @@ class TestNeverClearTarget:
         c.find_model_guid.assert_not_called()
         c.set_nl_instructions.assert_not_called()
         assert result["applied"] == 0
+
+
+class TestStage9cOutput:
+    """9c must say what it did; a silent success is indistinguishable from a silent skip."""
+
+    def _client(self, existing_info, read_status=200, set_resp=None):
+        c = MagicMock()
+        c.find_model_guid.return_value = "target-guid"
+        c.get_nl_instructions.return_value = _resp(read_status, {"nl_instructions_info": existing_info})
+        c.set_nl_instructions.return_value = set_resp or _resp(200, {"success": True})
+        return c
+
+    def test_prints_applied_line_and_summary(self, capsys):
+        import_instructions(self._client([]), PAYLOAD, dry_run=False)
+        out = capsys.readouterr().out
+        assert "'Model 1': APPLIED — 2 instruction(s) set on target (HTTP 200, success=true)." in out
+        assert "Summary (LIVE): 1 model(s) — 1 applied, 0 would change, 0 unchanged, 0 skipped, 0 failed." in out
+
+    def test_dry_run_summary_says_would_change(self, capsys):
+        import_instructions(self._client([]), PAYLOAD, dry_run=True)
+        out = capsys.readouterr().out
+        assert "APPLIED" not in out
+        assert "Summary (DRY RUN): 1 model(s) — 0 applied, 1 would change" in out
+
+    def test_failed_set_prints_warning_not_applied(self, capsys):
+        import_instructions(self._client([], set_resp=_resp(500, {"error": "boom"})), PAYLOAD, dry_run=False)
+        cap = capsys.readouterr()
+        assert "APPLIED" not in cap.out
+        assert "set failed (HTTP 500)" in cap.err
+        assert "1 failed" in cap.out
+
+    def test_failed_read_is_flagged_not_silent_zero(self, capsys):
+        import_instructions(self._client([], read_status=500), PAYLOAD, dry_run=True)
+        err = capsys.readouterr().err
+        assert "reading target instructions returned HTTP 500" in err
+
+    def test_unchanged_counted_in_summary(self, capsys):
+        import_instructions(self._client(INFO), PAYLOAD, dry_run=False)
+        out = capsys.readouterr().out
+        assert "1 unchanged" in out and "APPLIED" not in out
