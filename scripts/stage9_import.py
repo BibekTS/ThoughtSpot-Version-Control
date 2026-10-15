@@ -42,6 +42,47 @@ IMPORT_TIERS = [
 ASYNC_THRESHOLD = 20  # use async import for batches larger than this
 
 
+def order_by_dependencies(entries: list[dict], repo_root: Path) -> list[dict]:
+    """
+    Order one tier so an object comes after the objects in the same tier that it references.
+
+    Tiers already put tables before models before liveboards; this covers objects of the
+    same kind that depend on each other (a model built on another model, a table joined to
+    another table). Entries keep manifest order otherwise. Unreadable TML counts as no
+    dependencies, and a cycle falls back to manifest order for the objects in it.
+    """
+    in_tier = {e["obj_id"] for e in entries}
+    deps: dict[str, list[str]] = {}
+    for e in entries:
+        refs: list[str] = []
+        path = e.get("tml_path")
+        if path and (repo_root / path).exists():
+            try:
+                tml = parse_tml((repo_root / path).read_text(encoding="utf-8"))
+                refs = [r["obj_id"] for r in extract_refs(tml)
+                        if r["obj_id"] in in_tier and r["obj_id"] != e["obj_id"]]
+            except Exception:
+                refs = []
+        deps[e["obj_id"]] = refs
+
+    by_id = {e["obj_id"]: e for e in entries}
+    ordered: list[dict] = []
+    state: dict[str, int] = {}          # 1 = in progress, 2 = done
+
+    def visit(obj_id: str) -> None:
+        if state.get(obj_id):
+            return                       # done, or a cycle: keep going in manifest order
+        state[obj_id] = 1
+        for dep in deps[obj_id]:
+            visit(dep)
+        state[obj_id] = 2
+        ordered.append(by_id[obj_id])
+
+    for e in entries:
+        visit(e["obj_id"])
+    return ordered
+
+
 def import_tier(
     target_client: TSClient,
     tier_entries: list[dict],
@@ -286,6 +327,7 @@ def main():
         ]
         if not tier_entries:
             continue
+        tier_entries = order_by_dependencies(tier_entries, repo_root)
         print(f"[STAGE 9] Importing tier '{folder}': {len(tier_entries)} objects...")
         tier_results = import_tier(
             target_client, tier_entries, cfg, repo_root, failed_obj_ids
