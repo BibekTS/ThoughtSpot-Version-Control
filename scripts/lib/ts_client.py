@@ -352,15 +352,35 @@ class TSClient:
         variable_type: str | None = None,
         name_pattern: str | None = None,
         include_values: bool = False,
+        page_size: int = 100,
+        max_pages: int = 50,
     ) -> list[dict]:
-        body: dict[str, Any] = {
-            "response_format": "METADATA_AND_VALUES" if include_values else "METADATA",
-        }
+        """
+        All variables matching the filters, across pages.
+
+        The API reads its filters from `variable_details[]` and returns only 10 records
+        unless told otherwise. A top-level `name_pattern` is ignored, so a variable beyond
+        the first 10 would look missing.
+        """
+        detail: dict[str, Any] = {}
         if variable_type:
-            body["variable_type"] = variable_type
+            detail["type"] = variable_type
         if name_pattern:
-            body["name_pattern"] = name_pattern
-        return self.post_json("/template/variables/search", body)
+            detail["name_pattern"] = name_pattern
+        found: list[dict] = []
+        for page in range(max_pages):
+            body: dict[str, Any] = {
+                "record_offset": page * page_size,
+                "record_size": page_size,
+                "response_content": "METADATA_AND_VALUES" if include_values else "METADATA",
+            }
+            if detail:
+                body["variable_details"] = [detail]
+            batch = self.post_json("/template/variables/search", body)
+            found.extend(batch)
+            if len(batch) < page_size:
+                break
+        return found
 
     def create_variable(self, name: str, var_type: str, is_sensitive: bool = False) -> dict:
         return self.post_json("/template/variables/create", {

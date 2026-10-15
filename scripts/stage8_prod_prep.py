@@ -74,7 +74,7 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -
         found = next((x for x in existing if x.get("name") == name), None)
 
         if found:
-            found_type = found.get("type", "")
+            found_type = found.get("variable_type") or found.get("type", "")
             if found_type and found_type != var_type:
                 issues.append({
                     "severity": "ERROR",
