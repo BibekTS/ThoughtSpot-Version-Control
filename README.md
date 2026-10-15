@@ -148,7 +148,7 @@ Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, 
 
 - **Job logs:** the quickest view. Every stage prefixes its lines with `[STAGE n]`.
 - **Artifacts** (kept 90 days): `extract-*` (exports and manifest), `import-*` (`prod_prep.json`, `stage9_import.json`, `stage9b_memory_import.json`, `stage9c_instructions_import.json`), `postcheck-*`, `reports-*`.
-- **Reports:** `migration_summary.txt`, `failures_report.txt`, `failures.json`, `manifest.json`.
+- **Reports:** `migration_summary.txt`, `failures_report.txt`, `failures.json`, `manifest.json`. They are also committed to `ts-dev` under `reports/<org>/<TIMESTAMP>_<run_id>/`, including for failed runs.
 
 ## Repository layout
 

@@ -183,9 +183,11 @@ The per-stage results are also in the `import-<org>-<run_id>` artifact (`stage9b
 
 ## Reading the Reports
 
-Reports are in the **workflow artifacts** (90-day retention): download `reports-<org_key>-<run_id>` from the Actions run page.
+Reports are in two places:
+1. **Workflow artifacts** (90-day retention): download `reports-<org_key>-<run_id>` from the Actions run page
+2. **Git history**: committed to `ts-dev` under `reports/<org_key>/<TIMESTAMP>_<run_id>/`, where `TIMESTAMP` is the run's timestamp from the extract job (the same one in the exported file names)
 
-**Known issue:** the `report` job also tries to commit them to `ts-dev` under `reports/<org_key>/<timestamp>_<run_id>/`, but Stage 11 names that folder with its own clock while the commit step looks for the extract job's timestamp, so the names never match and nothing is committed. Use the artifact.
+The commit runs even when the run had failures. It is best-effort and never fails the job: if the push cannot be completed after 5 rebase-and-retry attempts, the job logs a warning and the artifact is the copy.
 
 ### Files
 

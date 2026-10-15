@@ -392,16 +392,37 @@ jobs:
         run: python -m scripts.stage11_report
 
       - name: Commit reports to ts-dev
+        # Runs even when Stage 11 exited non-zero: reports for failed runs matter most.
+        # Never fails the job; if the push cannot be completed the reports artifact is the copy.
+        if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Must match the folder Stage 11 writes (it uses the same TIMESTAMP).
           REPORT_DIR="reports/$ORG_KEY/${TIMESTAMP}_${RUN_ID}"
-          if [ -d "$REPORT_DIR" ]; then
-            git add "$REPORT_DIR"
-            git diff --cached --quiet || \
-              git commit -m "[skip ci] reports: $ORG_KEY run $RUN_ID" && \
-              git push origin ts-dev || true
+          if [ ! -d "$REPORT_DIR" ]; then
+            echo "::warning::No report directory at $REPORT_DIR; nothing to commit."
+            exit 0
           fi
+          git add "$REPORT_DIR"
+          if git diff --cached --quiet; then
+            echo "No report changes to commit."
+            exit 0
+          fi
+          if ! git commit -m "[skip ci] reports: $ORG_KEY run $RUN_ID"; then
+            echo "::warning::Could not commit reports; use the reports artifact."
+            exit 0
+          fi
+          for attempt in 1 2 3 4 5; do
+            if git push origin ts-dev; then
+              echo "Pushed reports to ts-dev (attempt $attempt)."
+              exit 0
+            fi
+            echo "Push rejected; rebasing onto origin/ts-dev and retrying ($attempt/5)..."
+            sleep $((attempt * 2))
+            git pull --rebase --autostash origin ts-dev || true
+          done
+          echo "::warning::Could not push reports to ts-dev after 5 attempts; use the reports artifact."
 
       - name: Upload final reports as artifacts
         if: always()

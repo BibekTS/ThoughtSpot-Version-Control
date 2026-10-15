@@ -144,6 +144,18 @@ def write_job_summary(report: RunReport, summary_path: str) -> None:
             f.write("\n".join(lines) + "\n")
 
 
+def report_timestamp() -> str:
+    """
+    Timestamp for the report folder name.
+
+    The workflow's "Commit reports to ts-dev" step looks for
+    reports/<org>/<TIMESTAMP>_<RUN_ID>, where TIMESTAMP is the run's value from the
+    extract job. Use the same value here so the names match; fall back to the current
+    time only when run outside the workflow.
+    """
+    return os.environ.get("TIMESTAMP") or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+
+
 def main():
     org_key = os.environ["ORG_KEY"]
     run_id = os.environ.get("RUN_ID", "local")
@@ -179,7 +191,7 @@ def main():
         postcheck_data, prod_prep_data,
     )
 
-    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    ts = report_timestamp()
     out_dir = repo_root / "reports" / org_key / f"{ts}_{run_id}"
     report.write_all(out_dir)
     print(f"[STAGE 11] Reports written to {out_dir}")
