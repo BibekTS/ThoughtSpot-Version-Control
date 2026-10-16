@@ -1,0 +1,126 @@
+{
+  "obj_id": "MILESTONES-cc5ed6d9",
+  "table": {
+    "columns": [
+      {
+        "db_column_name": "ID",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "ID",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "NCT_ID",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "NCT_ID",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "RESULT_GROUP_ID",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "RESULT_GROUP_ID",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "CTGOV_GROUP_CODE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "CTGOV_GROUP_CODE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "TITLE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "TITLE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "PERIOD",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "PERIOD",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "DESCRIPTION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "DESCRIPTION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "COUNT",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "COUNT",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "MILESTONE_DESCRIPTION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "MILESTONE_DESCRIPTION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "COUNT_UNITS",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "COUNT_UNITS",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      }
+    ],
+    "connection": {
+      "name": "TS Demo Snowflake",
+      "obj_id": "TSDemoSnowflake-572488eb"
+    },
+    "db": "TEST",
+    "db_table": "MILESTONES",
+    "name": "MILESTONES",
+    "properties": {
+      "spotter_config": {
+        "is_spotter_enabled": false
+      }
+    },
+    "schema": "AACT_CLINICAL_TRIALS"
+  }
+}

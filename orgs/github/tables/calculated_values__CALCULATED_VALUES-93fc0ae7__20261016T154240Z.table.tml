@@ -1,0 +1,234 @@
+{
+  "obj_id": "CALCULATED_VALUES-93fc0ae7",
+  "table": {
+    "columns": [
+      {
+        "db_column_name": "ID",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "ID",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "NCT_ID",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "NCT_ID",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "NUMBER_OF_FACILITIES",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "NUMBER_OF_FACILITIES",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "NUMBER_OF_NSAE_SUBJECTS",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "NUMBER_OF_NSAE_SUBJECTS",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "NUMBER_OF_SAE_SUBJECTS",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "NUMBER_OF_SAE_SUBJECTS",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "REGISTERED_IN_CALENDAR_YEAR",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "REGISTERED_IN_CALENDAR_YEAR",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "NLM_DOWNLOAD_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "NLM_DOWNLOAD_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "ACTUAL_DURATION",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "ACTUAL_DURATION",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "WERE_RESULTS_REPORTED",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "WERE_RESULTS_REPORTED",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "MONTHS_TO_REPORT_RESULTS",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "MONTHS_TO_REPORT_RESULTS",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "HAS_US_FACILITY",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "HAS_US_FACILITY",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "HAS_SINGLE_FACILITY",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "HAS_SINGLE_FACILITY",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "MINIMUM_AGE_NUM",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "MINIMUM_AGE_NUM",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "MAXIMUM_AGE_NUM",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "MAXIMUM_AGE_NUM",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "MINIMUM_AGE_UNIT",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "MINIMUM_AGE_UNIT",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "MAXIMUM_AGE_UNIT",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "MAXIMUM_AGE_UNIT",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "NUMBER_OF_PRIMARY_OUTCOMES_TO_MEASURE",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "NUMBER_OF_PRIMARY_OUTCOMES_TO_MEASURE",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "NUMBER_OF_SECONDARY_OUTCOMES_TO_MEASURE",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "NUMBER_OF_SECONDARY_OUTCOMES_TO_MEASURE",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "NUMBER_OF_OTHER_OUTCOMES_TO_MEASURE",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "NUMBER_OF_OTHER_OUTCOMES_TO_MEASURE",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      }
+    ],
+    "connection": {
+      "name": "TS Demo Snowflake",
+      "obj_id": "TSDemoSnowflake-572488eb"
+    },
+    "db": "TEST",
+    "db_table": "CALCULATED_VALUES",
+    "name": "CALCULATED_VALUES",
+    "properties": {
+      "spotter_config": {
+        "is_spotter_enabled": false
+      }
+    },
+    "schema": "AACT_CLINICAL_TRIALS"
+  }
+}

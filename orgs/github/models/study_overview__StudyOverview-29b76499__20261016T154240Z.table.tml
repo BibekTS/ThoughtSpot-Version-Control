@@ -1,0 +1,1484 @@
+{
+  "model": {
+    "columns": [
+      {
+        "column_id": "BRIEF_SUMMARIES::DESCRIPTION",
+        "name": "Description",
+        "properties": {
+          "ai_context": "Detailed narrative explanation of the study's purpose, methodology, and objectives, providing comprehensive context for stakeholder understanding.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Overview",
+            "Details"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Study Count",
+        "name": "Study Count",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Numerical count of clinical research studies for portfolio aggregation and statistical analysis across therapeutic research programs.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Research Number",
+            "Experiment Total"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Average Enrollment",
+        "name": "Average Enrollment",
+        "properties": {
+          "aggregation": "AVERAGE",
+          "ai_context": "Average number of participants enrolled per study, useful for benchmarking recruitment performance across phases and therapeutic areas.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Mean Enrollment",
+            "Avg Participants"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Study Duration (Days)",
+        "name": "Study Duration (Days)",
+        "properties": {
+          "aggregation": "AVERAGE",
+          "ai_context": "Calculated number of days between study start and completion dates, enabling timeline analysis and phase duration benchmarking.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Duration Days",
+            "Trial Length Days"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Facility Count",
+        "name": "Facility Count",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Total number of unique research facilities participating in studies, indicating trial operational complexity and geographic reach.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Site Count",
+            "Number of Sites"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Country Count",
+        "name": "Country Count",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Count of distinct countries where study sites are located, measuring the international scope and regulatory complexity of clinical programs.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Number of Countries",
+            "Geographic Reach"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Completion Rate",
+        "name": "Completion Rate",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Percentage of enrolled participants who completed the study protocol, measuring retention and protocol adherence success rates.",
+          "column_type": "MEASURE",
+          "format_pattern": "#.##%",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "formula_id": "formula_Active Studies",
+        "name": "Active Studies",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Count of currently ongoing clinical trials in active recruitment, treatment, or follow-up phases within the research portfolio.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "formula_id": "formula_Terminated Studies",
+        "name": "Terminated Studies",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Count of clinical trials that were discontinued or stopped before completion due to safety, efficacy, or operational reasons.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "column_id": "INTERVENTIONS::INTERVENTION_TYPE",
+        "name": "Intervention Type",
+        "properties": {
+          "ai_context": "Category of experimental treatment or procedure being tested, specifying whether it involves devices, genetics, procedures, radiation, or biologics.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Treatment Kind",
+            "Intervention Category"
+          ]
+        }
+      },
+      {
+        "column_id": "INTERVENTIONS::NAME",
+        "name": "Intervention Name",
+        "properties": {
+          "ai_context": "Specific identifier or title of the experimental treatment, drug, device, or procedure being investigated in the clinical study.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Treatment Name",
+            "Procedure Name"
+          ]
+        }
+      },
+      {
+        "column_id": "INTERVENTIONS::DESCRIPTION",
+        "name": "Intervention Description",
+        "properties": {
+          "ai_context": "Comprehensive explanation of the experimental treatment protocol, including administration methods, dosages, and procedural details.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Treatment Details",
+            "Intervention Summary"
+          ]
+        }
+      },
+      {
+        "column_id": "CALCULATED_VALUES::ACTUAL_DURATION",
+        "name": "Actual Duration",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Real-time span from study initiation to completion measured in numerical units for performance tracking and timeline analysis.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Real Time Span",
+            "True Length"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::ANTICIPATED_POSTING_DATE",
+        "name": "Anticipated Posting Date",
+        "properties": {
+          "ai_context": "Projected date when study results or information are expected to be published or made publicly available for regulatory compliance.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Projected Release Date",
+            "Scheduled Announcement Date"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::ANTICIPATED_POSTING_MONTH_YEAR",
+        "name": "Anticipated Posting Month Year",
+        "properties": {
+          "ai_context": "Expected month and year when study results or updates are scheduled for public release in clinical trial registries.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Projected Posting Period",
+            "Anticipated Release Month Year"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::DESCRIPTION",
+        "name": "Outcome Description",
+        "properties": {
+          "ai_context": "Comprehensive explanation of what the study endpoint measures, including clinical significance and evaluation methodology.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Summary",
+            "Outcome Details"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::DISPERSION_TYPE",
+        "name": "Outcome Dispersion Type",
+        "properties": {
+          "ai_context": "Statistical method used to express data variability around the central outcome measure, including confidence intervals and standard deviations.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Data Variability Type",
+            "Measurement Distribution Type"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::ID",
+        "name": "Outcome ID",
+        "properties": {
+          "ai_context": "Unique numerical identifier for linking specific study outcomes to their corresponding measurements and statistical analyses.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Identifier",
+            "Outcome Reference"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::OUTCOME_TYPE",
+        "name": "Outcome Outcome Type",
+        "properties": {
+          "ai_context": "Hierarchical classification of study endpoints as primary, secondary, post-hoc, or other pre-specified measures for regulatory reporting.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Type",
+            "Result Kind"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::PARAM_TYPE",
+        "name": "Outcome Param Type",
+        "properties": {
+          "ai_context": "Statistical parameter method used to summarize outcome data, such as mean, median, count, or geometric mean calculations.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Parameter Type",
+            "Outcome Parameter Category"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::POPULATION",
+        "name": "Outcome Population",
+        "properties": {
+          "ai_context": "Specific participant group or subset included in the outcome analysis, defining the analytical population for endpoint evaluation.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Population",
+            "Outcome Demographic"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::TIME_FRAME",
+        "name": "Outcome Time Frame",
+        "properties": {
+          "ai_context": "Temporal period during which the outcome measurement is assessed and evaluated within the study timeline.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Period",
+            "Data Duration"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::TITLE",
+        "name": "Outcome Title",
+        "properties": {
+          "ai_context": "Formal name or heading for the study endpoint being measured and reported in the clinical trial results.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Title",
+            "Data Summary Title"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::UNITS",
+        "name": "Outcome Units",
+        "properties": {
+          "ai_context": "Measurement units used to quantify and report the outcome results, such as percentages, scores, or clinical measures.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Units",
+            "Outcome Measurement Units"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOMES::UNITS_ANALYZED",
+        "name": "Outcome Units Analyzed",
+        "properties": {
+          "ai_context": "Analytical units of measurement applied to outcome data evaluation, specifying the basis for statistical calculations and comparisons.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Units Evaluated",
+            "Data Units Assessed"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::CATEGORY",
+        "name": "Outcome Measurements Category",
+        "properties": {
+          "ai_context": "Categorical grouping or classification level within the outcome measurement scale for organized data presentation and analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Measurement Type",
+            "Measurement Classification"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::CLASSIFICATION",
+        "name": "Outcome Measurements Classification",
+        "properties": {
+          "ai_context": "Systematic categorization framework used to organize and group outcome measurement results for analytical and reporting purposes.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Category",
+            "Outcome Grouping"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::CTGOV_GROUP_CODE",
+        "name": "Outcome Measurements Ctgov Group Code",
+        "properties": {
+          "ai_context": "ClinicalTrials.gov standardized alphanumeric code identifying specific study groups or arms for regulatory tracking and data organization.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Group Code",
+            "Outcome Group Identifier"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::DESCRIPTION",
+        "name": "Outcome Measurements Description",
+        "properties": {
+          "ai_context": "Detailed explanation of how outcome measurements were collected, calculated, and interpreted within the study protocol.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Metrics Details",
+            "Data Analysis Description"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::DISPERSION_LOWER_LIMIT",
+        "name": "Outcome Measurements Dispersion Lower Limit",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Numerical lower boundary of the confidence interval or range for the outcome measurement dispersion calculation.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Spread Minimum",
+            "Outcome Spread Lower Bound"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::DISPERSION_LOWER_LIMIT_RAW",
+        "name": "Outcome Measurements Dispersion Lower Limit Raw",
+        "properties": {
+          "ai_context": "Unprocessed text representation of the lower confidence boundary before numerical conversion for data validation purposes.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Spread Minimum Raw",
+            "Outcome Spread Lower Bound Raw"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::DISPERSION_TYPE",
+        "name": "Outcome Measurements Dispersion Type",
+        "properties": {
+          "ai_context": "Statistical method used to express variability in individual outcome measurements, specifying confidence interval or deviation type.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Outcome Dispersion Category",
+            "Measurement Spread Kind"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::DISPERSION_UPPER_LIMIT",
+        "name": "Outcome Measurements Dispersion Upper Limit",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Numerical upper boundary of the confidence interval or range for the outcome measurement dispersion calculation.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Spread Upper Limit",
+            "Outcome Range Upper Bound"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::DISPERSION_UPPER_LIMIT_RAW",
+        "name": "Outcome Measurements Dispersion Upper Limit Raw",
+        "properties": {
+          "ai_context": "Unprocessed text representation of the upper confidence boundary before numerical conversion for data validation purposes.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Spread Upper Limit Raw",
+            "Outcome Range Upper Bound Raw"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::DISPERSION_VALUE",
+        "name": "Outcome Measurements Dispersion Value",
+        "properties": {
+          "ai_context": "Text representation of the variability measure associated with the outcome measurement for uncertainty quantification.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Outcome Variability Value",
+            "Measurement Distribution Value"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::DISPERSION_VALUE_NUM",
+        "name": "Outcome Measurements Dispersion Value Num",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Numerical value representing the statistical dispersion or variability measure for the outcome measurement parameter.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Data Variability Number",
+            "Measurement Distribution Number"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::EXPLANATION_OF_NA",
+        "name": "Outcome Measurements Explanation Of Na",
+        "properties": {
+          "ai_context": "Explanatory text describing why certain outcome measurements are not available or not applicable for specific study conditions.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Explanation of NA",
+            "Outcome NA Description"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::OUTCOME_ID",
+        "name": "Outcome Measurements Outcome Id",
+        "properties": {
+          "ai_context": "Foreign key linking individual outcome measurements to their parent outcome definitions for relational data integrity.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Measurement ID",
+            "Outcome Metric Identifier"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::PARAM_TYPE",
+        "name": "Outcome Measurements Param Type",
+        "properties": {
+          "ai_context": "Statistical parameter method applied to individual outcome measurements, specifying calculation approach for data summarization.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Metric Type",
+            "Outcome Measurement Category"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::PARAM_VALUE",
+        "name": "Outcome Measurements Param Value",
+        "properties": {
+          "ai_context": "Text representation of the calculated outcome measurement result, including both numerical and descriptive values.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Parameter Value",
+            "Data Metric Value"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::PARAM_VALUE_NUM",
+        "name": "Outcome Measurements Param Value Num",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Numerical value of the calculated outcome measurement parameter for quantitative analysis and statistical processing.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Value Number",
+            "Outcome Metric Value"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::RESULT_GROUP_ID",
+        "name": "Outcome Measurements Result Group Id",
+        "properties": {
+          "ai_context": "Identifier connecting outcome measurements to specific study groups or treatment arms for comparative analysis and reporting.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Group Identifier",
+            "Outcome Group ID"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::TITLE",
+        "name": "Outcome Measurements Title",
+        "properties": {
+          "ai_context": "Specific heading or name assigned to individual outcome measurement components for identification and reporting clarity.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Metrics Title",
+            "Data Analysis Title"
+          ]
+        }
+      },
+      {
+        "column_id": "OUTCOME_MEASUREMENTS::UNITS",
+        "name": "Outcome Measurements Units",
+        "properties": {
+          "ai_context": "Specific measurement units used to quantify individual outcome results, providing scale and context for numerical values.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Result Measurement Units"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::LATITUDE",
+        "name": "Latitude",
+        "properties": {
+          "aggregation": "AVERAGE",
+          "ai_context": "Geographic coordinate specifying the north-south position of research facilities in decimal degrees for spatial analysis and mapping applications.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Lat Coordinate"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::LONGITUDE",
+        "name": "Longitude",
+        "properties": {
+          "aggregation": "AVERAGE",
+          "ai_context": "Geographic coordinate indicating the east-west position of study sites in decimal degrees for location-based analytics and geographic visualization.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Long Coordinate"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::BIOSPEC_DESCRIPTION",
+        "name": "Biospec Description",
+        "properties": {
+          "ai_context": "Detailed explanation of biological specimen collection protocols, storage procedures, and sample types obtained during the clinical study.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Biological Sample Details",
+            "Specimen Information"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::BASELINE_TYPE_UNITS_ANALYZED",
+        "name": "Baseline Type Units Analyzed",
+        "properties": {
+          "ai_context": "Measurement units and analytical framework applied to baseline population data, defining how participant characteristics are quantified and assessed.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Initial Units Evaluated",
+            "Baseline Units Assessed"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::START_DATE_TYPE",
+        "name": "Start Date Type",
+        "properties": {
+          "ai_context": "Classification specifying the nature of the start date, indicating whether it represents actual initiation, anticipated beginning, or estimated commencement timing.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Commencement Date Category",
+            "Initiation Date Classification"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::STUDY_FIRST_POSTED_DATE",
+        "name": "Study First Posted Date",
+        "properties": {
+          "ai_context": "Publication date when the study information was first made publicly available on clinical trial registries for transparency and recruitment.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Initial Posting Date",
+            "First Publication Date"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::STUDY_FIRST_SUBMITTED_DATE",
+        "name": "Study First Submitted Date",
+        "properties": {
+          "ai_context": "Initial date when the study protocol was first submitted to regulatory authorities or clinical trial registries for approval and documentation.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Initial Submission Date",
+            "First Entry Date"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::STUDY_FIRST_SUBMITTED_QC_DATE",
+        "name": "Study First Submitted Qc Date",
+        "properties": {
+          "ai_context": "Quality control review date when the initially submitted study underwent formal examination and validation before regulatory acceptance.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Initial Submission QC Date",
+            "First Submission Quality Check Date"
+          ]
+        }
+      },
+      {
+        "column_id": "MILESTONES::DESCRIPTION",
+        "name": "Milestone",
+        "properties": {
+          "ai_context": "Unique identifier for specific study progress markers and achievement points used for tracking completion rates and timeline adherence.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Key Event",
+            "Project Phase"
+          ]
+        }
+      },
+      {
+        "column_id": "MILESTONES::MILESTONE_DESCRIPTION",
+        "name": "Milestone Description",
+        "properties": {
+          "ai_context": "Detailed explanation of milestone criteria, participant requirements, or completion definitions for progress tracking and reporting purposes.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Key Event Description",
+            "Project Phase Details"
+          ]
+        }
+      },
+      {
+        "column_id": "MILESTONES::PERIOD",
+        "name": "Milestone Period",
+        "properties": {
+          "ai_context": "Study phase or time segment during which the milestone occurs, providing temporal context for progress tracking and analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Achievement Duration",
+            "Goal Timeline"
+          ]
+        }
+      },
+      {
+        "column_id": "MILESTONES::TITLE",
+        "name": "Milestone Title",
+        "properties": {
+          "ai_context": "Descriptive name for study progress checkpoints, visits, or treatment cycles providing clear identification of specific timeline events.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Key Event Title",
+            "Project Phase Name"
+          ]
+        }
+      },
+      {
+        "column_id": "MILESTONES::COUNT",
+        "name": "Milestone Count",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Numeric value representing participant numbers, completion rates, or achievement metrics associated with specific study milestones.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Achievement Number",
+            "Goal Count"
+          ]
+        }
+      },
+      {
+        "column_id": "MILESTONES::COUNT_UNITS",
+        "name": "Milestone Count Units",
+        "properties": {
+          "ai_context": "Measurement specification for milestone counts, indicating the unit of measurement or participant category being tracked at each checkpoint.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Achievement Count Units",
+            "Goal Count Units"
+          ]
+        }
+      },
+      {
+        "column_id": "COUNTRIES::NAME",
+        "name": "Country Name",
+        "properties": {
+          "ai_context": "Standardized country designation providing consistent geographic classification for global study distribution and regional performance analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Nation Name",
+            "Country Title"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::NAME",
+        "name": "Facility Name",
+        "properties": {
+          "ai_context": "Official name of the healthcare institution, hospital, or research center conducting the study at a specific geographic location.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Site Name",
+            "Location Name"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::STATE",
+        "name": "Facility State",
+        "properties": {
+          "ai_context": "State, province, or regional administrative division of the facility location for geographic analysis and regulatory jurisdiction identification.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Site State",
+            "Region State"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::STATUS",
+        "name": "Facility Status",
+        "properties": {
+          "ai_context": "Current operational condition of the individual research site indicating recruitment capability, completion status, or withdrawal from study participation.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Site Condition",
+            "Building Status"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::ZIP",
+        "name": "Facility Zip",
+        "properties": {
+          "ai_context": "Postal code of the research facility location enabling precise geographic mapping and demographic analysis of study site distribution.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Site Zip Code",
+            "Location Postal Code"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::CITY",
+        "name": "Facility City",
+        "properties": {
+          "ai_context": "Municipal location where the research facility is situated, providing geographic context for site distribution and participant accessibility analysis.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Site City",
+            "Location City"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::COUNTRY",
+        "name": "Facility Country",
+        "properties": {
+          "ai_context": "Nation where the research facility operates, critical for international study coordination and regulatory compliance across jurisdictions.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Site Country",
+            "Location Country"
+          ]
+        }
+      },
+      {
+        "column_id": "FACILITIES::ID",
+        "name": "Facility Id",
+        "properties": {
+          "ai_context": "Unique numeric identifier assigned to each participating research site or facility for database linkage and location tracking purposes.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Site Identifier",
+            "Location ID"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::START_DATE",
+        "name": "Start Date",
+        "properties": {
+          "ai_context": "Official commencement date when the study began enrolling participants or initiated study procedures for timeline tracking and planning.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Commencement Date",
+            "Beginning Date"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::STUDY_TYPE",
+        "name": "Study Type",
+        "properties": {
+          "ai_context": "Primary research methodology classification indicating whether the study is observational, interventional, or expanded access in design approach.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Research Type",
+            "Study Category"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::TARGET_DURATION",
+        "name": "Target Duration",
+        "properties": {
+          "ai_context": "Planned length of time for study execution expressed in days or years, indicating the expected timeframe from start to completion.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Planned Length",
+            "Expected Timeframe"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::COMPLETION_DATE",
+        "name": "Completion Date",
+        "properties": {
+          "ai_context": "Scheduled or actual date when the study concluded all participant activities and data collection for timeline management and reporting.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "End Date",
+            "Finalization Date"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::ENROLLMENT",
+        "name": "Enrollment",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Total number of participants recruited and registered in the study, representing the actual or planned sample size for statistical analysis.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Registration",
+            "Sign-up"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::ENROLLMENT_TYPE",
+        "name": "Enrollment Type",
+        "properties": {
+          "ai_context": "Classification indicating whether the enrollment number represents actual achieved participation or estimated target recruitment for planning purposes.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Registration Category",
+            "Sign-up Type"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::NUMBER_OF_GROUPS",
+        "name": "Number Of Groups",
+        "properties": {
+          "aggregation": "SUM",
+          "ai_context": "Count of distinct study arms, cohorts, or treatment groups within trial design for randomization and comparative analysis frameworks.",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Group Count",
+            "Cohort Number"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::OFFICIAL_TITLE",
+        "name": "Official Title",
+        "properties": {
+          "ai_context": "Complete formal title of the clinical study as registered with regulatory authorities, providing comprehensive scientific designation for research identification.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Formal Title",
+            "Authorized Title"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::OVERALL_STATUS",
+        "name": "Overall Status",
+        "properties": {
+          "ai_context": "Current operational state of the study indicating recruitment status, activity level, and availability for participant enrollment across all sites.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "General Condition",
+            "Total State",
+            "Trial Status",
+            "Recruitment Status",
+            "Study Status"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::PHASE",
+        "name": "Phase",
+        "properties": {
+          "ai_context": "Clinical development stage identifier specifying the phase of drug/treatment testing from early phase 1 through phase 4 or combination phases.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Stage",
+            "Level",
+            "Clinical Phase",
+            "Drug Development Phase",
+            "Trial Phase"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::SOURCE_CLASS",
+        "name": "Source Class",
+        "properties": {
+          "ai_context": "Categorical classification of the study sponsor type, distinguishing between federal, industry, academic, or other organizational funding sources.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Origin Category",
+            "Source Type",
+            "Sponsor Type",
+            "Funder Category",
+            "Funding Source Type"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::SOURCE",
+        "name": "Source",
+        "properties": {
+          "ai_context": "Organization or entity responsible for sponsoring, funding, or conducting the clinical study, identifying the primary research authority.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Origin",
+            "Provider"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::VERIFICATION_DATE",
+        "name": "Verification Date",
+        "properties": {
+          "ai_context": "Most recent date when study information was reviewed and confirmed accurate by the responsible party for data quality assurance.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Validation Date",
+            "Confirmation Date"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::WHY_STOPPED",
+        "name": "Why Stopped",
+        "properties": {
+          "ai_context": "Documented reason for study termination or suspension, capturing specific circumstances that led to premature study closure or interruption.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Reason for Termination",
+            "Cause of Halt"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::PATIENT_REGISTRY",
+        "name": "Patient Registry",
+        "properties": {
+          "ai_context": "Boolean indicator specifying whether the study contributes data to a patient registry for long-term follow-up and population health tracking.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Participant Database",
+            "Subject Registry"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::FDAAA801_VIOLATION",
+        "name": "Fdaaa801 Violation",
+        "properties": {
+          "ai_context": "Regulatory compliance flag indicating whether the study has violated FDA Amendment Act reporting requirements for transparency and legal adherence.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Regulatory Violation",
+            "Compliance Breach"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::BRIEF_TITLE",
+        "name": "Brief Title",
+        "properties": {
+          "ai_context": "Condensed, user-friendly study name for quick reference and public communication in clinical trial listings and recruitment materials.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Short Title",
+            "Concise Name"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::BASELINE_POPULATION",
+        "name": "Baseline Population",
+        "properties": {
+          "ai_context": "Definition of the participant subset included in baseline characteristic analysis, specifying inclusion criteria for demographic and clinical summaries.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Initial Group",
+            "Foundation Population"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::BIOSPEC_RETENTION",
+        "name": "Biospec Retention",
+        "properties": {
+          "ai_context": "Policy classification for biological sample storage, indicating whether specimens are retained with DNA, without DNA, or not retained at all.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Specimen Retention",
+            "Sample Preservation"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::UPDATED_AT",
+        "name": "Updated At",
+        "properties": {
+          "ai_context": "System timestamp recording the most recent modification to any study record information for data currency and audit trail purposes.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Modified Date",
+            "Revised Time"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::RESULTS_FIRST_POSTED_DATE",
+        "name": "Results First Posted Date",
+        "properties": {
+          "ai_context": "Date when study results were first publicly posted to clinical trial registries, critical for tracking result reporting timelines and FDAAA801 compliance.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Results Release Date",
+            "First Results Date"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::PRIMARY_COMPLETION_DATE",
+        "name": "Primary Completion Date",
+        "properties": {
+          "ai_context": "Date by which the primary outcome measure data collection is complete, distinct from overall study completion and used for phase-level timeline analysis.",
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Primary Endpoint Date",
+            "Key Completion Date"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::HAS_EXPANDED_ACCESS",
+        "name": "Has Expanded Access",
+        "properties": {
+          "ai_context": "Boolean flag indicating whether expanded access or compassionate use of the investigational treatment is available outside the clinical trial.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "Expanded Access Available",
+            "Compassionate Use"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::IS_FDA_REGULATED_DRUG",
+        "name": "Is FDA Regulated Drug",
+        "properties": {
+          "ai_context": "Boolean indicator specifying whether the study involves an FDA-regulated drug product, determining applicable regulatory reporting requirements.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "FDA Drug Study",
+            "Regulated Drug Trial"
+          ]
+        }
+      },
+      {
+        "column_id": "STUDIES::IS_FDA_REGULATED_DEVICE",
+        "name": "Is FDA Regulated Device",
+        "properties": {
+          "ai_context": "Boolean indicator specifying whether the study involves an FDA-regulated medical device, determining applicable regulatory reporting requirements.",
+          "column_type": "ATTRIBUTE",
+          "synonym_type": "AUTO_GENERATED",
+          "synonyms": [
+            "FDA Device Study",
+            "Regulated Device Trial"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Study Recruiting %",
+        "name": "Study Recruiting %",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "formula_id": "formula_Study Completed %",
+        "name": "Study Completed %",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "formula_id": "formula_Study Not Yet Recruiting %",
+        "name": "Study Not Yet Recruiting %",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "formula_id": "formula_Phase Label",
+        "name": "Phase Label",
+        "properties": {
+          "ai_context": "Normalized display label for clinical trial phase, converting raw database values (e.g. PHASE1) to human-readable format (e.g. Phase 1) for consistent chart rendering.",
+          "column_type": "ATTRIBUTE",
+          "synonyms": [
+            "Clinical Phase Label",
+            "Phase Display Name"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Study Type Label",
+        "name": "Study Type Label",
+        "properties": {
+          "ai_context": "Normalized display label for study type, converting raw uppercase values to title case for consistent chart rendering and reporting.",
+          "column_type": "ATTRIBUTE",
+          "synonyms": [
+            "Study Category Label",
+            "Research Type Display"
+          ]
+        }
+      },
+      {
+        "formula_id": "formula_Why Stopped Bucket",
+        "name": "Why Stopped Bucket",
+        "properties": {
+          "ai_context": "Standardized grouping of free-text termination reasons into meaningful categories for aggregate analysis and visualization.",
+          "column_type": "ATTRIBUTE",
+          "synonyms": [
+            "Termination Category",
+            "Stop Reason Group",
+            "Termination Bucket"
+          ]
+        }
+      }
+    ],
+    "filters": [
+      {
+        "column": [
+          "Start Date"
+        ],
+        "oper": "between",
+        "values": [
+          "12/31/2021",
+          "04/30/2026"
+        ]
+      }
+    ],
+    "formulas": [
+      {
+        "expr": "unique_count_if ( [STUDIES::OVERALL_STATUS] = 'recruiting' or [STUDIES::OVERALL_STATUS] = 'active_not_recruiting' , [STUDIES::NCT_ID] )",
+        "id": "formula_Active Studies",
+        "name": "Active Studies"
+      },
+      {
+        "expr": "average ( [STUDIES::ENROLLMENT] )",
+        "id": "formula_Average Enrollment",
+        "name": "Average Enrollment"
+      },
+      {
+        "expr": "safe_divide ( unique_count_if ( [STUDIES::OVERALL_STATUS] = 'completed' , [STUDIES::NCT_ID] ) , unique count ( [STUDIES::NCT_ID] ) )",
+        "id": "formula_Completion Rate",
+        "name": "Completion Rate"
+      },
+      {
+        "expr": "unique count ( [COUNTRIES::NAME] )",
+        "id": "formula_Country Count",
+        "name": "Country Count"
+      },
+      {
+        "expr": "unique count ( [FACILITIES::ID] )",
+        "id": "formula_Facility Count",
+        "name": "Facility Count"
+      },
+      {
+        "expr": "if ( [STUDIES::PHASE] = 'phase1' ) then 'phase 1' else if ( [STUDIES::PHASE] = 'phase2' ) then 'phase 2' else if ( [STUDIES::PHASE] = 'phase3' ) then 'phase 3' else if ( [STUDIES::PHASE] = 'phase4' ) then 'phase 4' else if ( [STUDIES::PHASE] = 'phase1/phase2' ) then 'p1 / p2' else if ( [STUDIES::PHASE] = 'phase2/phase3' ) then 'p2 / p3' else if ( [STUDIES::PHASE] = 'early_phase1' ) then 'early p1' else 'no phase'",
+        "id": "formula_Phase Label",
+        "name": "Phase Label"
+      },
+      {
+        "expr": "safe_divide ( unique_count_if ( [STUDIES::OVERALL_STATUS] = 'completed' , [STUDIES::NCT_ID] ) , unique count ( [STUDIES::NCT_ID] ) )",
+        "id": "formula_Study Completed %",
+        "name": "Study Completed %"
+      },
+      {
+        "expr": "unique count ( [STUDIES::NCT_ID] )",
+        "id": "formula_Study Count",
+        "name": "Study Count"
+      },
+      {
+        "expr": "diff_days ( [STUDIES::COMPLETION_DATE] , [STUDIES::START_DATE] )",
+        "id": "formula_Study Duration (Days)",
+        "name": "Study Duration (Days)"
+      },
+      {
+        "expr": "safe_divide ( unique_count_if ( [STUDIES::OVERALL_STATUS] = 'not_yet_recruiting' , [STUDIES::NCT_ID] ) , unique count ( [STUDIES::NCT_ID] ) )",
+        "id": "formula_Study Not Yet Recruiting %",
+        "name": "Study Not Yet Recruiting %"
+      },
+      {
+        "expr": "safe_divide ( unique_count_if ( [STUDIES::OVERALL_STATUS] = 'recruiting' , [STUDIES::NCT_ID] ) , unique count ( [STUDIES::NCT_ID] ) )",
+        "id": "formula_Study Recruiting %",
+        "name": "Study Recruiting %"
+      },
+      {
+        "expr": "if ( [STUDIES::STUDY_TYPE] = 'interventional' ) then 'interventional' else if ( [STUDIES::STUDY_TYPE] = 'observational' ) then 'observational' else if ( [STUDIES::STUDY_TYPE] = 'expanded_access' ) then 'expanded access' else 'other'",
+        "id": "formula_Study Type Label",
+        "name": "Study Type Label"
+      },
+      {
+        "expr": "unique_count_if ( [STUDIES::OVERALL_STATUS] = 'terminated' , [STUDIES::NCT_ID] )",
+        "id": "formula_Terminated Studies",
+        "name": "Terminated Studies"
+      },
+      {
+        "expr": "if ( contains ( [STUDIES::WHY_STOPPED] , 'sponsor' ) or contains ( [STUDIES::WHY_STOPPED] , 'sponsor' ) ) then 'sponsor decision' else if ( contains ( [STUDIES::WHY_STOPPED] , 'business' ) or contains ( [STUDIES::WHY_STOPPED] , 'business' ) or contains ( [STUDIES::WHY_STOPPED] , 'strateg' ) or contains ( [STUDIES::WHY_STOPPED] , 'strateg' ) or contains ( [STUDIES::WHY_STOPPED] , 'priorit' ) or contains ( [STUDIES::WHY_STOPPED] , 'priorit' ) or contains ( [STUDIES::WHY_STOPPED] , 'portfolio' ) or contains ( [STUDIES::WHY_STOPPED] , 'portfolio' ) ) then 'business / strategic' else if ( contains ( [STUDIES::WHY_STOPPED] , 'recruit' ) or contains ( [STUDIES::WHY_STOPPED] , 'recruit' ) or contains ( [STUDIES::WHY_STOPPED] , 'accrual' ) or contains ( [STUDIES::WHY_STOPPED] , 'accrual' ) or contains ( [STUDIES::WHY_STOPPED] , 'enrollment' ) or contains ( [STUDIES::WHY_STOPPED] , 'enrollment' ) or contains ( [STUDIES::WHY_STOPPED] , 'enrolment' ) or contains ( [STUDIES::WHY_STOPPED] , 'enrolment' ) or contains ( [STUDIES::WHY_STOPPED] , 'participation' ) or contains ( [STUDIES::WHY_STOPPED] , 'participation' ) ) then 'low recruitment' else if ( contains ( [STUDIES::WHY_STOPPED] , 'fund' ) or contains ( [STUDIES::WHY_STOPPED] , 'fund' ) ) then 'lack of funding' else if ( contains ( [STUDIES::WHY_STOPPED] , 'futility' ) or contains ( [STUDIES::WHY_STOPPED] , 'futility' ) or contains ( [STUDIES::WHY_STOPPED] , 'efficacy' ) or contains ( [STUDIES::WHY_STOPPED] , 'efficacy' ) or contains ( [STUDIES::WHY_STOPPED] , 'benefit' ) or contains ( [STUDIES::WHY_STOPPED] , 'benefit' ) ) then 'futility / no efficacy' else if ( contains ( [STUDIES::WHY_STOPPED] , 'safety' ) or contains ( [STUDIES::WHY_STOPPED] , 'safety' ) or contains ( [STUDIES::WHY_STOPPED] , 'adverse' ) or contains ( [STUDIES::WHY_STOPPED] , 'adverse' ) or contains ( [STUDIES::WHY_STOPPED] , 'toxicity' ) or contains ( [STUDIES::WHY_STOPPED] , 'toxicity' ) ) then 'safety concerns' else if ( contains ( [STUDIES::WHY_STOPPED] , 'dsmb' ) or contains ( [STUDIES::WHY_STOPPED] , 'data safety' ) or contains ( [STUDIES::WHY_STOPPED] , 'data safety' ) ) then 'dsmb recommendation' else if ( [STUDIES::WHY_STOPPED] = null ) then 'not specified' else 'other'",
+        "id": "formula_Why Stopped Bucket",
+        "name": "Why Stopped Bucket"
+      }
+    ],
+    "model_tables": [
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[STUDIES::NCT_ID] = [BRIEF_SUMMARIES::NCT_ID]",
+            "type": "INNER",
+            "with": "BRIEF_SUMMARIES"
+          },
+          {
+            "cardinality": "ONE_TO_MANY",
+            "on": "[STUDIES::NCT_ID] = [COUNTRIES::NCT_ID]",
+            "type": "INNER",
+            "with": "COUNTRIES"
+          },
+          {
+            "cardinality": "ONE_TO_MANY",
+            "on": "[STUDIES::NCT_ID] = [FACILITIES::NCT_ID]",
+            "type": "INNER",
+            "with": "FACILITIES"
+          },
+          {
+            "cardinality": "ONE_TO_MANY",
+            "on": "[STUDIES::NCT_ID] = [MILESTONES::NCT_ID]",
+            "type": "INNER",
+            "with": "MILESTONES"
+          }
+        ],
+        "name": "STUDIES",
+        "obj_id": "STUDIES-c2c55404"
+      },
+      {
+        "name": "FACILITIES",
+        "obj_id": "FACILITIES-f045bacf"
+      },
+      {
+        "name": "COUNTRIES",
+        "obj_id": "COUNTRIES-c96e9d9d"
+      },
+      {
+        "name": "BRIEF_SUMMARIES",
+        "obj_id": "BRIEF_SUMMARIES-c3de8168"
+      },
+      {
+        "name": "MILESTONES",
+        "obj_id": "MILESTONES-cc5ed6d9"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[INTERVENTIONS::NCT_ID] = [STUDIES::NCT_ID]",
+            "type": "INNER",
+            "with": "STUDIES"
+          }
+        ],
+        "name": "INTERVENTIONS",
+        "obj_id": "INTERVENTIONS-8ab81656"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[CALCULATED_VALUES::NCT_ID] = [STUDIES::NCT_ID]",
+            "type": "INNER",
+            "with": "STUDIES"
+          }
+        ],
+        "name": "CALCULATED_VALUES",
+        "obj_id": "CALCULATED_VALUES-93fc0ae7"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[OUTCOMES::NCT_ID] = [STUDIES::NCT_ID]",
+            "type": "INNER",
+            "with": "STUDIES"
+          }
+        ],
+        "name": "OUTCOMES",
+        "obj_id": "OUTCOMES-90c85100"
+      },
+      {
+        "joins": [
+          {
+            "cardinality": "MANY_TO_ONE",
+            "on": "[OUTCOME_MEASUREMENTS::NCT_ID] = [STUDIES::NCT_ID]",
+            "type": "INNER",
+            "with": "STUDIES"
+          }
+        ],
+        "name": "OUTCOME_MEASUREMENTS",
+        "obj_id": "OUTCOME_MEASUREMENTS-a5c20327"
+      }
+    ],
+    "name": "Study Overview",
+    "properties": {
+      "is_bypass_rls": false,
+      "join_progressive": true,
+      "spotter_config": {
+        "is_spotter_enabled": true
+      }
+    }
+  },
+  "obj_id": "StudyOverview-29b76499"
+}

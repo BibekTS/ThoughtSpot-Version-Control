@@ -1,0 +1,754 @@
+{
+  "obj_id": "STUDIES-c2c55404",
+  "table": {
+    "columns": [
+      {
+        "db_column_name": "NCT_ID",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "NCT_ID",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "NLM_DOWNLOAD_DATE_DESCRIPTION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "NLM_DOWNLOAD_DATE_DESCRIPTION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "STUDY_FIRST_SUBMITTED_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "STUDY_FIRST_SUBMITTED_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "RESULTS_FIRST_SUBMITTED_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "RESULTS_FIRST_SUBMITTED_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "DISPOSITION_FIRST_SUBMITTED_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "DISPOSITION_FIRST_SUBMITTED_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "LAST_UPDATE_SUBMITTED_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "LAST_UPDATE_SUBMITTED_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "STUDY_FIRST_SUBMITTED_QC_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "STUDY_FIRST_SUBMITTED_QC_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "STUDY_FIRST_POSTED_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "STUDY_FIRST_POSTED_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "STUDY_FIRST_POSTED_DATE_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "STUDY_FIRST_POSTED_DATE_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "RESULTS_FIRST_SUBMITTED_QC_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "RESULTS_FIRST_SUBMITTED_QC_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "RESULTS_FIRST_POSTED_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "RESULTS_FIRST_POSTED_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "RESULTS_FIRST_POSTED_DATE_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "RESULTS_FIRST_POSTED_DATE_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "DISPOSITION_FIRST_SUBMITTED_QC_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "DISPOSITION_FIRST_SUBMITTED_QC_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "DISPOSITION_FIRST_POSTED_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "DISPOSITION_FIRST_POSTED_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "DISPOSITION_FIRST_POSTED_DATE_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "DISPOSITION_FIRST_POSTED_DATE_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "LAST_UPDATE_SUBMITTED_QC_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "LAST_UPDATE_SUBMITTED_QC_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "LAST_UPDATE_POSTED_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "LAST_UPDATE_POSTED_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "LAST_UPDATE_POSTED_DATE_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "LAST_UPDATE_POSTED_DATE_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "START_MONTH_YEAR",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "START_MONTH_YEAR",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "START_DATE_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "START_DATE_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "START_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "START_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "VERIFICATION_MONTH_YEAR",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "VERIFICATION_MONTH_YEAR",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "VERIFICATION_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "VERIFICATION_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "COMPLETION_MONTH_YEAR",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "COMPLETION_MONTH_YEAR",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "COMPLETION_DATE_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "COMPLETION_DATE_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "COMPLETION_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "COMPLETION_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "PRIMARY_COMPLETION_MONTH_YEAR",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "PRIMARY_COMPLETION_MONTH_YEAR",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "PRIMARY_COMPLETION_DATE_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "PRIMARY_COMPLETION_DATE_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "PRIMARY_COMPLETION_DATE",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "PRIMARY_COMPLETION_DATE",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "TARGET_DURATION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "TARGET_DURATION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "STUDY_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "STUDY_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "ACRONYM",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "ACRONYM",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "BASELINE_POPULATION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "BASELINE_POPULATION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "BRIEF_TITLE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "BRIEF_TITLE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "OFFICIAL_TITLE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "OFFICIAL_TITLE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "OVERALL_STATUS",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "OVERALL_STATUS",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "LAST_KNOWN_STATUS",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "LAST_KNOWN_STATUS",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "PHASE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "PHASE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "ENROLLMENT",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "ENROLLMENT",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "ENROLLMENT_TYPE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "ENROLLMENT_TYPE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "SOURCE",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "SOURCE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "LIMITATIONS_AND_CAVEATS",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "LIMITATIONS_AND_CAVEATS",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "NUMBER_OF_ARMS",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "NUMBER_OF_ARMS",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "NUMBER_OF_GROUPS",
+        "db_column_properties": {
+          "data_type": "DOUBLE"
+        },
+        "name": "NUMBER_OF_GROUPS",
+        "properties": {
+          "aggregation": "SUM",
+          "column_type": "MEASURE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "WHY_STOPPED",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "WHY_STOPPED",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "HAS_EXPANDED_ACCESS",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "HAS_EXPANDED_ACCESS",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "EXPANDED_ACCESS_TYPE_INDIVIDUAL",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "EXPANDED_ACCESS_TYPE_INDIVIDUAL",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "EXPANDED_ACCESS_TYPE_INTERMEDIATE",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "EXPANDED_ACCESS_TYPE_INTERMEDIATE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "EXPANDED_ACCESS_TYPE_TREATMENT",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "EXPANDED_ACCESS_TYPE_TREATMENT",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "HAS_DMC",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "HAS_DMC",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "IS_FDA_REGULATED_DRUG",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "IS_FDA_REGULATED_DRUG",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "IS_FDA_REGULATED_DEVICE",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "IS_FDA_REGULATED_DEVICE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "IS_UNAPPROVED_DEVICE",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "IS_UNAPPROVED_DEVICE",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "IS_PPSD",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "IS_PPSD",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "IS_US_EXPORT",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "IS_US_EXPORT",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "BIOSPEC_RETENTION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "BIOSPEC_RETENTION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "BIOSPEC_DESCRIPTION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "BIOSPEC_DESCRIPTION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "IPD_TIME_FRAME",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "IPD_TIME_FRAME",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "IPD_ACCESS_CRITERIA",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "IPD_ACCESS_CRITERIA",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "IPD_URL",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "IPD_URL",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "PLAN_TO_SHARE_IPD",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "PLAN_TO_SHARE_IPD",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "PLAN_TO_SHARE_IPD_DESCRIPTION",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "PLAN_TO_SHARE_IPD_DESCRIPTION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "CREATED_AT",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "CREATED_AT",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "UPDATED_AT",
+        "db_column_properties": {
+          "data_type": "DATE_TIME"
+        },
+        "name": "UPDATED_AT",
+        "properties": {
+          "column_type": "ATTRIBUTE",
+          "index_type": "DONT_INDEX"
+        }
+      },
+      {
+        "db_column_name": "SOURCE_CLASS",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "SOURCE_CLASS",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "DELAYED_POSTING",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "DELAYED_POSTING",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "EXPANDED_ACCESS_NCTID",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "EXPANDED_ACCESS_NCTID",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "EXPANDED_ACCESS_STATUS_FOR_NCTID",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "EXPANDED_ACCESS_STATUS_FOR_NCTID",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "FDAAA801_VIOLATION",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "FDAAA801_VIOLATION",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "BASELINE_TYPE_UNITS_ANALYZED",
+        "db_column_properties": {
+          "data_type": "VARCHAR"
+        },
+        "name": "BASELINE_TYPE_UNITS_ANALYZED",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      },
+      {
+        "db_column_name": "PATIENT_REGISTRY",
+        "db_column_properties": {
+          "data_type": "BOOL"
+        },
+        "name": "PATIENT_REGISTRY",
+        "properties": {
+          "column_type": "ATTRIBUTE"
+        }
+      }
+    ],
+    "connection": {
+      "name": "TS Demo Snowflake",
+      "obj_id": "TSDemoSnowflake-572488eb"
+    },
+    "db": "TEST",
+    "db_table": "STUDIES",
+    "name": "STUDIES",
+    "properties": {
+      "spotter_config": {
+        "is_spotter_enabled": false
+      }
+    },
+    "schema": "AACT_CLINICAL_TRIALS"
+  }
+}

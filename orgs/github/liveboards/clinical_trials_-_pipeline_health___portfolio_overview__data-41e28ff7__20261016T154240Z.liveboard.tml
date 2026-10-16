@@ -1,0 +1,1499 @@
+{
+  "liveboard": {
+    "description": "ClinicalTrials.gov — clinical operations audience. 7-layer narrative: Portfolio Pulse → Composition → Science Mix → Phase Efficiency → Benchmarks → Risk Signals → Forward Look.",
+    "filters": [
+      {
+        "column": [
+          "Start Date"
+        ],
+        "date_filter": {
+          "date_period": "YEAR",
+          "include_current_period": true,
+          "number": 3,
+          "oper": "=",
+          "type": "LAST_N_PERIOD"
+        },
+        "display_name": "",
+        "is_mandatory": false
+      }
+    ],
+    "groups": [
+      {
+        "group_guid": "8c3c7277-969c-4929-ab45-ba4906ee96b6",
+        "id": "Group_1",
+        "name": "Group 1",
+        "visualizations": [
+          "Viz_1",
+          "Viz_2",
+          "Viz_3",
+          "Viz_4",
+          "Viz_5",
+          "Viz_15"
+        ]
+      }
+    ],
+    "layout": {
+      "group_layouts": [
+        {
+          "id": "Group_1",
+          "tiles": [
+            {
+              "height": 2,
+              "visualization_id": "Viz_1",
+              "width": 2,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "height": 2,
+              "visualization_id": "Viz_5",
+              "width": 2,
+              "x": 8,
+              "y": 0
+            },
+            {
+              "height": 2,
+              "visualization_id": "Viz_15",
+              "width": 2,
+              "x": 10,
+              "y": 0
+            },
+            {
+              "height": 2,
+              "visualization_id": "Viz_3",
+              "width": 2,
+              "x": 4,
+              "y": 0
+            },
+            {
+              "height": 2,
+              "visualization_id": "Viz_4",
+              "width": 2,
+              "x": 6,
+              "y": 0
+            },
+            {
+              "height": 2,
+              "visualization_id": "Viz_2",
+              "width": 2,
+              "x": 2,
+              "y": 0
+            }
+          ]
+        }
+      ],
+      "tiles": [
+        {
+          "height": 7,
+          "visualization_id": "Viz_6",
+          "width": 12,
+          "x": 0,
+          "y": 2
+        },
+        {
+          "height": 6,
+          "visualization_id": "Viz_7",
+          "width": 4,
+          "x": 0,
+          "y": 9
+        },
+        {
+          "height": 6,
+          "visualization_id": "Viz_8",
+          "width": 4,
+          "x": 4,
+          "y": 9
+        },
+        {
+          "height": 6,
+          "visualization_id": "Viz_9",
+          "width": 4,
+          "x": 8,
+          "y": 9
+        },
+        {
+          "height": 5,
+          "visualization_id": "Viz_10",
+          "width": 6,
+          "x": 0,
+          "y": 19
+        },
+        {
+          "height": 9,
+          "visualization_id": "Viz_11",
+          "width": 6,
+          "x": 6,
+          "y": 15
+        },
+        {
+          "height": 6,
+          "visualization_id": "Viz_12",
+          "width": 6,
+          "x": 0,
+          "y": 24
+        },
+        {
+          "height": 6,
+          "visualization_id": "Viz_13",
+          "width": 6,
+          "x": 6,
+          "y": 24
+        },
+        {
+          "height": 9,
+          "visualization_id": "Viz_14",
+          "width": 12,
+          "x": 0,
+          "y": 30
+        },
+        {
+          "height": 4,
+          "visualization_id": "Viz_16",
+          "width": 6,
+          "x": 0,
+          "y": 15
+        },
+        {
+          "height": 2,
+          "visualization_id": "Group_1",
+          "width": 12,
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    "name": "Clinical Trials - Pipeline Health & Portfolio Overview",
+    "ordered_chips": [
+      {
+        "name": "Start Date",
+        "type": "FILTER"
+      }
+    ],
+    "style": {
+      "style_properties": [
+        {
+          "name": "lb_border_type",
+          "value": "CURVED"
+        },
+        {
+          "name": "lb_brand_color",
+          "value": "LBC_D"
+        },
+        {
+          "name": "hide_group_title",
+          "value": "true"
+        },
+        {
+          "name": "hide_group_description",
+          "value": "true"
+        },
+        {
+          "name": "hide_group_divider",
+          "value": "true"
+        },
+        {
+          "name": "hide_group_tile_description",
+          "value": "true"
+        },
+        {
+          "name": "hide_tile_description",
+          "value": "true"
+        },
+        {
+          "name": "kpi_hero_font_size",
+          "value": "M"
+        }
+      ]
+    },
+    "visualizations": [
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Study Count"
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Study Count"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Study Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"ax-Study Count-y\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Study Count\"],\"isOpposite\": false}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Study Count"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiU3R1ZHkgQ291bnQiCiAqICJNZWFzdXJlIG5hbWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICogIk1lYXN1cmUgdmFsdWVzIiAvLyBJZiAnbWVhc3VyZVZhbHVlcycgaXMgZW5hYmxlZC4KICogLS0tIEVORCAtLS0gCiAqLwoKY29uc3QgeyBtdXplLCBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5IH0gPSB2aXo7CmNvbnN0IGRhdGEgPSBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5KCk7CgptdXplLmNhbnZhcygpCiAgLnJvd3MoWyJTdHVkeSBDb3VudCJdKQogIC5jb2x1bW5zKFtdKQogIC5kYXRhKGRhdGEpCiAgLm1vdW50KCIjY2hhcnQiKTsKCmNvbnN0IHNjaGVtYSA9IGRhdGEuZ2V0RGF0YSgpLnNjaGVtYTsKY29uc3Qgcm93cyAgID0gZGF0YS5nZXREYXRhKCkuZGF0YTsKY29uc3QgY29sSWR4ID0gc2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gJ1N0dWR5IENvdW50Jyk7CmNvbnN0IHJhdyAgICA9IHJvd3MubGVuZ3RoICYmIGNvbElkeCA+PSAwID8gcm93c1swXVtjb2xJZHhdIDogMDsKCmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdrcGktdmFsJykudGV4dENvbnRlbnQgPSBOdW1iZXIocmF3KS50b0xvY2FsZVN0cmluZygpOw\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"YmJvZHksIGh0bWwgewogIG1hcmdpbjogMDsKICBwYWRkaW5nOiAwOwogIGhlaWdodDogMTAwJTsKICBvdmVyZmxvdzogaGlkZGVuOwp9CiNjaGFydCB7CiAgcG9zaXRpb246IGFic29sdXRlOwogIHdpZHRoOiAxcHg7CiAgaGVpZ2h0OiAxcHg7CiAgb3ZlcmZsb3c6IGhpZGRlbjsKICBvcGFjaXR5OiAwOwogIHBvaW50ZXItZXZlbnRzOiBub25lOwp9CiNrcGktb3ZlcmxheSB7CiAgcG9zaXRpb246IGFic29sdXRlOwogIHRvcDogMDsKICBsZWZ0OiAwOwogIHJpZ2h0OiAwOwogIGJvdHRvbTogMDsKICBkaXNwbGF5OiBmbGV4OwogIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAganVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0OwogIGFsaWduLWl0ZW1zOiBmbGV4LXN0YXJ0OwogIHBhZGRpbmc6IDhweCAyMHB4OwogIGJveC1zaXppbmc6IGJvcmRlci1ib3g7Cn0KLmtwaS12YWx1ZSB7CiAgZm9udC1zaXplOiA0MHB4OwogIGZvbnQtd2VpZ2h0OiA2MDA7CiAgbGV0dGVyLXNwYWNpbmc6IC0xLjVweDsKICBjb2xvcjogIzBGMTcyQTsKICBsaW5lLWhlaWdodDogMTsKICBtYXJnaW4tYm90dG9tOiA0cHg7Cn0KLmtwaS1zdWIgewogIGZvbnQtc2l6ZTogMTFweDsKICBjb2xvcjogIzY0NzQ4QjsKfQoua3BpLXBpbGwgewogIGRpc3BsYXk6IGlubGluZS1ibG9jazsKICBtYXJnaW4tdG9wOiA2cHg7CiAgZm9udC1zaXplOiAxMHB4OwogIGZvbnQtd2VpZ2h0OiA1MDA7CiAgcGFkZGluZzogMnB4IDhweDsKICBib3JkZXItcmFkaXVzOiAyMHB4Owp9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pgo8ZGl2IGlkPSJrcGktb3ZlcmxheSI+CiAgPGRpdiBjbGFzcz0ia3BpLXZhbHVlIiBpZD0ia3BpLXZhbCI+4oCUPC9kaXY+CiAgPGRpdiBjbGFzcz0ia3BpLXN1YiI+YWxsIHN0YXR1c2VzIMK3IDIwMjPigJMyMDI3PC9kaXY+CjwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[58.659793814432994,44.329896907216494]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "Total Studies — Muze KPI tile.",
+          "display_mode": "CHART_MODE",
+          "dynamic_name": "Total Studies",
+          "name": "Total Studies",
+          "search_query": "[Study Count]",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Study Count\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Study Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_1",
+        "viz_guid": "7c35ba48-ebce-47a2-b061-f315462ebefc"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Active Studies"
+            },
+            {
+              "name": "Study Count"
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Active Studies"
+              },
+              {
+                "column_id": "Study Count"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Active Studies\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"ax-Active Studies-y\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Active Studies\"],\"isOpposite\": false}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Active Studies"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiQWN0aXZlIFN0dWRpZXMiCiAqICJTdHVkeSBDb3VudCIKICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAtLS0gRU5EIC0tLSAKICovCgpjb25zdCB7IG11emUsIGdldERhdGFGcm9tU2VhcmNoUXVlcnkgfSA9IHZpejsKY29uc3QgZGF0YSA9IGdldERhdGFGcm9tU2VhcmNoUXVlcnkoKTsKCm11emUuY2FudmFzKCkKICAucm93cyhbIkFjdGl2ZSBTdHVkaWVzIl0pCiAgLmNvbHVtbnMoW10pCiAgLmRhdGEoZGF0YSkKICAubW91bnQoIiNjaGFydCIpOwoKY29uc3Qgc2NoZW1hICA9IGRhdGEuZ2V0RGF0YSgpLnNjaGVtYTsKY29uc3Qgcm93cyAgICA9IGRhdGEuZ2V0RGF0YSgpLmRhdGE7CmNvbnN0IGFjdGl2ZUlkeCA9IHNjaGVtYS5maW5kSW5kZXgocyA9PiBzLm5hbWUgPT09ICdBY3RpdmUgU3R1ZGllcycpOwpjb25zdCB0b3RhbElkeCAgPSBzY2hlbWEuZmluZEluZGV4KHMgPT4gcy5uYW1lID09PSAnU3R1ZHkgQ291bnQnKTsKCmNvbnN0IGFjdGl2ZSA9IHJvd3NbMF1bYWN0aXZlSWR4XTsKY29uc3QgdG90YWwgID0gcm93c1swXVt0b3RhbElkeF07CmNvbnN0IHBjdCAgICA9IHRvdGFsID4gMCA/ICgoYWN0aXZlIC8gdG90YWwpICogMTAwKS50b0ZpeGVkKDEpICsgJyUgb2YgcG9ydGZvbGlvJyA6ICfigJQnOwoKZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2twaS12YWwnKS50ZXh0Q29udGVudCA9IE51bWJlcihhY3RpdmUpLnRvTG9jYWxlU3RyaW5nKCk7CmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdrcGktcGlsbCcpLnRleHRDb250ZW50ID0gcGN0Ow\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"Ym9keSwgaHRtbCB7CiAgbWFyZ2luOiAwOwogIHBhZGRpbmc6IDA7CiAgaGVpZ2h0OiAxMDAlOwogIG92ZXJmbG93OiBoaWRkZW47Cn0KI2NoYXJ0IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgd2lkdGg6IDFweDsKICBoZWlnaHQ6IDFweDsKICBvdmVyZmxvdzogaGlkZGVuOwogIG9wYWNpdHk6IDA7CiAgcG9pbnRlci1ldmVudHM6IG5vbmU7Cn0KI2twaS1vdmVybGF5IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgdG9wOiAwOwogIGxlZnQ6IDA7CiAgcmlnaHQ6IDA7CiAgYm90dG9tOiAwOwogIGRpc3BsYXk6IGZsZXg7CiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7CiAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7CiAgcGFkZGluZzogOHB4IDIwcHg7CiAgYm94LXNpemluZzogYm9yZGVyLWJveDsKfQoua3BpLXZhbHVlIHsKICBmb250LXNpemU6IDQwcHg7CiAgZm9udC13ZWlnaHQ6IDYwMDsKICBsZXR0ZXItc3BhY2luZzogLTEuNXB4OwogIGNvbG9yOiAjMTRCOEE2OwogIGxpbmUtaGVpZ2h0OiAxOwogIG1hcmdpbi1ib3R0b206IDRweDsKfQoua3BpLXN1YiB7CiAgZm9udC1zaXplOiAxMXB4OwogIGNvbG9yOiAjNjQ3NDhCOwp9Ci5rcGktcGlsbCB7CiAgZGlzcGxheTogaW5saW5lLWJsb2NrOwogIG1hcmdpbi10b3A6IDZweDsKICBmb250LXNpemU6IDEwcHg7CiAgZm9udC13ZWlnaHQ6IDUwMDsKICBwYWRkaW5nOiAycHggOHB4OwogIGJvcmRlci1yYWRpdXM6IDIwcHg7CiAgYmFja2dyb3VuZDogcmdiYSgyMCwgMTg0LCAxNjYsIDAuMTUpOwogIGNvbG9yOiAjMTRCOEE2Owp9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pgo8ZGl2IGlkPSJrcGktb3ZlcmxheSI+CiAgPGRpdiBjbGFzcz0ia3BpLXZhbHVlIiBpZD0ia3BpLXZhbCI+4oCUPC9kaXY+CiAgPGRpdiBjbGFzcz0ia3BpLXN1YiI+Y3VycmVudGx5IGVucm9sbGluZzwvZGl2PgogIDxkaXYgY2xhc3M9ImtwaS1waWxsIiBpZD0ia3BpLXBpbGwiPuKAlDwvZGl2Pgo8L2Rpdj4\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "Active (Recruiting) — Muze KPI tile.",
+          "display_mode": "CHART_MODE",
+          "name": "Active (Recruiting)",
+          "search_query": "[Active Studies] [Study Count]",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Active Studies\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Active Studies",
+              "Study Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Active Studies",
+                "headline_aggregation": "SUM"
+              },
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_2",
+        "viz_guid": "01573dc8-886f-4fe3-884e-8a0142a709c1"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Terminated Studies"
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Terminated Studies"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Terminated Studies\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"ax-Terminated Studies-y\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Terminated Studies\"],\"isOpposite\": false}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Terminated Studies"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiVGVybWluYXRlZCBTdHVkaWVzIgogKiAiTWVhc3VyZSBuYW1lcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAqICJNZWFzdXJlIHZhbHVlcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAqIC0tLSBFTkQgLS0tIAogKi8KCmNvbnN0IHsgbXV6ZSwgZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSB9ID0gdml6Owpjb25zdCBkYXRhID0gZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSgpOwoKbXV6ZS5jYW52YXMoKQogIC5yb3dzKFsiVGVybWluYXRlZCBTdHVkaWVzIl0pCiAgLmNvbHVtbnMoW10pCiAgLmRhdGEoZGF0YSkKICAubW91bnQoIiNjaGFydCIpOwoKY29uc3Qgc2NoZW1hID0gZGF0YS5nZXREYXRhKCkuc2NoZW1hOwpjb25zdCByb3dzICAgPSBkYXRhLmdldERhdGEoKS5kYXRhOwpjb25zdCBjb2xJZHggPSBzY2hlbWEuZmluZEluZGV4KHMgPT4gcy5uYW1lID09PSAnVGVybWluYXRlZCBTdHVkaWVzJyk7CmNvbnN0IHJhdyAgICA9IHJvd3NbMF1bY29sSWR4XTsKCmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdrcGktdmFsJykudGV4dENvbnRlbnQgPSBOdW1iZXIocmF3KS50b0xvY2FsZVN0cmluZygpOw\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"Ym9keSwgaHRtbCB7CiAgbWFyZ2luOiAwOwogIHBhZGRpbmc6IDA7CiAgaGVpZ2h0OiAxMDAlOwogIG92ZXJmbG93OiBoaWRkZW47Cn0KI2NoYXJ0IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgd2lkdGg6IDFweDsKICBoZWlnaHQ6IDFweDsKICBvdmVyZmxvdzogaGlkZGVuOwogIG9wYWNpdHk6IDA7CiAgcG9pbnRlci1ldmVudHM6IG5vbmU7Cn0KI2twaS1vdmVybGF5IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgdG9wOiAwOwogIGxlZnQ6IDA7CiAgcmlnaHQ6IDA7CiAgYm90dG9tOiAwOwogIGRpc3BsYXk6IGZsZXg7CiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7CiAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7CiAgcGFkZGluZzogOHB4IDIwcHg7CiAgYm94LXNpemluZzogYm9yZGVyLWJveDsKfQoua3BpLXZhbHVlIHsKICBmb250LXNpemU6IDQwcHg7CiAgZm9udC13ZWlnaHQ6IDYwMDsKICBsZXR0ZXItc3BhY2luZzogLTEuNXB4OwogIGNvbG9yOiAjRjQzRjVFOwogIGxpbmUtaGVpZ2h0OiAxOwogIG1hcmdpbi1ib3R0b206IDRweDsKfQoua3BpLXN1YiB7CiAgZm9udC1zaXplOiAxMXB4OwogIGNvbG9yOiAjNjQ3NDhCOwp9Ci5rcGktcGlsbCB7CiAgZGlzcGxheTogaW5saW5lLWJsb2NrOwogIG1hcmdpbi10b3A6IDZweDsKICBmb250LXNpemU6IDEwcHg7CiAgZm9udC13ZWlnaHQ6IDUwMDsKICBwYWRkaW5nOiAycHggOHB4OwogIGJvcmRlci1yYWRpdXM6IDIwcHg7CiAgYmFja2dyb3VuZDogcmdiYSgyNDQsIDYzLCA5NCwgMC4xNSk7CiAgY29sb3I6ICNGNDNGNUU7Cn0\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pgo8ZGl2IGlkPSJrcGktb3ZlcmxheSI+CiAgPGRpdiBjbGFzcz0ia3BpLXZhbHVlIiBpZD0ia3BpLXZhbCI+4oCUPC9kaXY+CiAgPGRpdiBjbGFzcz0ia3BpLXN1YiI+ZWFybHkgY2xvc3VyZTwvZGl2PgogIDxkaXYgY2xhc3M9ImtwaS1waWxsIj4xLjElIHRlcm1pbmF0aW9uIHJhdGU8L2Rpdj4KPC9kaXY+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "Terminated Studies — Muze KPI tile.",
+          "display_mode": "CHART_MODE",
+          "dynamic_description": "Terminated Studies — Muze KPI tile.",
+          "name": "Terminated Studies",
+          "search_query": "[Terminated Studies]",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Terminated Studies\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Terminated Studies"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Terminated Studies",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_3",
+        "viz_guid": "af7a9361-ae33-4300-81ac-5afc8131db76"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Completion Rate"
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Completion Rate"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Completion Rate\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"ax-Completion Rate-y\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Completion Rate\"],\"isOpposite\": false}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Completion Rate"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiQ29tcGxldGlvbiBSYXRlIgogKiAiTWVhc3VyZSBuYW1lcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAqICJNZWFzdXJlIHZhbHVlcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAqIC0tLSBFTkQgLS0tIAogKi8KCmNvbnN0IHsgbXV6ZSwgZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSB9ID0gdml6Owpjb25zdCBkYXRhID0gZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSgpOwoKbXV6ZS5jYW52YXMoKQogIC5yb3dzKFsiQ29tcGxldGlvbiBSYXRlIl0pCiAgLmNvbHVtbnMoW10pCiAgLmRhdGEoZGF0YSkKICAubW91bnQoIiNjaGFydCIpOwoKY29uc3Qgc2NoZW1hID0gZGF0YS5nZXREYXRhKCkuc2NoZW1hOwpjb25zdCByb3dzICAgPSBkYXRhLmdldERhdGEoKS5kYXRhOwpjb25zdCBjb2xJZHggPSBzY2hlbWEuZmluZEluZGV4KHMgPT4gcy5uYW1lID09PSAnQ29tcGxldGlvbiBSYXRlJyk7CmNvbnN0IHJhdyAgICA9IHJvd3NbMF1bY29sSWR4XTsKY29uc3QgZGlzcGxheSA9IHJhdyA8IDEgPyAocmF3ICogMTAwKS50b0ZpeGVkKDEpICsgJyUnIDogcmF3LnRvRml4ZWQoMSkgKyAnJSc7Cgpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgna3BpLXZhbCcpLnRleHRDb250ZW50ID0gZGlzcGxheTs\\u003d\\\",\\\"cssCodeBase64\\\":\\\"Ym9keSwgaHRtbCB7CiAgbWFyZ2luOiAwOwogIHBhZGRpbmc6IDA7CiAgaGVpZ2h0OiAxMDAlOwogIG92ZXJmbG93OiBoaWRkZW47Cn0KI2NoYXJ0IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgd2lkdGg6IDFweDsKICBoZWlnaHQ6IDFweDsKICBvdmVyZmxvdzogaGlkZGVuOwogIG9wYWNpdHk6IDA7CiAgcG9pbnRlci1ldmVudHM6IG5vbmU7Cn0KI2twaS1vdmVybGF5IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgdG9wOiAwOwogIGxlZnQ6IDA7CiAgcmlnaHQ6IDA7CiAgYm90dG9tOiAwOwogIGRpc3BsYXk6IGZsZXg7CiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7CiAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7CiAgcGFkZGluZzogOHB4IDIwcHg7CiAgYm94LXNpemluZzogYm9yZGVyLWJveDsKfQoua3BpLXZhbHVlIHsKICBmb250LXNpemU6IDQwcHg7CiAgZm9udC13ZWlnaHQ6IDYwMDsKICBsZXR0ZXItc3BhY2luZzogLTEuNXB4OwogIGNvbG9yOiAjRjU5RTBCOwogIGxpbmUtaGVpZ2h0OiAxOwogIG1hcmdpbi1ib3R0b206IDRweDsKfQoua3BpLXN1YiB7CiAgZm9udC1zaXplOiAxMXB4OwogIGNvbG9yOiAjNjQ3NDhCOwp9Ci5rcGktcGlsbCB7CiAgZGlzcGxheTogaW5saW5lLWJsb2NrOwogIG1hcmdpbi10b3A6IDZweDsKICBmb250LXNpemU6IDEwcHg7CiAgZm9udC13ZWlnaHQ6IDUwMDsKICBwYWRkaW5nOiAycHggOHB4OwogIGJvcmRlci1yYWRpdXM6IDIwcHg7CiAgYmFja2dyb3VuZDogcmdiYSgyNDUsIDE1OCwgMTEsIDAuMTUpOwogIGNvbG9yOiAjRjU5RTBCOwp9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pgo8ZGl2IGlkPSJrcGktb3ZlcmxheSI+CiAgPGRpdiBjbGFzcz0ia3BpLXZhbHVlIiBpZD0ia3BpLXZhbCI+4oCUPC9kaXY+CiAgPGRpdiBjbGFzcz0ia3BpLXN1YiI+MjgsOTc5IGNvbXBsZXRlZDwvZGl2PgogIDxkaXYgY2xhc3M9ImtwaS1waWxsIj5vZiB0b3RhbCBwb3J0Zm9saW88L2Rpdj4KPC9kaXY+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "Completion Rate — Muze KPI tile.",
+          "display_mode": "CHART_MODE",
+          "name": "Completion Rate",
+          "search_query": "[Completion Rate]",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Completion Rate\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Completion Rate"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Completion Rate",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_4",
+        "viz_guid": "0d111dc2-4eaa-482f-8de9-314846f3e18c"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Country Count"
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Country Count"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Country Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"ax-Country Count-y\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Country Count\"],\"isOpposite\": false}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Country Count"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiQ291bnRyeSBDb3VudCIKICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAtLS0gRU5EIC0tLSAKICovCgpjb25zdCB7IG11emUsIGdldERhdGFGcm9tU2VhcmNoUXVlcnkgfSA9IHZpejsKY29uc3QgZGF0YSA9IGdldERhdGFGcm9tU2VhcmNoUXVlcnkoKTsKCm11emUuY2FudmFzKCkKICAucm93cyhbIkNvdW50cnkgQ291bnQiXSkKICAuY29sdW1ucyhbXSkKICAuZGF0YShkYXRhKQogIC5tb3VudCgiI2NoYXJ0Iik7Cgpjb25zdCBzY2hlbWEgPSBkYXRhLmdldERhdGEoKS5zY2hlbWE7CmNvbnN0IHJvd3MgICA9IGRhdGEuZ2V0RGF0YSgpLmRhdGE7CmNvbnN0IGNvbElkeCA9IHNjaGVtYS5maW5kSW5kZXgocyA9PiBzLm5hbWUgPT09ICdDb3VudHJ5IENvdW50Jyk7CmNvbnN0IHJhdyAgICA9IHJvd3NbMF1bY29sSWR4XTsKCmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdrcGktdmFsJykudGV4dENvbnRlbnQgPSBOdW1iZXIocmF3KS50b0xvY2FsZVN0cmluZygpOwo\\u003d\\\",\\\"cssCodeBase64\\\":\\\"Ym9keSwgaHRtbCB7CiAgbWFyZ2luOiAwOwogIHBhZGRpbmc6IDA7CiAgaGVpZ2h0OiAxMDAlOwogIG92ZXJmbG93OiBoaWRkZW47Cn0KI2NoYXJ0IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgd2lkdGg6IDFweDsKICBoZWlnaHQ6IDFweDsKICBvdmVyZmxvdzogaGlkZGVuOwogIG9wYWNpdHk6IDA7CiAgcG9pbnRlci1ldmVudHM6IG5vbmU7Cn0KI2twaS1vdmVybGF5IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgdG9wOiAwOwogIGxlZnQ6IDA7CiAgcmlnaHQ6IDA7CiAgYm90dG9tOiAwOwogIGRpc3BsYXk6IGZsZXg7CiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7CiAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7CiAgcGFkZGluZzogOHB4IDIwcHg7CiAgYm94LXNpemluZzogYm9yZGVyLWJveDsKfQoua3BpLXZhbHVlIHsKICBmb250LXNpemU6IDQwcHg7CiAgZm9udC13ZWlnaHQ6IDYwMDsKICBsZXR0ZXItc3BhY2luZzogLTEuNXB4OwogIGNvbG9yOiAjMEVBNUU5OwogIGxpbmUtaGVpZ2h0OiAxOwogIG1hcmdpbi1ib3R0b206IDRweDsKfQoua3BpLXN1YiB7CiAgZm9udC1zaXplOiAxMXB4OwogIGNvbG9yOiAjNjQ3NDhCOwp9Ci5rcGktcGlsbCB7CiAgZGlzcGxheTogaW5saW5lLWJsb2NrOwogIG1hcmdpbi10b3A6IDZweDsKICBmb250LXNpemU6IDEwcHg7CiAgZm9udC13ZWlnaHQ6IDUwMDsKICBwYWRkaW5nOiAycHggOHB4OwogIGJvcmRlci1yYWRpdXM6IDIwcHg7CiAgYmFja2dyb3VuZDogcmdiYSgxNCwgMTY1LCAyMzMsIDAuMTUpOwogIGNvbG9yOiAjMEVBNUU5Owp9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pgo8ZGl2IGlkPSJrcGktb3ZlcmxheSI+CiAgPGRpdiBjbGFzcz0ia3BpLXZhbHVlIiBpZD0ia3BpLXZhbCI+4oCUPC9kaXY+CiAgPGRpdiBjbGFzcz0ia3BpLXN1YiI+YWN0aXZlIHN0dWR5IHNpdGVzPC9kaXY+CiAgPGRpdiBjbGFzcz0ia3BpLXBpbGwiPlVTICsgQ2hpbmEgPSAzOCU8L2Rpdj4KPC9kaXY+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO",
+            "viz_style": "{}"
+          },
+          "description": "Countries Active — Muze KPI tile.",
+          "display_mode": "CHART_MODE",
+          "dynamic_name": "Countries",
+          "name": "Countries",
+          "search_query": "[Country Count]",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Country Count\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Country Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Country Count",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_5",
+        "viz_guid": "94c33479-86e0-4f84-918e-135de3f31445"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Month(Start Date)"
+            },
+            {
+              "format": {
+                "category": "PERCENTAGE",
+                "isCategoryEditable": true,
+                "percentageFormatConfig": {
+                  "decimals": 1.0,
+                  "removeTrailingZeroes": false
+                }
+              },
+              "name": "Study Completed %"
+            },
+            {
+              "format": {
+                "category": "PERCENTAGE",
+                "isCategoryEditable": true,
+                "percentageFormatConfig": {
+                  "decimals": 1.0,
+                  "removeTrailingZeroes": false
+                }
+              },
+              "name": "Study Not Yet Recruiting %"
+            },
+            {
+              "format": {
+                "category": "PERCENTAGE",
+                "isCategoryEditable": true,
+                "percentageFormatConfig": {
+                  "decimals": 1.0,
+                  "removeTrailingZeroes": false
+                }
+              },
+              "name": "Study Recruiting %"
+            }
+          ],
+          "chart": {
+            "axis_configs": [
+              {
+                "x": [
+                  "Month(Start Date)"
+                ],
+                "y": [
+                  "Study Completed %",
+                  "Study Recruiting %",
+                  "Study Not Yet Recruiting %"
+                ]
+              }
+            ],
+            "chart_columns": [
+              {
+                "column_id": "Month(Start Date)"
+              },
+              {
+                "column_id": "Study Completed %"
+              },
+              {
+                "column_id": "Study Not Yet Recruiting %"
+              },
+              {
+                "column_id": "Study Recruiting %"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {\"yGridlineEnabled\": true},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"stackedAsPercentFormat\": {\"category\": \"PERCENTAGE\",\"percentageFormatConfig\": {\"decimals\": 2.0,\"removeTrailingZeroes\": false},\"isCategoryEditable\": false},\"customProps\": \"{\\\"tileType\\\":null,\\\"advancedProperties\\\":{\\\"tooltip\\\":{\\\"enabled\\\":true,\\\"borderWidth\\\":\\\"1\\\",\\\"opacity\\\":\\\"\\\",\\\"label\\\":{},\\\"value\\\":{}},\\\"regression\\\":{\\\"lineWidth\\\":\\\"\\\"},\\\"gridlines\\\":{\\\"xAxis\\\":{},\\\"yAxis\\\":{\\\"gridLineColor\\\":\\\"#9098a3\\\",\\\"gridLineWidth\\\":1,\\\"gridLineDashStyle\\\":\\\"SOLID_LINE\\\"}},\\\"answerLevelSettings\\\":{\\\"chart\\\":{\\\"backgroundStyle\\\":null},\\\"plotArea\\\":{\\\"backgroundStyle\\\":null},\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"\\\",\\\"connectingLines\\\":false},\\\"stackLabelStyles\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{}}},\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnalyseChangeCta\\\":true,\\\"showAnomalies\\\":null,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"dataFieldArea\": \"column\",\"pivotSummariesState\": {}},\"showStackedLabels\": true,\"allLabels\": true,\"legendPosition\": \"TOP_LEGEND\",\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Study Recruiting %\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"DATA_LABEL_PROPS\\\",\\\"id\\\":\\\"Study Completed %\\\",\\\"key\\\":\\\"labelTextStyle\\\"},\\\"boldFontWeight\\\":false,\\\"color\\\":\\\"\\\",\\\"fontSize\\\":\\\"\\\",\\\"italicFontStyle\\\":false,\\\"underlineTextDecoration\\\":false}}}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Study Completed %\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":{\\\"type\\\":\\\"DATA_LABEL_PROPS\\\",\\\"id\\\":\\\"Study Recruiting %\\\",\\\"key\\\":\\\"labelTextStyle\\\"},\\\"boldFontWeight\\\":false,\\\"color\\\":\\\"\\\",\\\"fontSize\\\":\\\"\\\",\\\"italicFontStyle\\\":false,\\\"underlineTextDecoration\\\":false}}}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Study Not Yet Recruiting %\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":{\\\"type\\\":\\\"DATA_LABEL_PROPS\\\",\\\"id\\\":\\\"Study Recruiting %\\\",\\\"key\\\":\\\"labelTextStyle\\\"},\\\"boldFontWeight\\\":false,\\\"color\\\":\\\"\\\",\\\"fontSize\\\":\\\"\\\",\\\"italicFontStyle\\\":false,\\\"underlineTextDecoration\\\":false}}}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Month(Start Date)\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null},\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"8b5b0681-570a-4d1f-a2d8-1eccdd7b2a1d\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Study Recruiting %\",\"Study Completed %\",\"Study Not Yet Recruiting %\"],\"name\": \"|\",\"yAxisRange\": {\"max\": 1.0},\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"60067c86-398e-48d0-81e8-106ca35885c0\\\",\\\"key\\\":\\\"nameTextStyle\\\"},\\\"boldFontWeight\\\":false,\\\"color\\\":\\\"\\\",\\\"fontSize\\\":\\\"\\\",\\\"isAxisNameVisible\\\":true,\\\"italicFontStyle\\\":false,\\\"underlineTextDecoration\\\":false}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"60067c86-398e-48d0-81e8-106ca35885c0\\\",\\\"key\\\":\\\"labelTextStyle\\\"},\\\"boldFontWeight\\\":false,\\\"color\\\":\\\"\\\",\\\"enabled\\\":true,\\\"fontSize\\\":\\\"\\\",\\\"italicFontStyle\\\":false,\\\"maxCharacters\\\":\\\"\\\",\\\"underlineTextDecoration\\\":false,\\\"wrap\\\":false},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\",\"dynamicTitle\": \"|\"}},{\"id\": \"60067c86-398e-48d0-81e8-106ca35885c0\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Month(Start Date)\"],\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}}],\"seriesColors\": [{\"serieName\": \"Study Recruiting %\",\"color\": \"#0EA5E9\"},{\"serieName\": \"Study Completed %\",\"color\": \"#8B5CF6\"},{\"serieName\": \"Study Not Yet Recruiting %\",\"color\": \"#14B8A6\"}],\"systemSeriesColors\": [{\"serieName\": \"Study Recruiting %\",\"color\": \"#82C4E6\"},{\"serieName\": \"Study Completed %\",\"color\": \"#9978E5\"},{\"serieName\": \"Study Not Yet Recruiting %\",\"color\": \"#E1B171\"}]}",
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiTW9udGgoU3RhcnQgRGF0ZSkiCiAqICJTdHVkeSBSZWNydWl0aW5nICUiCiAqICJTdHVkeSBDb21wbGV0ZWQgJSIKICogIlN0dWR5IE5vdCBZZXQgUmVjcnVpdGluZyAlIgogKiAiTWVhc3VyZSBuYW1lcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAqICJNZWFzdXJlIHZhbHVlcyIgLy8gSWYgJ21lYXN1cmVWYWx1ZXMnIGlzIGVuYWJsZWQuCiAqIC0tLSBFTkQgLS0tIAogKi8KCmNvbnN0IHsgbXV6ZSwgZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSB9ID0gdml6Owpjb25zdCBkYXRhID0gZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSgpOwoKbXV6ZS5jYW52YXMoKQogIC5yb3dzKFsnU3R1ZHkgUmVjcnVpdGluZyAlJ10pCiAgLmNvbHVtbnMoWydNb250aChTdGFydCBEYXRlKSddKQogIC5kYXRhKGRhdGEpCiAgLm1vdW50KCcjY2hhcnQnKTsKCmNvbnN0IHNjaGVtYSAgID0gZGF0YS5nZXREYXRhKCkuc2NoZW1hOwpjb25zdCByb3dzICAgICA9IGRhdGEuZ2V0RGF0YSgpLmRhdGE7CmNvbnN0IG1vbnRoSWR4ID0gc2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gJ01vbnRoKFN0YXJ0IERhdGUpJyk7CmNvbnN0IHJlY0lkeCAgID0gc2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gJ1N0dWR5IFJlY3J1aXRpbmcgJScpOwpjb25zdCBjb21JZHggICA9IHNjaGVtYS5maW5kSW5kZXgocyA9PiBzLm5hbWUgPT09ICdTdHVkeSBDb21wbGV0ZWQgJScpOwpjb25zdCBueXJJZHggICA9IHNjaGVtYS5maW5kSW5kZXgocyA9PiBzLm5hbWUgPT09ICdTdHVkeSBOb3QgWWV0IFJlY3J1aXRpbmcgJScpOwoKY29uc3QgZmlsdGVyZWQgPSByb3dzCiAgLmZpbHRlcihyID0+IHJbbW9udGhJZHhdID49IG5ldyBEYXRlKCcyMDIzLTAxLTAxJykuZ2V0VGltZSgpICYmCiAgICAgICAgICAgICAgIHJbbW9udGhJZHhdIDw9IG5ldyBEYXRlKCcyMDI3LTAxLTAxJykuZ2V0VGltZSgpKQogIC5zb3J0KChhLCBiKSA9PiBhW21vbnRoSWR4XSAtIGJbbW9udGhJZHhdKTsKCmNvbnN0IHBvaW50cyA9IGZpbHRlcmVkLm1hcChyID0+IHsKICBjb25zdCByZWMgICA9IHJbcmVjSWR4XSAgfHwgMDsKICBjb25zdCBjb20gICA9IHJbY29tSWR4XSAgfHwgMDsKICBjb25zdCBueXIgICA9IHJbbnlySWR4XSAgfHwgMDsKICBjb25zdCBvdGhlciA9IE1hdGgubWF4KDAsIDEgLSByZWMgLSBjb20gLSBueXIpOwogIGNvbnN0IHRvdGFsID0gcmVjICsgY29tICsgbnlyICsgb3RoZXI7CiAgcmV0dXJuIHsKICAgIG1vbnRoOiAgclttb250aElkeF0sCiAgICB0MTogICAgIHJlYyAvIHRvdGFsLAogICAgdDI6ICAgICAocmVjICsgY29tKSAvIHRvdGFsLAogICAgdDM6ICAgICAocmVjICsgY29tICsgbnlyKSAvIHRvdGFsLAogICAgdDQ6ICAgICAxCiAgfTsKfSk7Cgpjb25zdCBQQUQgPSB7IHRvcDogMTYsIHJpZ2h0OiAxNiwgYm90dG9tOiA0MCwgbGVmdDogNDggfTsKCnNldFRpbWVvdXQoKCkgPT4gewogIGNvbnN0IGNhbnZhcyA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzdGFja2VkLWNhbnZhcycpOwogIGNvbnN0IFcgPSBjYW52YXMud2lkdGggID0gY2FudmFzLm9mZnNldFdpZHRoOwogIGNvbnN0IEggPSBjYW52YXMuaGVpZ2h0ID0gY2FudmFzLm9mZnNldEhlaWdodDsKICBjb25zdCBjdHggPSBjYW52YXMuZ2V0Q29udGV4dCgnMmQnKTsKICBjb25zdCBQVyAgPSBXIC0gUEFELmxlZnQgLSBQQUQucmlnaHQ7CiAgY29uc3QgUEggID0gSCAtIFBBRC50b3AgIC0gUEFELmJvdHRvbTsKCiAgY29uc3QgbWluVCAgPSBwb2ludHNbMF0ubW9udGg7CiAgY29uc3QgbWF4VCAgPSBwb2ludHNbcG9pbnRzLmxlbmd0aCAtIDFdLm1vbnRoOwogIGNvbnN0IHhQb3MgID0gdCA9PiBQQUQubGVmdCArICh0IC0gbWluVCkgLyAobWF4VCAtIG1pblQpICogUFc7CiAgY29uc3QgeVBvcyAgPSB2ID0+IFBBRC50b3AgICsgKDEgLSB2KSAqIFBIOwoKICBmdW5jdGlvbiBkcmF3QmFuZCh0b3BGbiwgYm90Rm4sIGNvbG9yKSB7CiAgICBjdHguYmVnaW5QYXRoKCk7CiAgICBjdHgubW92ZVRvKHhQb3MocG9pbnRzWzBdLm1vbnRoKSwgeVBvcyhib3RGbihwb2ludHNbMF0pKSk7CiAgICBwb2ludHMuZm9yRWFjaChwID0+IGN0eC5saW5lVG8oeFBvcyhwLm1vbnRoKSwgeVBvcyh0b3BGbihwKSkpKTsKICAgIGZvciAobGV0IGkgPSBwb2ludHMubGVuZ3RoIC0gMTsgaSA+PSAwOyBpLS0pCiAgICAgIGN0eC5saW5lVG8oeFBvcyhwb2ludHNbaV0ubW9udGgpLCB5UG9zKGJvdEZuKHBvaW50c1tpXSkpKTsKICAgIGN0eC5jbG9zZVBhdGgoKTsKICAgIGN0eC5maWxsU3R5bGUgPSBjb2xvcjsKICAgIGN0eC5maWxsKCk7CiAgfQoKICAvLyBEcmF3IGJhbmRzIGJvdHRvbSB0byB0b3AKICBkcmF3QmFuZChwID0+IHAudDEsIHAgPT4gMCwgICAgJyMxNEI4QTYnKTsgLy8gUmVjcnVpdGluZyAodGVhbCkKICBkcmF3QmFuZChwID0+IHAudDIsIHAgPT4gcC50MSwgJyM2MzY2RjEnKTsgLy8gQ29tcGxldGVkIChpbmRpZ28pCiAgZHJhd0JhbmQocCA9PiBwLnQzLCBwID0+IHAudDIsICcjMEVBNUU5Jyk7IC8vIE5vdCB5ZXQgcmVjcnVpdGluZyAoc2t5KQogIGRyYXdCYW5kKHAgPT4gcC50NCwgcCA9PiBwLnQzLCAnIzMzNDE1NScpOyAvLyBPdGhlciAoc2xhdGUpCgogIC8vIFkgYXhpcyBsYWJlbHMKICBjdHguZmlsbFN0eWxlID0gJyM5NEEzQjgnOwogIGN0eC5mb250ID0gJzExcHggc3lzdGVtLXVpJzsKICBjdHgudGV4dEFsaWduID0gJ3JpZ2h0JzsKICBbMCwgMC4yNSwgMC41LCAwLjc1LCAxXS5mb3JFYWNoKHYgPT4gewogICAgY29uc3QgeSA9IHlQb3Modik7CiAgICBjdHguZmlsbFRleHQoTWF0aC5yb3VuZCh2ICogMTAwKSArICclJywgUEFELmxlZnQgLSA2LCB5ICsgNCk7CiAgICBjdHguc3Ryb2tlU3R5bGUgPSAnIzFFMjkzQic7CiAgICBjdHgubGluZVdpZHRoID0gMC41OwogICAgY3R4LmJlZ2luUGF0aCgpOwogICAgY3R4Lm1vdmVUbyhQQUQubGVmdCwgeSk7CiAgICBjdHgubGluZVRvKFBBRC5sZWZ0ICsgUFcsIHkpOwogICAgY3R4LnN0cm9rZSgpOwogIH0pOwoKICAvLyBYIGF4aXMgbGFiZWxzIOKAlCBldmVyeSA2IG1vbnRocwogIGN0eC50ZXh0QWxpZ24gPSAnY2VudGVyJzsKICBwb2ludHMuZm9yRWFjaCgocCwgaSkgPT4gewogICAgY29uc3QgZCA9IG5ldyBEYXRlKHAubW9udGgpOwogICAgaWYgKGQuZ2V0TW9udGgoKSA9PT0gMCB8fCBkLmdldE1vbnRoKCkgPT09IDYpIHsKICAgICAgY29uc3QgbGFiZWwgPSBkLmdldE1vbnRoKCkgPT09IDAKICAgICAgICA/IGQuZ2V0RnVsbFllYXIoKS50b1N0cmluZygpCiAgICAgICAgOiBbJ0phbicsJ0ZlYicsJ01hcicsJ0FwcicsJ01heScsJ0p1bicsJ0p1bCcsJ0F1ZycsJ1NlcCcsJ09jdCcsJ05vdicsJ0RlYyddW2QuZ2V0TW9udGgoKV07CiAgICAgIGN0eC5maWxsVGV4dChsYWJlbCwgeFBvcyhwLm1vbnRoKSwgSCAtIFBBRC5ib3R0b20gKyAxNik7CiAgICB9CiAgfSk7CgogIC8vIEF4aXMgbGluZXMKICBjdHguc3Ryb2tlU3R5bGUgPSAnIzMzNDE1NSc7CiAgY3R4LmxpbmVXaWR0aCA9IDE7CiAgY3R4LmJlZ2luUGF0aCgpOwogIGN0eC5tb3ZlVG8oUEFELmxlZnQsIFBBRC50b3ApOwogIGN0eC5saW5lVG8oUEFELmxlZnQsIFBBRC50b3AgKyBQSCk7CiAgY3R4LmxpbmVUbyhQQUQubGVmdCArIFBXLCBQQUQudG9wICsgUEgpOwogIGN0eC5zdHJva2UoKTsKCn0sIDgwMCk7\\\",\\\"cssCodeBase64\\\":\\\"Ym9keSwgaHRtbCB7CiAgbWFyZ2luOiAwOwogIHBhZGRpbmc6IDA7CiAgaGVpZ2h0OiAxMDAlOwogIG92ZXJmbG93OiBoaWRkZW47Cn0\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiIHN0eWxlPSJwb3NpdGlvbjphYnNvbHV0ZTt3aWR0aDoxcHg7aGVpZ2h0OjFweDtvcGFjaXR5OjA7cG9pbnRlci1ldmVudHM6bm9uZTsiPjwvZGl2Pgo8Y2FudmFzIGlkPSJzdGFja2VkLWNhbnZhcyIgc3R5bGU9InBvc2l0aW9uOmFic29sdXRlO3RvcDowO2xlZnQ6MDt3aWR0aDoxMDAlO2hlaWdodDoxMDAlOyI+PC9jYW52YXM+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[63.91575663026521,46.957878315132604]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "STACKED_COLUMN"
+          },
+          "display_mode": "CHART_MODE",
+          "name": "Monthly Study Starts by Status",
+          "search_query": "[Study Recruiting %] [Study Completed %] [Study Not Yet Recruiting %] [Start Date].monthly",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Study Recruiting %\",\"columnProperty\": {}},{\"columnId\": \"Study Completed %\",\"columnProperty\": {}},{\"columnId\": \"Study Not Yet Recruiting %\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Month(Start Date)",
+              "Study Recruiting %",
+              "Study Completed %",
+              "Study Not Yet Recruiting %"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Month(Start Date)",
+                "headline_aggregation": "MIN-MAX"
+              },
+              {
+                "column_id": "Study Completed %",
+                "headline_aggregation": "SUM"
+              },
+              {
+                "column_id": "Study Not Yet Recruiting %",
+                "headline_aggregation": "SUM"
+              },
+              {
+                "column_id": "Study Recruiting %",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_6",
+        "viz_guid": "36ed96ee-c299-4d89-9617-6455acd89867"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Intervention Type"
+            },
+            {
+              "name": "Study Count",
+              "sort_info": {
+                "category": "DEFAULT"
+              }
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Intervention Type"
+              },
+              {
+                "column_id": "Study Count"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Intervention Type\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Study Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"188b704c-4753-4ec5-8b7a-bd60e47155ad\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Study Count\"],\"isOpposite\": false}},{\"id\": \"5dae75bf-e5b9-4493-98c6-d7e233597882\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Intervention Type\"]}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Intervention Type",
+                      "Study Count"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiUGhhc2UgTGFiZWwiCiAqICJTdHVkeSBDb3VudCIKICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAtLS0gRU5EIC0tLSAKICovCgovLyDilIDilIAgVGhvdWdodFNwb3QgY29udGV4dCDilIDilIAKLy8gVW5jb21tZW50IHRoZSBsaW5lIGJlbG93IHdoZW4gcGFzdGluZyBpbnRvIFRob3VnaHRTcG90OgogY29uc3QgeyBtdXplLCBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5IH0gPSB2aXo7Cgpjb25zdCB7IERhdGFNb2RlbCB9ID0gbXV6ZTsKCmNvbnN0IHNjaGVtYSA9IFsKICB7IG5hbWU6ICdQaGFzZSBMYWJlbCcsIHR5cGU6ICdkaW1lbnNpb24nIH0sCiAgeyBuYW1lOiAnU3R1ZHkgQ291bnQnLCB0eXBlOiAnbWVhc3VyZScsIGRlZkFnZ0ZuOiAnc3VtJyB9Cl07Cgpjb25zdCBmYWxsYmFja0RhdGEgPSBbCiAgeyAiUGhhc2UgTGFiZWwiOiAibm8gcGhhc2UiLCAiU3R1ZHkgQ291bnQiOiA0ODAwIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAiZWFybHkgcDEiLCAiU3R1ZHkgQ291bnQiOiAzMjAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSAxIiwgIlN0dWR5IENvdW50IjogMzkwMCB9LAogIHsgIlBoYXNlIExhYmVsIjogInAxIC8gcDIiLCAiU3R1ZHkgQ291bnQiOiA3NTAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSAyIiwgIlN0dWR5IENvdW50IjogNTIwMCB9LAogIHsgIlBoYXNlIExhYmVsIjogInAyIC8gcDMiLCAiU3R1ZHkgQ291bnQiOiA0MTAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSAzIiwgIlN0dWR5IENvdW50IjogMjgwMCB9LAogIHsgIlBoYXNlIExhYmVsIjogInBoYXNlIDQiLCAiU3R1ZHkgQ291bnQiOiAxMTAwIH0KXTsKCi8vIOKUgOKUgCBDb2x1bW4gTmFtZXMgKHVwZGF0ZSB0aGVzZSB0byBtYXRjaCB5b3VyIGRhdGEpIOKUgOKUgApjb25zdCBQSEFTRV9MQUJFTF9GSUVMRCA9ICdJbnRlcnZlbnRpb24gVHlwZSc7CmNvbnN0IFNUVURZX0NPVU5UX0ZJRUxEID0gJ1N0dWR5IENvdW50JzsKCi8vIOKUgOKUgCBDb2xvciBwYWxldHRlIChhc3NpZ25lZCBieSBpbmRleCDigJQgbm90IHRpZWQgdG8gcGhhc2UgbmFtZXMpIOKUgOKUgApjb25zdCBDT0xPUl9QQUxFVFRFID0gWwogICcjNDc1NTY5JywKICAnIzBFQTVFOScsCiAgJyMxNEI4QTYnLAogICcjMkRENEJGJywKICAnIzYzNjZGMScsCiAgJyM4QjVDRjYnLAogICcjRjU5RTBCJywKICAnI0Y0M0Y1RScKXTsKCi8vIOKUgOKUgCBEYXRhIHNvdXJjZTogVGhvdWdodFNwb3QgbGl2ZSBvciBzdGFuZGFsb25lIGZhbGxiYWNrIOKUgOKUgApsZXQgZG07CmlmICh0eXBlb2YgZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSA9PT0gJ2Z1bmN0aW9uJykgewogIC8vIOKUgOKUgCBSdW5uaW5nIGluIFRob3VnaHRTcG90IOKAlCBsaXZlIGRhdGEg4pSA4pSACiAgZG0gPSBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5KCk7CiAgY29uc3QgdHNSZXN1bHQgPSBkbS5nZXREYXRhKCk7Cn0gZWxzZSB7CiAgLy8g4pSA4pSAIFJ1bm5pbmcgc3RhbmRhbG9uZSDigJQgdXNlIGZhbGxiYWNrIOKUgOKUgAogIGNvbnN0IGZvcm1hdHRlZERhdGEgPSBEYXRhTW9kZWwubG9hZERhdGFTeW5jKGZhbGxiYWNrRGF0YSwgc2NoZW1hKTsKICBkbSA9IG5ldyBEYXRhTW9kZWwoZm9ybWF0dGVkRGF0YSk7Cn0KCi8vIOKUgOKUgCBEZXJpdmUgcGhhc2Ugb3JkZXIgZnJvbSB0aGUgZGF0YXNldCBhcy1pcyAobm8gaGFyZGNvZGluZykg4pSA4pSACmNvbnN0IHsgZGF0YTogcmF3Um93cywgc2NoZW1hOiByYXdTY2hlbWEgfSA9IGRtLmdldERhdGEoKTsKY29uc3QgcGhhc2VJZHggPSByYXdTY2hlbWEuZmluZEluZGV4KHMgPT4gcy5uYW1lID09PSBQSEFTRV9MQUJFTF9GSUVMRCk7CmNvbnN0IFBIQVNFX09SREVSID0gcmF3Um93cy5tYXAociA9PiByW3BoYXNlSWR4XSk7CgovLyBNdXplIEV4cGVyaWVuY2Ugc3RhbmRhbG9uZSAoZGVmYXVsdCk6Ci8vY29uc3QgZW52ID0gbXV6ZSgpOwovL2NvbnN0IGNhbnZhcyA9IGVudi5jYW52YXMoKTsKLy8gVGhvdWdodFNwb3Q6IENvbW1lbnQgb3V0IHRoZSAyIGxpbmVzIGFib3ZlIGFuZCB1bmNvbW1lbnQgYmVsb3c6CiBjb25zdCBjYW52YXMgPSBtdXplLmNhbnZhcygpOwoKY2FudmFzCiAgLmRhdGEoZG0pCiAgLnJvd3MoW1BIQVNFX0xBQkVMX0ZJRUxEXSkKICAuY29sdW1ucyhbU1RVRFlfQ09VTlRfRklFTERdKQogIC5jb2xvcih7CiAgICBmaWVsZDogUEhBU0VfTEFCRUxfRklFTEQsCiAgICByYW5nZTogQ09MT1JfUEFMRVRURQogIH0pCiAgLmxheWVycyhbCiAgICAvLyDilIDilIAgU3RlbTogdWx0cmEtdGhpbiBiYXIg4pSA4pSACiAgICB7CiAgICAgIG1hcms6ICdiYXInLAogICAgICBlbmNvZGluZzogewogICAgICAgIGNvbG9yOiBQSEFTRV9MQUJFTF9GSUVMRCwKICAgICAgICBzaXplOiB7IHZhbHVlOiAoKSA9PiAwLjA0IH0KICAgICAgfSwKICAgICAgdHJhbnNpdGlvbjogeyBkaXNhYmxlZDogdHJ1ZSB9CiAgICB9LAogICAgLy8g4pSA4pSAIERvdDogc21hbGwgcG9pbnQgbWFya2VyIGF0IGVuZCBvZiBzdGVtIOKUgOKUgAogICAgewogICAgICBtYXJrOiAncG9pbnQnLAogICAgICBlbmNvZGluZzogewogICAgICAgIGNvbG9yOiBQSEFTRV9MQUJFTF9GSUVMRCwKICAgICAgICBzaXplOiB7IHZhbHVlOiAoKSA9PiAwLjA5IH0sCiAgICAgICAgb3BhY2l0eTogeyB2YWx1ZTogKCkgPT4gMSB9CiAgICAgIH0sCiAgICAgIHRyYW5zaXRpb246IHsgZGlzYWJsZWQ6IHRydWUgfQogICAgfQogIF0pCiAgLmNvbmZpZyh7CiAgICBhdXRvR3JvdXBCeTogeyBkaXNhYmxlZDogZmFsc2UgfSwKICAgIGxlZ2VuZDogeyBzaG93OiBmYWxzZSB9LAogICAgYXhlczogewogICAgICB4OiB7CiAgICAgICAgbmFtZTogJ1N0dWR5IENvdW50JywKICAgICAgICBzaG93QXhpc05hbWU6IHRydWUsCiAgICAgICAgc2hvd0lubmVyVGlja3M6IHRydWUsCiAgICAgICAgdGlja0Zvcm1hdDogKGQpID0+IHsKICAgICAgICAgIGNvbnN0IHZhbCA9IHR5cGVvZiBkID09PSAnb2JqZWN0JyA/IGQucmF3VmFsdWUgPz8gZC5mb3JtYXR0ZWRWYWx1ZSA6IGQ7CiAgICAgICAgICByZXR1cm4gdmFsID49IDEwMDAgPyBNYXRoLnJvdW5kKHZhbCAvIDEwMDApICsgJ2snIDogU3RyaW5nKHZhbCk7CiAgICAgICAgfQogICAgICB9LAogICAgICB5OiB7CiAgICAgICAgc2hvdzogdHJ1ZSwKICAgICAgICBzaG93QXhpc05hbWU6IGZhbHNlLAogICAgICAgIHNob3dJbm5lclRpY2tzOiBmYWxzZSwKICAgICAgICBzaG93QXhpc0xpbmU6IGZhbHNlLAogICAgICAgIG9yZGVyaW5nOiB7CiAgICAgICAgICB0eXBlOiAnY3VzdG9tJywKICAgICAgICAgIHZhbHVlczogUEhBU0VfT1JERVIKICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICBncmlkTGluZXM6IHsKICAgICAgeDogeyBzaG93OiB0cnVlIH0sCiAgICAgIHk6IHsgc2hvdzogZmFsc2UgfSwKICAgICAgY29sb3I6ICdyZ2JhKDE0OCwxNjMsMTg0LDAuMTgpJwogICAgfSwKICAgIGJvcmRlcjogewogICAgICBzaG93Um93Qm9yZGVyczogeyB0b3A6IGZhbHNlLCBib3R0b206IGZhbHNlLCBsZWZ0OiBmYWxzZSwgcmlnaHQ6IGZhbHNlIH0sCiAgICAgIHNob3dDb2xCb3JkZXJzOiB7IHRvcDogZmFsc2UsIGJvdHRvbTogZmFsc2UsIGxlZnQ6IGZhbHNlLCByaWdodDogZmFsc2UgfSwKICAgICAgc2hvd1ZhbHVlQm9yZGVyczogeyB0b3A6IGZhbHNlLCBib3R0b206IGZhbHNlLCBsZWZ0OiBmYWxzZSwgcmlnaHQ6IGZhbHNlIH0KICAgIH0sCiAgICBpbnRlcmFjdGlvbjogewogICAgICB0b29sdGlwOiB7CiAgICAgICAgbW9kZTogJ2NvbnNvbGlkYXRlZCcsCiAgICAgICAgZmllbGRzOiBbUEhBU0VfTEFCRUxfRklFTEQsIFNUVURZX0NPVU5UX0ZJRUxEXQogICAgICB9CiAgICB9CiAgfSkKICAud2lkdGgoNTYwKQogIC5oZWlnaHQoMzYwKQogIC5tb3VudCgnI2NoYXJ0Jyk7\\\",\\\"cssCodeBase64\\\":\\\"I2NoYXJ0IHsgd2lkdGg6IDEwMCU7IG1pbi1oZWlnaHQ6IDQwMHB4OyB9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[70,30]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO",
+            "viz_style": "{}"
+          },
+          "description": ".",
+          "display_mode": "CHART_MODE",
+          "dynamic_description": ".",
+          "name": "Study Count by Intervention Type",
+          "search_query": "[Study Count] [Intervention Type] sort by [Study Count] descending",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Intervention Type\",\"columnProperty\": {}},{\"columnId\": \"Study Count\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Intervention Type",
+              "Study Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Intervention Type",
+                "headline_aggregation": "COUNT_DISTINCT"
+              },
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_7",
+        "viz_guid": "e8005662-a70e-4dd0-8a4d-1ce6e43ef946"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Source Class"
+            },
+            {
+              "name": "Study Count",
+              "sort_info": {
+                "category": "DEFAULT"
+              }
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Source Class"
+              },
+              {
+                "column_id": "Study Count"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Source Class\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Study Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"dde2f3d9-1fc7-4ecf-879d-6ae243d867e4\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Study Count\"],\"isOpposite\": false}},{\"id\": \"51209524-ad3d-4f06-a7d4-5ea9142a779f\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Source Class\"]}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Source Class",
+                      "Study Count"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiSW50ZXJ2ZW50aW9uIFR5cGUiCiAqICJTdHVkeSBDb3VudCIKICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAtLS0gRU5EIC0tLSAKICovCgovLyDilIDilIAgVGhvdWdodFNwb3QgY29udGV4dCDilIDilIAKLy8gVW5jb21tZW50IHRoZSBsaW5lIGJlbG93IHdoZW4gcGFzdGluZyBpbnRvIFRob3VnaHRTcG90OgogY29uc3QgeyBtdXplLCBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5IH0gPSB2aXo7Cgpjb25zdCB7IERhdGFNb2RlbCB9ID0gbXV6ZTsKCmNvbnN0IHNjaGVtYSA9IFsKICB7IG5hbWU6ICdQaGFzZSBMYWJlbCcsIHR5cGU6ICdkaW1lbnNpb24nIH0sCiAgeyBuYW1lOiAnU3R1ZHkgQ291bnQnLCB0eXBlOiAnbWVhc3VyZScsIGRlZkFnZ0ZuOiAnc3VtJyB9Cl07Cgpjb25zdCBmYWxsYmFja0RhdGEgPSBbCiAgeyAiUGhhc2UgTGFiZWwiOiAibm8gcGhhc2UiLCAiU3R1ZHkgQ291bnQiOiA0ODAwIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAiZWFybHkgcDEiLCAiU3R1ZHkgQ291bnQiOiAzMjAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSAxIiwgIlN0dWR5IENvdW50IjogMzkwMCB9LAogIHsgIlBoYXNlIExhYmVsIjogInAxIC8gcDIiLCAiU3R1ZHkgQ291bnQiOiA3NTAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSAyIiwgIlN0dWR5IENvdW50IjogNTIwMCB9LAogIHsgIlBoYXNlIExhYmVsIjogInAyIC8gcDMiLCAiU3R1ZHkgQ291bnQiOiA0MTAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSAzIiwgIlN0dWR5IENvdW50IjogMjgwMCB9LAogIHsgIlBoYXNlIExhYmVsIjogInBoYXNlIDQiLCAiU3R1ZHkgQ291bnQiOiAxMTAwIH0KXTsKCi8vIOKUgOKUgCBDb2x1bW4gTmFtZXMgKHVwZGF0ZSB0aGVzZSB0byBtYXRjaCB5b3VyIGRhdGEpIOKUgOKUgApjb25zdCBQSEFTRV9MQUJFTF9GSUVMRCA9ICdTb3VyY2UgQ2xhc3MnOwpjb25zdCBTVFVEWV9DT1VOVF9GSUVMRCA9ICdTdHVkeSBDb3VudCc7CgovLyDilIDilIAgQ29sb3IgcGFsZXR0ZSAoYXNzaWduZWQgYnkgaW5kZXgg4oCUIG5vdCB0aWVkIHRvIHBoYXNlIG5hbWVzKSDilIDilIAKY29uc3QgQ09MT1JfUEFMRVRURSA9IFsKICAnIzQ3NTU2OScsCiAgJyMwRUE1RTknLAogICcjMTRCOEE2JywKICAnIzJERDRCRicsCiAgJyM2MzY2RjEnLAogICcjOEI1Q0Y2JywKICAnI0Y1OUUwQicsCiAgJyNGNDNGNUUnCl07CgovLyDilIDilIAgRGF0YSBzb3VyY2U6IFRob3VnaHRTcG90IGxpdmUgb3Igc3RhbmRhbG9uZSBmYWxsYmFjayDilIDilIAKbGV0IGRtOwppZiAodHlwZW9mIGdldERhdGFGcm9tU2VhcmNoUXVlcnkgPT09ICdmdW5jdGlvbicpIHsKICAvLyDilIDilIAgUnVubmluZyBpbiBUaG91Z2h0U3BvdCDigJQgbGl2ZSBkYXRhIOKUgOKUgAogIGRtID0gZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSgpOwogIGNvbnN0IHRzUmVzdWx0ID0gZG0uZ2V0RGF0YSgpOwp9IGVsc2UgewogIC8vIOKUgOKUgCBSdW5uaW5nIHN0YW5kYWxvbmUg4oCUIHVzZSBmYWxsYmFjayDilIDilIAKICBjb25zdCBmb3JtYXR0ZWREYXRhID0gRGF0YU1vZGVsLmxvYWREYXRhU3luYyhmYWxsYmFja0RhdGEsIHNjaGVtYSk7CiAgZG0gPSBuZXcgRGF0YU1vZGVsKGZvcm1hdHRlZERhdGEpOwp9CgovLyDilIDilIAgRGVyaXZlIHBoYXNlIG9yZGVyIGZyb20gdGhlIGRhdGFzZXQgYXMtaXMgKG5vIGhhcmRjb2RpbmcpIOKUgOKUgApjb25zdCB7IGRhdGE6IHJhd1Jvd3MsIHNjaGVtYTogcmF3U2NoZW1hIH0gPSBkbS5nZXREYXRhKCk7CmNvbnN0IHBoYXNlSWR4ID0gcmF3U2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gUEhBU0VfTEFCRUxfRklFTEQpOwpjb25zdCBQSEFTRV9PUkRFUiA9IHJhd1Jvd3MubWFwKHIgPT4gcltwaGFzZUlkeF0pOwoKLy8gTXV6ZSBFeHBlcmllbmNlIHN0YW5kYWxvbmUgKGRlZmF1bHQpOgovL2NvbnN0IGVudiA9IG11emUoKTsKLy9jb25zdCBjYW52YXMgPSBlbnYuY2FudmFzKCk7Ci8vIFRob3VnaHRTcG90OiBDb21tZW50IG91dCB0aGUgMiBsaW5lcyBhYm92ZSBhbmQgdW5jb21tZW50IGJlbG93OgogY29uc3QgY2FudmFzID0gbXV6ZS5jYW52YXMoKTsKCmNhbnZhcwogIC5kYXRhKGRtKQogIC5yb3dzKFtQSEFTRV9MQUJFTF9GSUVMRF0pCiAgLmNvbHVtbnMoW1NUVURZX0NPVU5UX0ZJRUxEXSkKICAuY29sb3IoewogICAgZmllbGQ6IFBIQVNFX0xBQkVMX0ZJRUxELAogICAgcmFuZ2U6IENPTE9SX1BBTEVUVEUKICB9KQogIC5sYXllcnMoWwogICAgLy8g4pSA4pSAIFN0ZW06IHVsdHJhLXRoaW4gYmFyIOKUgOKUgAogICAgewogICAgICBtYXJrOiAnYmFyJywKICAgICAgZW5jb2Rpbmc6IHsKICAgICAgICBjb2xvcjogUEhBU0VfTEFCRUxfRklFTEQsCiAgICAgICAgc2l6ZTogeyB2YWx1ZTogKCkgPT4gMC4wNCB9CiAgICAgIH0sCiAgICAgIHRyYW5zaXRpb246IHsgZGlzYWJsZWQ6IHRydWUgfQogICAgfSwKICAgIC8vIOKUgOKUgCBEb3Q6IHNtYWxsIHBvaW50IG1hcmtlciBhdCBlbmQgb2Ygc3RlbSDilIDilIAKICAgIHsKICAgICAgbWFyazogJ3BvaW50JywKICAgICAgZW5jb2Rpbmc6IHsKICAgICAgICBjb2xvcjogUEhBU0VfTEFCRUxfRklFTEQsCiAgICAgICAgc2l6ZTogeyB2YWx1ZTogKCkgPT4gMC4wOSB9LAogICAgICAgIG9wYWNpdHk6IHsgdmFsdWU6ICgpID0+IDEgfQogICAgICB9LAogICAgICB0cmFuc2l0aW9uOiB7IGRpc2FibGVkOiB0cnVlIH0KICAgIH0KICBdKQogIC5jb25maWcoewogICAgYXV0b0dyb3VwQnk6IHsgZGlzYWJsZWQ6IGZhbHNlIH0sCiAgICBsZWdlbmQ6IHsgc2hvdzogZmFsc2UgfSwKICAgIGF4ZXM6IHsKICAgICAgeDogewogICAgICAgIG5hbWU6ICdTdHVkeSBDb3VudCcsCiAgICAgICAgc2hvd0F4aXNOYW1lOiB0cnVlLAogICAgICAgIHNob3dJbm5lclRpY2tzOiB0cnVlLAogICAgICAgIHRpY2tGb3JtYXQ6IChkKSA9PiB7CiAgICAgICAgICBjb25zdCB2YWwgPSB0eXBlb2YgZCA9PT0gJ29iamVjdCcgPyBkLnJhd1ZhbHVlID8/IGQuZm9ybWF0dGVkVmFsdWUgOiBkOwogICAgICAgICAgcmV0dXJuIHZhbCA+PSAxMDAwID8gTWF0aC5yb3VuZCh2YWwgLyAxMDAwKSArICdrJyA6IFN0cmluZyh2YWwpOwogICAgICAgIH0KICAgICAgfSwKICAgICAgeTogewogICAgICAgIHNob3c6IHRydWUsCiAgICAgICAgc2hvd0F4aXNOYW1lOiBmYWxzZSwKICAgICAgICBzaG93SW5uZXJUaWNrczogZmFsc2UsCiAgICAgICAgc2hvd0F4aXNMaW5lOiBmYWxzZSwKICAgICAgICBvcmRlcmluZzogewogICAgICAgICAgdHlwZTogJ2N1c3RvbScsCiAgICAgICAgICB2YWx1ZXM6IFBIQVNFX09SREVSCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgZ3JpZExpbmVzOiB7CiAgICAgIHg6IHsgc2hvdzogdHJ1ZSB9LAogICAgICB5OiB7IHNob3c6IGZhbHNlIH0sCiAgICAgIGNvbG9yOiAncmdiYSgxNDgsMTYzLDE4NCwwLjE4KScKICAgIH0sCiAgICBib3JkZXI6IHsKICAgICAgc2hvd1Jvd0JvcmRlcnM6IHsgdG9wOiBmYWxzZSwgYm90dG9tOiBmYWxzZSwgbGVmdDogZmFsc2UsIHJpZ2h0OiBmYWxzZSB9LAogICAgICBzaG93Q29sQm9yZGVyczogeyB0b3A6IGZhbHNlLCBib3R0b206IGZhbHNlLCBsZWZ0OiBmYWxzZSwgcmlnaHQ6IGZhbHNlIH0sCiAgICAgIHNob3dWYWx1ZUJvcmRlcnM6IHsgdG9wOiBmYWxzZSwgYm90dG9tOiBmYWxzZSwgbGVmdDogZmFsc2UsIHJpZ2h0OiBmYWxzZSB9CiAgICB9LAogICAgaW50ZXJhY3Rpb246IHsKICAgICAgdG9vbHRpcDogewogICAgICAgIG1vZGU6ICdjb25zb2xpZGF0ZWQnLAogICAgICAgIGZpZWxkczogW1BIQVNFX0xBQkVMX0ZJRUxELCBTVFVEWV9DT1VOVF9GSUVMRF0KICAgICAgfQogICAgfQogIH0pCiAgLndpZHRoKDU2MCkKICAuaGVpZ2h0KDM2MCkKICAubW91bnQoJyNjaGFydCcpOw\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"I2NoYXJ0IHsgd2lkdGg6IDEwMCU7IG1pbi1oZWlnaHQ6IDQwMHB4OyB9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO",
+            "viz_style": "{}"
+          },
+          "description": "Industry drives 17% of studies. 78% tagged Other — a data quality gap obscuring true funder breakdown",
+          "display_mode": "CHART_MODE",
+          "dynamic_description": "Industry drives 17% of studies. 78% tagged Other — a data quality gap obscuring true funder breakdown",
+          "name": "Sponsor Source Class",
+          "search_query": "[Study Count] [Source Class] sort by [Study Count] descending",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Source Class\",\"columnProperty\": {}},{\"columnId\": \"Study Count\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Source Class",
+              "Study Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Source Class",
+                "headline_aggregation": "COUNT_DISTINCT"
+              },
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_8",
+        "viz_guid": "7bdd9cbc-7920-4ce3-ab24-66d0a2fa9dc0"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Study Count"
+            },
+            {
+              "name": "Study Type Label"
+            }
+          ],
+          "chart": {
+            "axis_configs": [
+              {
+                "x": [
+                  "Study Type Label"
+                ],
+                "y": [
+                  "Study Count"
+                ]
+              }
+            ],
+            "chart_columns": [
+              {
+                "column_id": "Study Count"
+              },
+              {
+                "column_id": "Study Type Label"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"stackedAsPercentFormat\": {\"category\": \"PERCENTAGE\",\"percentageFormatConfig\": {\"decimals\": 2.0,\"removeTrailingZeroes\": false},\"isCategoryEditable\": false},\"customProps\": \"{\\\"tileType\\\":null,\\\"advancedProperties\\\":{\\\"tooltip\\\":{\\\"enabled\\\":true,\\\"borderWidth\\\":\\\"1\\\",\\\"opacity\\\":\\\"\\\",\\\"label\\\":{},\\\"value\\\":{}},\\\"regression\\\":{\\\"lineWidth\\\":\\\"\\\"},\\\"gridlines\\\":{\\\"xAxis\\\":{},\\\"yAxis\\\":{}},\\\"answerLevelSettings\\\":{\\\"chart\\\":{\\\"backgroundStyle\\\":null},\\\"plotArea\\\":{\\\"backgroundStyle\\\":null},\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"\\\",\\\"connectingLines\\\":false},\\\"stackLabelStyles\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{}}},\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnalyseChangeCta\\\":true,\\\"showAnomalies\\\":null,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"dataFieldArea\": \"column\",\"pivotSummariesState\": {}},\"showStackedLabels\": true,\"allLabels\": true,\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Study Type Label\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null},\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Study Count\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"ax9y\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Study Count\"],\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"ax9x\\\",\\\"key\\\":\\\"nameTextStyle\\\"},\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"ax9x\\\",\\\"key\\\":\\\"labelTextStyle\\\"},\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}},{\"id\": \"ax9x\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Study Type Label\"],\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}}],\"seriesColors\": [{\"serieName\": \"interventional\",\"color\": \"#14B8A6\"},{\"serieName\": \"observational\",\"color\": \"#8B5CF6\"}],\"systemSeriesColors\": [{\"serieName\": \"interventional\",\"color\": \"#48D1E0\"},{\"serieName\": \"observational\",\"color\": \"#2E75F0\"}]}",
+            "custom_visual_props": "{\"code\":\"const { muze, getDataFromSearchQuery } \\u003d viz;\\nconst data \\u003d getDataFromSearchQuery();\\nconst fields \\u003d data.getFieldspace().fields.map(f \\u003d\\u003e f.name());\\nconst typeField \\u003d fields.find(f \\u003d\\u003e f.includes(\\u0027Type\\u0027) || f.includes(\\u0027type\\u0027)) || \\u0027Study Type Label\\u0027;\\nconst countField \\u003d fields.find(f \\u003d\\u003e f.includes(\\u0027Count\\u0027) || f.includes(\\u0027count\\u0027)) || \\u0027Study Count\\u0027;\\nmuze.canvas()\\n  .rows([])\\n  .columns([])\\n  .detail([typeField])\\n  .layers([{\\n    mark: \\u0027arc\\u0027,\\n    encoding: {\\n      angle: { field: typeField },\\n      color: {\\n        field: typeField,\\n        value: (d) \\u003d\\u003e d \\u003d\\u003d\\u003d \\u0027Interventional\\u0027 ? \\u0027#14B8A6\\u0027 : \\u0027#6366F1\\u0027\\n      },\\n      radius: {\\n        field: countField,\\n        scale: { type: \\u0027linear\\u0027, domain: [0, 110000], range: [0, 200] }\\n      },\\n      radius0: { value: () \\u003d\\u003e 40 }\\n    }\\n  }])\\n  .config({ legend: { show: false } })\\n  .data(data)\\n  .mount(\\u0027#chart\\u0027);\"}",
+            "type": "PIE"
+          },
+          "display_mode": "CHART_MODE",
+          "dynamic_name": "Study Type",
+          "name": "Study Type",
+          "search_query": "[Study Count] [Study Type Label]",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Study Type Label\",\"columnProperty\": {}},{\"columnId\": \"Study Count\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Study Type Label",
+              "Study Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              },
+              {
+                "column_id": "Study Type Label",
+                "headline_aggregation": "COUNT_DISTINCT"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_9",
+        "viz_guid": "c62e0fd8-2560-4562-89e7-0179cbab46c2"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Phase Label",
+              "sort_info": {
+                "category": "CUSTOM",
+                "custom_order": [
+                  "early p1",
+                  "phase 1",
+                  "p1 / p2",
+                  "phase 2",
+                  "p2 / p3",
+                  "phase 3",
+                  "phase 4"
+                ]
+              }
+            },
+            {
+              "name": "Study Count"
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Phase Label"
+              },
+              {
+                "column_id": "Study Count"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Study Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"9c1a9a09-6cbd-42e0-b007-b6100c542af8\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Study Count\"],\"isOpposite\": false}},{\"id\": \"20aad23a-a566-43ec-af64-a6f4df36db6a\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Phase Label\"]}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Phase Label",
+                      "Study Count"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"Ly8g4pSA4pSAIFRob3VnaHRTcG90IGNvbnRleHQg4pSA4pSACi8vIFVuY29tbWVudCB0aGUgbGluZSBiZWxvdyB3aGVuIHBhc3RpbmcgaW50byBUaG91Z2h0U3BvdDoKIGNvbnN0IHsgbXV6ZSwgZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSB9ID0gdml6OwoKY29uc3QgeyBEYXRhTW9kZWwgfSA9IG11emU7Cgpjb25zdCBzY2hlbWEgPSBbCiAgeyBuYW1lOiAnUGhhc2UgTGFiZWwnLCB0eXBlOiAnZGltZW5zaW9uJyB9LAogIHsgbmFtZTogJ1N0dWR5IENvdW50JywgdHlwZTogJ21lYXN1cmUnLCBkZWZBZ2dGbjogJ3N1bScgfQpdOwoKY29uc3QgZmFsbGJhY2tEYXRhID0gWwogIHsgIlBoYXNlIExhYmVsIjogIm5vIHBoYXNlIiwgIlN0dWR5IENvdW50IjogNDgwMCB9LAogIHsgIlBoYXNlIExhYmVsIjogImVhcmx5IHAxIiwgIlN0dWR5IENvdW50IjogMzIwIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAicGhhc2UgMSIsICJTdHVkeSBDb3VudCI6IDM5MDAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwMSAvIHAyIiwgIlN0dWR5IENvdW50IjogNzUwIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAicGhhc2UgMiIsICJTdHVkeSBDb3VudCI6IDUyMDAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwMiAvIHAzIiwgIlN0dWR5IENvdW50IjogNDEwIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAicGhhc2UgMyIsICJTdHVkeSBDb3VudCI6IDI4MDAgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSA0IiwgIlN0dWR5IENvdW50IjogMTEwMCB9Cl07CgovLyDilIDilIAgQ29sdW1uIE5hbWVzICh1cGRhdGUgdGhlc2UgdG8gbWF0Y2ggeW91ciBkYXRhKSDilIDilIAKY29uc3QgUEhBU0VfTEFCRUxfRklFTEQgPSAnUGhhc2UgTGFiZWwnOwpjb25zdCBTVFVEWV9DT1VOVF9GSUVMRCA9ICdTdHVkeSBDb3VudCc7CgovLyDilIDilIAgQ29sb3IgcGFsZXR0ZSAoYXNzaWduZWQgYnkgaW5kZXgg4oCUIG5vdCB0aWVkIHRvIHBoYXNlIG5hbWVzKSDilIDilIAKY29uc3QgQ09MT1JfUEFMRVRURSA9IFsKICAnIzQ3NTU2OScsCiAgJyMwRUE1RTknLAogICcjMTRCOEE2JywKICAnIzJERDRCRicsCiAgJyM2MzY2RjEnLAogICcjOEI1Q0Y2JywKICAnI0Y1OUUwQicsCiAgJyNGNDNGNUUnCl07CgovLyDilIDilIAgRGF0YSBzb3VyY2U6IFRob3VnaHRTcG90IGxpdmUgb3Igc3RhbmRhbG9uZSBmYWxsYmFjayDilIDilIAKbGV0IGRtOwppZiAodHlwZW9mIGdldERhdGFGcm9tU2VhcmNoUXVlcnkgPT09ICdmdW5jdGlvbicpIHsKICAvLyDilIDilIAgUnVubmluZyBpbiBUaG91Z2h0U3BvdCDigJQgbGl2ZSBkYXRhIOKUgOKUgAogIGRtID0gZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSgpOwogIGNvbnN0IHRzUmVzdWx0ID0gZG0uZ2V0RGF0YSgpOwp9IGVsc2UgewogIC8vIOKUgOKUgCBSdW5uaW5nIHN0YW5kYWxvbmUg4oCUIHVzZSBmYWxsYmFjayDilIDilIAKICBjb25zdCBmb3JtYXR0ZWREYXRhID0gRGF0YU1vZGVsLmxvYWREYXRhU3luYyhmYWxsYmFja0RhdGEsIHNjaGVtYSk7CiAgZG0gPSBuZXcgRGF0YU1vZGVsKGZvcm1hdHRlZERhdGEpOwp9CgovLyDilIDilIAgRGVyaXZlIHBoYXNlIG9yZGVyIGZyb20gdGhlIGRhdGFzZXQgYXMtaXMgKG5vIGhhcmRjb2RpbmcpIOKUgOKUgApjb25zdCB7IGRhdGE6IHJhd1Jvd3MsIHNjaGVtYTogcmF3U2NoZW1hIH0gPSBkbS5nZXREYXRhKCk7CmNvbnN0IHBoYXNlSWR4ID0gcmF3U2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gUEhBU0VfTEFCRUxfRklFTEQpOwpjb25zdCBQSEFTRV9PUkRFUiA9IHJhd1Jvd3MubWFwKHIgPT4gcltwaGFzZUlkeF0pOwoKLy8gTXV6ZSBFeHBlcmllbmNlIHN0YW5kYWxvbmUgKGRlZmF1bHQpOgovL2NvbnN0IGVudiA9IG11emUoKTsKLy9jb25zdCBjYW52YXMgPSBlbnYuY2FudmFzKCk7Ci8vIFRob3VnaHRTcG90OiBDb21tZW50IG91dCB0aGUgMiBsaW5lcyBhYm92ZSBhbmQgdW5jb21tZW50IGJlbG93OgogY29uc3QgY2FudmFzID0gbXV6ZS5jYW52YXMoKTsKCmNhbnZhcwogIC5kYXRhKGRtKQogIC5yb3dzKFtQSEFTRV9MQUJFTF9GSUVMRF0pCiAgLmNvbHVtbnMoW1NUVURZX0NPVU5UX0ZJRUxEXSkKICAuY29sb3IoewogICAgZmllbGQ6IFBIQVNFX0xBQkVMX0ZJRUxELAogICAgcmFuZ2U6IENPTE9SX1BBTEVUVEUKICB9KQogIC5sYXllcnMoWwogICAgLy8g4pSA4pSAIFN0ZW06IHVsdHJhLXRoaW4gYmFyIOKUgOKUgAogICAgewogICAgICBtYXJrOiAnYmFyJywKICAgICAgZW5jb2Rpbmc6IHsKICAgICAgICBjb2xvcjogUEhBU0VfTEFCRUxfRklFTEQsCiAgICAgICAgc2l6ZTogeyB2YWx1ZTogKCkgPT4gMC4wNCB9CiAgICAgIH0sCiAgICAgIHRyYW5zaXRpb246IHsgZGlzYWJsZWQ6IHRydWUgfQogICAgfSwKICAgIC8vIOKUgOKUgCBEb3Q6IHNtYWxsIHBvaW50IG1hcmtlciBhdCBlbmQgb2Ygc3RlbSDilIDilIAKICAgIHsKICAgICAgbWFyazogJ3BvaW50JywKICAgICAgZW5jb2Rpbmc6IHsKICAgICAgICBjb2xvcjogUEhBU0VfTEFCRUxfRklFTEQsCiAgICAgICAgc2l6ZTogeyB2YWx1ZTogKCkgPT4gMC4wOSB9LAogICAgICAgIG9wYWNpdHk6IHsgdmFsdWU6ICgpID0+IDEgfQogICAgICB9LAogICAgICB0cmFuc2l0aW9uOiB7IGRpc2FibGVkOiB0cnVlIH0KICAgIH0KICBdKQogIC5jb25maWcoewogICAgYXV0b0dyb3VwQnk6IHsgZGlzYWJsZWQ6IGZhbHNlIH0sCiAgICBsZWdlbmQ6IHsgc2hvdzogZmFsc2UgfSwKICAgIGF4ZXM6IHsKICAgICAgeDogewogICAgICAgIG5hbWU6ICdTdHVkeSBDb3VudCcsCiAgICAgICAgc2hvd0F4aXNOYW1lOiB0cnVlLAogICAgICAgIHNob3dJbm5lclRpY2tzOiB0cnVlLAogICAgICAgIHRpY2tGb3JtYXQ6IChkKSA9PiB7CiAgICAgICAgICBjb25zdCB2YWwgPSB0eXBlb2YgZCA9PT0gJ29iamVjdCcgPyBkLnJhd1ZhbHVlID8/IGQuZm9ybWF0dGVkVmFsdWUgOiBkOwogICAgICAgICAgcmV0dXJuIHZhbCA+PSAxMDAwID8gTWF0aC5yb3VuZCh2YWwgLyAxMDAwKSArICdrJyA6IFN0cmluZyh2YWwpOwogICAgICAgIH0KICAgICAgfSwKICAgICAgeTogewogICAgICAgIHNob3c6IHRydWUsCiAgICAgICAgc2hvd0F4aXNOYW1lOiBmYWxzZSwKICAgICAgICBzaG93SW5uZXJUaWNrczogZmFsc2UsCiAgICAgICAgc2hvd0F4aXNMaW5lOiBmYWxzZSwKICAgICAgICBvcmRlcmluZzogewogICAgICAgICAgdHlwZTogJ2N1c3RvbScsCiAgICAgICAgICB2YWx1ZXM6IFBIQVNFX09SREVSCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgZ3JpZExpbmVzOiB7CiAgICAgIHg6IHsgc2hvdzogdHJ1ZSB9LAogICAgICB5OiB7IHNob3c6IGZhbHNlIH0sCiAgICAgIGNvbG9yOiAncmdiYSgxNDgsMTYzLDE4NCwwLjE4KScKICAgIH0sCiAgICBib3JkZXI6IHsKICAgICAgc2hvd1Jvd0JvcmRlcnM6IHsgdG9wOiBmYWxzZSwgYm90dG9tOiBmYWxzZSwgbGVmdDogZmFsc2UsIHJpZ2h0OiBmYWxzZSB9LAogICAgICBzaG93Q29sQm9yZGVyczogeyB0b3A6IGZhbHNlLCBib3R0b206IGZhbHNlLCBsZWZ0OiBmYWxzZSwgcmlnaHQ6IGZhbHNlIH0sCiAgICAgIHNob3dWYWx1ZUJvcmRlcnM6IHsgdG9wOiBmYWxzZSwgYm90dG9tOiBmYWxzZSwgbGVmdDogZmFsc2UsIHJpZ2h0OiBmYWxzZSB9CiAgICB9LAogICAgaW50ZXJhY3Rpb246IHsKICAgICAgdG9vbHRpcDogewogICAgICAgIG1vZGU6ICdjb25zb2xpZGF0ZWQnLAogICAgICAgIGZpZWxkczogW1BIQVNFX0xBQkVMX0ZJRUxELCBTVFVEWV9DT1VOVF9GSUVMRF0KICAgICAgfQogICAgfQogIH0pCiAgLndpZHRoKDU2MCkKICAuaGVpZ2h0KDM2MCkKICAubW91bnQoJyNjaGFydCcpOw\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"I2NoYXJ0IHsgd2lkdGg6IDEwMCU7IG1pbi1oZWlnaHQ6IDQwMHB4OyB9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[70,30]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "96k studies unphased. Among phased studies Phase 2 leads — the largest high-risk zone.",
+          "display_mode": "CHART_MODE",
+          "name": "Study Count by Phase",
+          "search_query": "[Study Count] [Phase Label] sort by [Phase Label] [Phase Label] != [Phase Label].'early p1' [Phase Label].'no phase'",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {}},{\"columnId\": \"Study Count\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Phase Label",
+              "Study Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Phase Label",
+                "headline_aggregation": "COUNT_DISTINCT"
+              },
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_10",
+        "viz_guid": "a9905c6f-bd31-4583-a52e-57a878255805"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Average Enrollment"
+            },
+            {
+              "name": "Completion Rate"
+            },
+            {
+              "name": "Phase Label"
+            },
+            {
+              "name": "Study Count"
+            }
+          ],
+          "chart": {
+            "axis_configs": [
+              {
+                "color": [
+                  "Phase Label"
+                ],
+                "size": "Study Count",
+                "x": [
+                  "Completion Rate"
+                ],
+                "y": [
+                  "Average Enrollment"
+                ]
+              }
+            ],
+            "chart_columns": [
+              {
+                "column_id": "Average Enrollment"
+              },
+              {
+                "column_id": "Completion Rate"
+              },
+              {
+                "column_id": "Phase Label"
+              },
+              {
+                "column_id": "Study Count"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"visibleSeriesNames\": [\"phase 1\",\"phase 2\",\"phase 3\",\"phase 4\",\"p2 / p3\",\"p1 / p2\",\"early p1\"],\"gridLines\": {\"xGridlineEnabled\": true,\"yGridlineEnabled\": true},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"stackedAsPercentFormat\": {\"category\": \"PERCENTAGE\",\"percentageFormatConfig\": {\"decimals\": 2.0,\"removeTrailingZeroes\": false},\"isCategoryEditable\": false},\"customProps\": \"{\\\"tileType\\\":null,\\\"advancedProperties\\\":{\\\"tooltip\\\":{\\\"enabled\\\":true,\\\"borderWidth\\\":\\\"1\\\",\\\"opacity\\\":\\\"\\\",\\\"label\\\":{},\\\"value\\\":{}},\\\"regression\\\":{\\\"lineWidth\\\":\\\"\\\"},\\\"gridlines\\\":{\\\"xAxis\\\":{\\\"gridLineColor\\\":\\\"#EAEDF2\\\",\\\"gridLineWidth\\\":1,\\\"gridLineDashStyle\\\":\\\"Dash\\\"},\\\"yAxis\\\":{\\\"gridLineColor\\\":\\\"#EAEDF2\\\",\\\"gridLineWidth\\\":1,\\\"gridLineDashStyle\\\":\\\"Dash\\\"}},\\\"answerLevelSettings\\\":{\\\"chart\\\":{\\\"backgroundStyle\\\":null},\\\"plotArea\\\":{\\\"backgroundStyle\\\":null},\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"\\\",\\\"connectingLines\\\":false},\\\"stackLabelStyles\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{}}},\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnalyseChangeCta\\\":true,\\\"showAnomalies\\\":null,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"dataFieldArea\": \"column\",\"pivotSummariesState\": {}},\"legendPosition\": \"TOP_LEGEND\",\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Completion Rate\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null},\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Average Enrollment\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Study Count\",\"columnProperty\": {\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"3233833e-c2af-4db6-b610-dc5ef5aa5006\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Average Enrollment\"],\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"d79a4c45-afbf-4303-ba6e-b78f18636095\\\",\\\"key\\\":\\\"nameTextStyle\\\"},\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"d79a4c45-afbf-4303-ba6e-b78f18636095\\\",\\\"key\\\":\\\"labelTextStyle\\\"},\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}},{\"id\": \"d79a4c45-afbf-4303-ba6e-b78f18636095\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Completion Rate\"],\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}}],\"seriesColors\": [{\"serieName\": \"phase 1\",\"color\": \"rgba(20,184,166,0.5)\"},{\"serieName\": \"phase 2\",\"color\": \"rgba(99,102,241,0.5)\"},{\"serieName\": \"phase 3\",\"color\": \"rgba(244,63,94,0.5)\"},{\"serieName\": \"phase 4\",\"color\": \"rgba(14,165,233,0.5)\"}],\"systemSeriesColors\": [{\"serieName\": \"phase 1\",\"color\": \"rgba(20,184,166,0.5)\"},{\"serieName\": \"phase 2\",\"color\": \"rgba(99,102,241,0.5)\"},{\"serieName\": \"phase 3\",\"color\": \"rgba(244,63,94,0.5)\"},{\"serieName\": \"phase 4\",\"color\": \"rgba(14,165,233,0.5)\"},{\"serieName\": \"early p1\",\"color\": \"rgba(46,117,240,0.5)\"},{\"serieName\": \"p1 / p2\",\"color\": \"rgba(72,209,224,0.5)\"},{\"serieName\": \"p2 / p3\",\"color\": \"rgba(252,200,56,0.5)\"}]}",
+            "custom_visual_props": "{\"code\":\"const { muze, getDataFromSearchQuery } \\u003d viz;\\nconst data \\u003d getDataFromSearchQuery();\\nconst c \\u003d {\\u0027Phase 1\\u0027:\\u0027#14B8A6\\u0027,\\u0027Phase 2\\u0027:\\u0027#6366F1\\u0027,\\u0027Phase 3\\u0027:\\u0027#8B5CF6\\u0027,\\u0027Phase 4\\u0027:\\u0027#F43F5E\\u0027,\\u0027P1 / P2\\u0027:\\u0027#2DD4BF\\u0027,\\u0027P2 / P3\\u0027:\\u0027#F59E0B\\u0027,\\u0027Early P1\\u0027:\\u0027#0EA5E9\\u0027,\\u0027No phase\\u0027:\\u0027#94A3B8\\u0027};\\nconst fields \\u003d data.getFieldspace().fields.map(f \\u003d\\u003e f.name());\\nconst phaseField \\u003d fields.find(f \\u003d\\u003e f.includes(\\u0027Phase\\u0027)) || \\u0027Phase Label\\u0027;\\nconst crField \\u003d fields.find(f \\u003d\\u003e f.includes(\\u0027Completion\\u0027) || f.includes(\\u0027Rate\\u0027)) || \\u0027Completion Rate\\u0027;\\nconst aeField \\u003d fields.find(f \\u003d\\u003e f.includes(\\u0027Enrollment\\u0027) || f.includes(\\u0027enrollment\\u0027)) || \\u0027Average Enrollment\\u0027;\\nconst scField \\u003d fields.find(f \\u003d\\u003e f.includes(\\u0027Count\\u0027) || f.includes(\\u0027count\\u0027)) || \\u0027Study Count\\u0027;\\nmuze.canvas()\\n  .rows([aeField])\\n  .columns([crField])\\n  .detail([phaseField])\\n  .layers([{\\n    mark: \\u0027point\\u0027,\\n    encoding: {\\n      size: {\\n        field: scField,\\n        scale: { type: \\u0027linear\\u0027, domain: [0, 100000], range: [80, 1800] }\\n      },\\n      color: { field: phaseField, value: (d) \\u003d\\u003e c[d] || \\u0027#94A3B8\\u0027 },\\n      opacity: { value: () \\u003d\\u003e 0.8 }\\n    }\\n  }])\\n  .config({\\n    axes: {\\n      x: { name: \\u0027Completion Rate\\u0027 },\\n      y: { name: \\u0027Avg Enrollment\\u0027 }\\n    },\\n    legend: { color: { show: false } }\\n  })\\n  .data(data)\\n  .mount(\\u0027#chart\\u0027);\"}",
+            "type": "BUBBLE",
+            "viz_style": "{}"
+          },
+          "description": "Phase 1 has best completion rate (29.7%). Phase 2 sits in the low-completion danger zone. Phase 4 is enrollment outlier at 4x portfolio average.",
+          "display_mode": "CHART_MODE",
+          "name": "Phase Efficiency Matrix",
+          "search_query": "[Completion Rate] [Average Enrollment] [Study Count] [Phase Label] [Phase Label] != [Phase Label].'no phase' [Phase Label].{null} [Phase Label] = [Phase Label].'early p1' [Phase Label].'p1 / p2' [Phase Label].'p2 / p3' [Phase Label].'phase 1' [Phase Label].'phase 2' [Phase Label].'phase 3' [Phase Label].'phase 4'",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {}},{\"columnId\": \"Completion Rate\",\"columnProperty\": {}},{\"columnId\": \"Average Enrollment\",\"columnProperty\": {}},{\"columnId\": \"Study Count\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Phase Label",
+              "Completion Rate",
+              "Average Enrollment",
+              "Study Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Average Enrollment",
+                "headline_aggregation": "TABLE_AGGR"
+              },
+              {
+                "column_id": "Completion Rate",
+                "headline_aggregation": "SUM"
+              },
+              {
+                "column_id": "Phase Label",
+                "headline_aggregation": "COUNT_DISTINCT"
+              },
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_11",
+        "viz_guid": "4cad6311-de7a-4e37-a7f5-b6d9f5e3768a"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Average Enrollment"
+            },
+            {
+              "name": "Average Line"
+            },
+            {
+              "name": "Phase Label",
+              "sort_info": {
+                "category": "CUSTOM",
+                "custom_order": [
+                  "early p1",
+                  "phase 1",
+                  "p1 / p2",
+                  "phase 2",
+                  "p2 / p3",
+                  "phase 3",
+                  "phase 4",
+                  "no phase"
+                ]
+              }
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Average Enrollment"
+              },
+              {
+                "column_id": "Average Line"
+              },
+              {
+                "column_id": "Phase Label"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Average Enrollment\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"5ce1b127-b8f3-42cc-9849-c48d252825e5\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Average Enrollment\"],\"isOpposite\": false}},{\"id\": \"eeea205d-fcb4-4401-98f8-5d204c52ffee\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Phase Label\"]}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Phase Label",
+                      "Average Enrollment"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"Ly8g4pSA4pSAIFRob3VnaHRTcG90IGNvbnRleHQg4pSA4pSACi8vIFVuY29tbWVudCB0aGUgbGluZSBiZWxvdyB3aGVuIHBhc3RpbmcgaW50byBUaG91Z2h0U3BvdDoKIGNvbnN0IHsgbXV6ZSwgZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSB9ID0gdml6Owpjb25zdCB7IERhdGFNb2RlbCB9ID0gbXV6ZTsKCi8vIOKUgOKUgCBDb2x1bW4gTmFtZSBDb25zdGFudHMgKHVwZGF0ZSB0aGVzZSB0byBtYXRjaCB5b3VyIGRhdGEpIOKUgOKUgApjb25zdCBQSEFTRV9GSUVMRCAgICA9ICdQaGFzZSBMYWJlbCc7CmNvbnN0IEVOUk9MTF9GSUVMRCAgID0gJ0F2ZXJhZ2UgRW5yb2xsbWVudCc7CmNvbnN0IEFWR19MSU5FX0ZJRUxEID0gJ0F2ZXJhZ2UgTGluZSc7CgovLyDilIDilIAgQ29sb3IgcGFsZXR0ZSDigJQgYXNzaWduZWQgYnkgaW5kZXgsIG5vdCBieSBwaGFzZSBuYW1lIOKUgOKUgApjb25zdCBDT0xPUl9QQUxFVFRFID0gWwogICcjNDc1NTY5JywKICAnIzE0QjhBNicsCiAgJyM2MzY2RjEnLAogICcjOEI1Q0Y2JywKICAnI0Y0M0Y1RScsCiAgJyMyREQ0QkYnLAogICcjRjU5RTBCJywKICAnIzBFQTVFOScKXTsKCi8vIOKUgOKUgCBTY2hlbWEgKHVzZWQgaW4gc3RhbmRhbG9uZSBtb2RlKSDilIDilIAKY29uc3Qgc2NoZW1hID0gWwogIHsgbmFtZTogUEhBU0VfRklFTEQsICAgIHR5cGU6ICdkaW1lbnNpb24nIH0sCiAgeyBuYW1lOiBFTlJPTExfRklFTEQsICAgdHlwZTogJ21lYXN1cmUnLCBkZWZBZ2dGbjogJ2F2ZycgfSwKICB7IG5hbWU6IEFWR19MSU5FX0ZJRUxELCB0eXBlOiAnbWVhc3VyZScsIGRlZkFnZ0ZuOiAnYXZnJyB9Cl07CgovLyDilIDilIAgRmFsbGJhY2sgc2FtcGxlIGRhdGEgKHVzZWQgaW4gc3RhbmRhbG9uZSBtb2RlKSDilIDilIAKY29uc3QgZmFsbGJhY2tEYXRhID0gWwogIHsgIlBoYXNlIExhYmVsIjogIm5vIHBoYXNlIiwgICJBdmVyYWdlIEVucm9sbG1lbnQiOiAyMTIsICAiQXZlcmFnZSBMaW5lIjogNDAzIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAiZWFybHkgcDEiLCAgIkF2ZXJhZ2UgRW5yb2xsbWVudCI6IDI4OSwgICJBdmVyYWdlIExpbmUiOiA0MDMgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSAxIiwgICAiQXZlcmFnZSBFbnJvbGxtZW50IjogMzQxLCAgIkF2ZXJhZ2UgTGluZSI6IDQwMyB9LAogIHsgIlBoYXNlIExhYmVsIjogInAxIC8gcDIiLCAgICJBdmVyYWdlIEVucm9sbG1lbnQiOiA0MDMsICAiQXZlcmFnZSBMaW5lIjogNDAzIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAicGhhc2UgMiIsICAgIkF2ZXJhZ2UgRW5yb2xsbWVudCI6IDUxOCwgICJBdmVyYWdlIExpbmUiOiA0MDMgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwMiAvIHAzIiwgICAiQXZlcmFnZSBFbnJvbGxtZW50IjogODc0LCAgIkF2ZXJhZ2UgTGluZSI6IDQwMyB9LAogIHsgIlBoYXNlIExhYmVsIjogInBoYXNlIDMiLCAgICJBdmVyYWdlIEVucm9sbG1lbnQiOiAxMzQwLCAiQXZlcmFnZSBMaW5lIjogNDAzIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAicGhhc2UgNCIsICAgIkF2ZXJhZ2UgRW5yb2xsbWVudCI6IDIxMDUsICJBdmVyYWdlIExpbmUiOiA0MDMgfQpdOwoKLy8g4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQCi8vIERBVEEgU09VUkNFIOKAlCBhdXRvLWRldGVjdHMgZW52aXJvbm1lbnQsIG5vIG1hbnVhbCBlZGl0cyBuZWVkZWQKLy8g4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQCmxldCBkbTsKaWYgKHR5cGVvZiBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5ID09PSAnZnVuY3Rpb24nKSB7CiAgLy8g4pSA4pSAIFJ1bm5pbmcgaW4gVGhvdWdodFNwb3Qg4oCUIGxpdmUgZGF0YSDilIDilIAKICBkbSA9IGdldERhdGFGcm9tU2VhcmNoUXVlcnkoKTsKICAvLyDilIDilIAgRGVidWc6IGluc3BlY3Qgd2hhdCBUaG91Z2h0U3BvdCBzZW50IOKUgOKUgAogIGNvbnN0IHRzUmVzdWx0ID0gZG0uZ2V0RGF0YSgpOwogIGNvbnNvbGUubG9nKCdbVFNdIFNjaGVtYTonLCB0c1Jlc3VsdC5zY2hlbWEpOwogIGNvbnNvbGUubG9nKCdbVFNdIERhdGEgKGFsbCByb3dzKTonLCB0c1Jlc3VsdC5kYXRhKTsKICBjb25zb2xlLmxvZygnW1RTXSBGaXJzdCByb3c6JywgdHNSZXN1bHQuZGF0YVswXSk7Cn0gZWxzZSB7CiAgLy8g4pSA4pSAIFJ1bm5pbmcgc3RhbmRhbG9uZSDigJQgdXNlIGZhbGxiYWNrIOKUgOKUgAogIGNvbnN0IGZvcm1hdHRlZERhdGEgPSBEYXRhTW9kZWwubG9hZERhdGFTeW5jKGZhbGxiYWNrRGF0YSwgc2NoZW1hKTsKICBkbSA9IG5ldyBEYXRhTW9kZWwoZm9ybWF0dGVkRGF0YSk7Cn0KCi8vIOKUgOKUgCBFeHRyYWN0IHJvd3MgZnJvbSBEYXRhTW9kZWwgKGlkZW50aWNhbCBpbiBib3RoIGVudmlyb25tZW50cykg4pSA4pSACmNvbnN0IHJlc3VsdCAgPSBkbS5nZXREYXRhKCk7CmNvbnN0IGNvbHVtbnMgPSByZXN1bHQuc2NoZW1hLm1hcChzID0+IHMubmFtZSk7CmNvbnN0IHJvd3MgICAgPSByZXN1bHQuZGF0YS5tYXAocm93ID0+IHsKICBjb25zdCBvYmogPSB7fTsKICBjb2x1bW5zLmZvckVhY2goKGNvbCwgaSkgPT4geyBvYmpbY29sXSA9IHJvd1tpXTsgfSk7CiAgcmV0dXJuIG9iajsKfSk7CgovLyDilIDilIAgU29ydCBhc2NlbmRpbmcgYnkgQXZlcmFnZSBFbnJvbGxtZW50IOKUgOKUgApjb25zdCBzb3J0ZWQgPSByb3dzCiAgLmZpbHRlcihkID0+IGRbUEhBU0VfRklFTERdICYmIGRbRU5ST0xMX0ZJRUxEXSAhPT0gbnVsbCkKICAuc29ydCgoYSwgYikgPT4gYVtFTlJPTExfRklFTERdIC0gYltFTlJPTExfRklFTERdKTsKCi8vIOKUgOKUgCBEeW5hbWljYWxseSBsb2FkIENoYXJ0LmpzIOKUgOKUgAovLyBUaG91Z2h0U3BvdDogUmVtb3ZlIHRoZSBkeW5hbWljIGxvYWRpbmcgYmxvY2sgYmVsb3cgYW5kIGFkZCB0aGUgQ0ROIFVSTCB0byB0aGUgSFRNTCB0YWIgaW5zdGVhZApjb25zdCBjanNTY3JpcHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTsKY2pzU2NyaXB0LnNyYyA9ICdodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2NoYXJ0LmpzQDQvZGlzdC9jaGFydC51bWQubWluLmpzJzsKYXdhaXQgbmV3IFByb21pc2UoKHJlc29sdmUsIHJlamVjdCkgPT4gewogIGNqc1NjcmlwdC5vbmxvYWQgPSByZXNvbHZlOwogIGNqc1NjcmlwdC5vbmVycm9yID0gcmVqZWN0OwogIGRvY3VtZW50LmhlYWQuYXBwZW5kQ2hpbGQoY2pzU2NyaXB0KTsKfSk7CgovLyDilIDilIAgTG9hZCBjaGFydGpzLXBsdWdpbi1hbm5vdGF0aW9uIGZvciB0aGUgYmVuY2htYXJrIGxpbmUg4pSA4pSACmNvbnN0IGFubm90U2NyaXB0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7CmFubm90U2NyaXB0LnNyYyA9ICdodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2NoYXJ0anMtcGx1Z2luLWFubm90YXRpb25AMy9kaXN0L2NoYXJ0anMtcGx1Z2luLWFubm90YXRpb24ubWluLmpzJzsKYXdhaXQgbmV3IFByb21pc2UoKHJlc29sdmUsIHJlamVjdCkgPT4gewogIGFubm90U2NyaXB0Lm9ubG9hZCA9IHJlc29sdmU7CiAgYW5ub3RTY3JpcHQub25lcnJvciA9IHJlamVjdDsKICBkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKGFubm90U2NyaXB0KTsKfSk7CgovLyDilIDilIAgUmVuZGVyIHdpdGggQ2hhcnQuanMg4pSA4pSACmNvbnN0IGN0eCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdlbnJvbGxtZW50Q2hhcnQnKS5nZXRDb250ZXh0KCcyZCcpOwoKY29uc3QgYmVuY2htYXJrVmFsdWUgPSBzb3J0ZWRbMF0/LltBVkdfTElORV9GSUVMRF0gPz8gNDAzOwoKbmV3IENoYXJ0KGN0eCwgewogIHR5cGU6ICdiYXInLAogIGRhdGE6IHsKICAgIGxhYmVsczogc29ydGVkLm1hcChkID0+IGRbUEhBU0VfRklFTERdKSwKICAgIGRhdGFzZXRzOiBbewogICAgICBsYWJlbDogRU5ST0xMX0ZJRUxELAogICAgICBkYXRhOiBzb3J0ZWQubWFwKGQgPT4gZFtFTlJPTExfRklFTERdKSwKICAgICAgYmFja2dyb3VuZENvbG9yOiBzb3J0ZWQubWFwKChfLCBpKSA9PiBDT0xPUl9QQUxFVFRFW2kgJSBDT0xPUl9QQUxFVFRFLmxlbmd0aF0pLAogICAgICBib3JkZXJSYWRpdXM6IDMsCiAgICAgIGJvcmRlclNraXBwZWQ6IGZhbHNlLAogICAgICBiYXJQZXJjZW50YWdlOiAwLjUsCiAgICAgIGNhdGVnb3J5UGVyY2VudGFnZTogMC44CiAgICB9XQogIH0sCiAgb3B0aW9uczogewogICAgaW5kZXhBeGlzOiAneScsCiAgICByZXNwb25zaXZlOiB0cnVlLAogICAgbWFpbnRhaW5Bc3BlY3RSYXRpbzogZmFsc2UsCiAgICBwbHVnaW5zOiB7CiAgICAgIGxlZ2VuZDogeyBkaXNwbGF5OiBmYWxzZSB9LAogICAgICB0b29sdGlwOiB7CiAgICAgICAgY2FsbGJhY2tzOiB7CiAgICAgICAgICBsYWJlbDogKGN0eCkgPT4gewogICAgICAgICAgICBjb25zdCB2YWwgPSBjdHgucGFyc2VkLng7CiAgICAgICAgICAgIHJldHVybiBgICR7dmFsID49IDEwMDAgPyAodmFsIC8gMTAwMCkudG9GaXhlZCgxKSArICdrJyA6IHZhbH0gYXZnIGVucm9sbG1lbnRgOwogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgYW5ub3RhdGlvbjogewogICAgICAgIGFubm90YXRpb25zOiB7CiAgICAgICAgICBiZW5jaG1hcmtMaW5lOiB7CiAgICAgICAgICAgIHR5cGU6ICdsaW5lJywKICAgICAgICAgICAgc2NhbGVJRDogJ3gnLAogICAgICAgICAgICB2YWx1ZTogYmVuY2htYXJrVmFsdWUsCiAgICAgICAgICAgIGJvcmRlckNvbG9yOiAnIzJGMzk0NycsCiAgICAgICAgICAgIGJvcmRlcldpZHRoOiAxLjUsCiAgICAgICAgICAgIGJvcmRlckRhc2g6IFs1LCA0XSwKICAgICAgICAgICAgbGFiZWw6IHsKICAgICAgICAgICAgICBkaXNwbGF5OiB0cnVlLAogICAgICAgICAgICAgIGNvbnRlbnQ6IGBBdmcgJHtiZW5jaG1hcmtWYWx1ZX1gLAogICAgICAgICAgICAgIHBvc2l0aW9uOiAnc3RhcnQnLAogICAgICAgICAgICAgIHlBZGp1c3Q6IC0xMCwKICAgICAgICAgICAgICBjb2xvcjogJyMyRjM5NDcnLAogICAgICAgICAgICAgIGZvbnQ6IHsgc2l6ZTogMTAsIHdlaWdodDogJzUwMCcsIGZhbWlseTogJ3N5c3RlbS11aScgfSwKICAgICAgICAgICAgICBiYWNrZ3JvdW5kQ29sb3I6ICd0cmFuc3BhcmVudCcsCiAgICAgICAgICAgICAgcGFkZGluZzogMAogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgc2NhbGVzOiB7CiAgICAgIHg6IHsKICAgICAgICBncmlkOiB7CiAgICAgICAgICBjb2xvcjogJ3JnYmEoMTQ4LDE2MywxODQsMC4xNSknLAogICAgICAgICAgbGluZVdpZHRoOiAwLjUKICAgICAgICB9LAogICAgICAgIGJvcmRlcjogeyBkaXNwbGF5OiBmYWxzZSB9LAogICAgICAgIHRpY2tzOiB7CiAgICAgICAgICBjb2xvcjogJyMyRjM5NDcnLAogICAgICAgICAgZm9udDogeyBzaXplOiAxMCwgZmFtaWx5OiAnc3lzdGVtLXVpJyB9LAogICAgICAgICAgY2FsbGJhY2s6ICh2YWwpID0+IHZhbCA+PSAxMDAwID8gKHZhbCAvIDEwMDApLnRvRml4ZWQoMSkgKyAnaycgOiB2YWwKICAgICAgICB9LAogICAgICAgIHRpdGxlOiB7CiAgICAgICAgICBkaXNwbGF5OiB0cnVlLAogICAgICAgICAgdGV4dDogJ0F2ZXJhZ2UgRW5yb2xsbWVudCBwZXIgU3R1ZHknLAogICAgICAgICAgY29sb3I6ICcjMkYzOTQ3JywKICAgICAgICAgIGZvbnQ6IHsgc2l6ZTogMTEsIGZhbWlseTogJ3N5c3RlbS11aScgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgeTogewogICAgICAgIGdyaWQ6IHsKICAgICAgICAgIGNvbG9yOiAncmdiYSgxNDgsMTYzLDE4NCwwLjEpJywKICAgICAgICAgIGxpbmVXaWR0aDogMC41CiAgICAgICAgfSwKICAgICAgICBib3JkZXI6IHsgZGlzcGxheTogZmFsc2UgfSwKICAgICAgICB0aWNrczogewogICAgICAgICAgY29sb3I6ICcjMkYzOTQ3JywKICAgICAgICAgIGZvbnQ6IHsgc2l6ZTogMTEsIGZhbWlseTogJ3N5c3RlbS11aScgfQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgIGxheW91dDogewogICAgICBwYWRkaW5nOiB7IHRvcDogMTAsIHJpZ2h0OiAzMCwgYm90dG9tOiAxMCwgbGVmdDogMCB9CiAgICB9CiAgfQp9KTsKCi8vIFRob3VnaHRTcG90OiBVbmNvbW1lbnQgdGhlIGxpbmUgYmVsb3cgdG8gc2lnbmFsIHJlbmRlciBjb21wbGV0aW9uCnZpei5ldmVudHMuZW1pdFJlbmRlckNvbXBsZXRlZEV2ZW50KCk7\\\",\\\"cssCodeBase64\\\":\\\"I2NoYXJ0IHsKICB3aWR0aDogMTAwJTsKICBoZWlnaHQ6IGNhbGMoMTAwdmggLSAzMnB4KTsKICBiYWNrZ3JvdW5kOiAjZmZmZmZmOwp9CiNlbnJvbGxtZW50Q2hhcnQgewogIHdpZHRoOiAxMDAlOwogIGhlaWdodDogMTAwJTsKfQ\\u003d\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPgogIDxjYW52YXMgaWQ9ImVucm9sbG1lbnRDaGFydCI+PC9jYW52YXM+CjwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "Phase 4 avg enrollment (1,625) is 4x portfolio average (403) — amber benchmark line. Skews planning assumptions.",
+          "display_mode": "CHART_MODE",
+          "formulas": [
+            {
+              "expr": "group_average ( [Enrollment] )",
+              "id": "formula_Average Line",
+              "name": "Average Line",
+              "was_auto_generated": false
+            }
+          ],
+          "name": "Average Enrollment by Phase",
+          "search_query": "average [Enrollment] [Phase Label] [formula_Average Line] sort by [Phase Label] [Phase Label] != 'no phase'",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {}},{\"columnId\": \"Average Enrollment\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Phase Label",
+              "Average Enrollment",
+              "Average Line"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Average Enrollment",
+                "headline_aggregation": "TABLE_AGGR"
+              },
+              {
+                "column_id": "Average Line",
+                "headline_aggregation": "TABLE_AGGR"
+              },
+              {
+                "column_id": "Phase Label",
+                "headline_aggregation": "COUNT_DISTINCT"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_12",
+        "viz_guid": "a6c6093b-2937-46ac-9f99-b95122f426b9"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Average Line"
+            },
+            {
+              "name": "Average Study Duration (Days)"
+            },
+            {
+              "name": "Phase Label",
+              "sort_info": {
+                "category": "CUSTOM",
+                "custom_order": [
+                  "early p1",
+                  "phase 1",
+                  "p1 / p2",
+                  "phase 2",
+                  "p2 / p3",
+                  "phase 3",
+                  "phase 4",
+                  "no phase"
+                ]
+              }
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Average Line"
+              },
+              {
+                "column_id": "Average Study Duration (Days)"
+              },
+              {
+                "column_id": "Phase Label"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Average Study Duration (Days)\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"a5ba4f12-54c3-45c1-802f-b9ba084e8374\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Average Study Duration (Days)\"],\"isOpposite\": false}},{\"id\": \"f9289af1-28a7-4ce7-8091-8360d89c4e7c\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Phase Label\"]}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Phase Label",
+                      "Average Study Duration (Days)"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"Ly8g4pSA4pSAIFRob3VnaHRTcG90IGNvbnRleHQg4pSA4pSACi8vIFVuY29tbWVudCB0aGUgbGluZSBiZWxvdyB3aGVuIHBhc3RpbmcgaW50byBUaG91Z2h0U3BvdDoKIGNvbnN0IHsgbXV6ZSwgZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSB9ID0gdml6OwoKY29uc3QgeyBEYXRhTW9kZWwgfSA9IG11emU7CgovLyDilIDilIAgQ29sdW1uIE5hbWUgQ29uc3RhbnRzICh1cGRhdGUgdGhlc2UgdG8gbWF0Y2ggeW91ciBkYXRhKSDilIDilIAKY29uc3QgUEhBU0VfRklFTEQgICAgPSAnUGhhc2UgTGFiZWwnOwpjb25zdCBFTlJPTExfRklFTEQgICA9ICdBdmVyYWdlIFN0dWR5IER1cmF0aW9uIChEYXlzKSc7CmNvbnN0IEFWR19MSU5FX0ZJRUxEID0gJ0F2ZXJhZ2UgTGluZSc7CgovLyDilIDilIAgQ29sb3IgcGFsZXR0ZSDigJQgYXNzaWduZWQgYnkgaW5kZXgsIG5vdCBieSBwaGFzZSBuYW1lIOKUgOKUgApjb25zdCBDT0xPUl9QQUxFVFRFID0gWwogICcjNDc1NTY5JywKICAnIzE0QjhBNicsCiAgJyM2MzY2RjEnLAogICcjOEI1Q0Y2JywKICAnI0Y0M0Y1RScsCiAgJyMyREQ0QkYnLAogICcjRjU5RTBCJywKICAnIzBFQTVFOScKXTsKCi8vIOKUgOKUgCBTY2hlbWEgKHVzZWQgaW4gc3RhbmRhbG9uZSBtb2RlKSDilIDilIAKY29uc3Qgc2NoZW1hID0gWwogIHsgbmFtZTogUEhBU0VfRklFTEQsICAgIHR5cGU6ICdkaW1lbnNpb24nIH0sCiAgeyBuYW1lOiBFTlJPTExfRklFTEQsICAgdHlwZTogJ21lYXN1cmUnLCBkZWZBZ2dGbjogJ2F2ZycgfSwKICB7IG5hbWU6IEFWR19MSU5FX0ZJRUxELCB0eXBlOiAnbWVhc3VyZScsIGRlZkFnZ0ZuOiAnYXZnJyB9Cl07CgovLyDilIDilIAgRmFsbGJhY2sgc2FtcGxlIGRhdGEgKHVzZWQgaW4gc3RhbmRhbG9uZSBtb2RlKSDilIDilIAKY29uc3QgZmFsbGJhY2tEYXRhID0gWwogIHsgIlBoYXNlIExhYmVsIjogIm5vIHBoYXNlIiwgICJBdmVyYWdlIEVucm9sbG1lbnQiOiAyMTIsICAiQXZlcmFnZSBMaW5lIjogNDAzIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAiZWFybHkgcDEiLCAgIkF2ZXJhZ2UgRW5yb2xsbWVudCI6IDI4OSwgICJBdmVyYWdlIExpbmUiOiA0MDMgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwaGFzZSAxIiwgICAiQXZlcmFnZSBFbnJvbGxtZW50IjogMzQxLCAgIkF2ZXJhZ2UgTGluZSI6IDQwMyB9LAogIHsgIlBoYXNlIExhYmVsIjogInAxIC8gcDIiLCAgICJBdmVyYWdlIEVucm9sbG1lbnQiOiA0MDMsICAiQXZlcmFnZSBMaW5lIjogNDAzIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAicGhhc2UgMiIsICAgIkF2ZXJhZ2UgRW5yb2xsbWVudCI6IDUxOCwgICJBdmVyYWdlIExpbmUiOiA0MDMgfSwKICB7ICJQaGFzZSBMYWJlbCI6ICJwMiAvIHAzIiwgICAiQXZlcmFnZSBFbnJvbGxtZW50IjogODc0LCAgIkF2ZXJhZ2UgTGluZSI6IDQwMyB9LAogIHsgIlBoYXNlIExhYmVsIjogInBoYXNlIDMiLCAgICJBdmVyYWdlIEVucm9sbG1lbnQiOiAxMzQwLCAiQXZlcmFnZSBMaW5lIjogNDAzIH0sCiAgeyAiUGhhc2UgTGFiZWwiOiAicGhhc2UgNCIsICAgIkF2ZXJhZ2UgRW5yb2xsbWVudCI6IDIxMDUsICJBdmVyYWdlIExpbmUiOiA0MDMgfQpdOwoKLy8g4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQCi8vIERBVEEgU09VUkNFIOKAlCBhdXRvLWRldGVjdHMgZW52aXJvbm1lbnQsIG5vIG1hbnVhbCBlZGl0cyBuZWVkZWQKLy8g4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQCmxldCBkbTsKaWYgKHR5cGVvZiBnZXREYXRhRnJvbVNlYXJjaFF1ZXJ5ID09PSAnZnVuY3Rpb24nKSB7CiAgLy8g4pSA4pSAIFJ1bm5pbmcgaW4gVGhvdWdodFNwb3Qg4oCUIGxpdmUgZGF0YSDilIDilIAKICBkbSA9IGdldERhdGFGcm9tU2VhcmNoUXVlcnkoKTsKICAvLyDilIDilIAgRGVidWc6IGluc3BlY3Qgd2hhdCBUaG91Z2h0U3BvdCBzZW50IOKUgOKUgAogIGNvbnN0IHRzUmVzdWx0ID0gZG0uZ2V0RGF0YSgpOwogIGNvbnNvbGUubG9nKCdbVFNdIFNjaGVtYTonLCB0c1Jlc3VsdC5zY2hlbWEpOwogIGNvbnNvbGUubG9nKCdbVFNdIERhdGEgKGFsbCByb3dzKTonLCB0c1Jlc3VsdC5kYXRhKTsKICBjb25zb2xlLmxvZygnW1RTXSBGaXJzdCByb3c6JywgdHNSZXN1bHQuZGF0YVswXSk7Cn0gZWxzZSB7CiAgLy8g4pSA4pSAIFJ1bm5pbmcgc3RhbmRhbG9uZSDigJQgdXNlIGZhbGxiYWNrIOKUgOKUgAogIGNvbnN0IGZvcm1hdHRlZERhdGEgPSBEYXRhTW9kZWwubG9hZERhdGFTeW5jKGZhbGxiYWNrRGF0YSwgc2NoZW1hKTsKICBkbSA9IG5ldyBEYXRhTW9kZWwoZm9ybWF0dGVkRGF0YSk7Cn0KCi8vIOKUgOKUgCBFeHRyYWN0IHJvd3MgZnJvbSBEYXRhTW9kZWwgKGlkZW50aWNhbCBpbiBib3RoIGVudmlyb25tZW50cykg4pSA4pSACmNvbnN0IHJlc3VsdCAgPSBkbS5nZXREYXRhKCk7CmNvbnN0IGNvbHVtbnMgPSByZXN1bHQuc2NoZW1hLm1hcChzID0+IHMubmFtZSk7CmNvbnN0IHJvd3MgICAgPSByZXN1bHQuZGF0YS5tYXAocm93ID0+IHsKICBjb25zdCBvYmogPSB7fTsKICBjb2x1bW5zLmZvckVhY2goKGNvbCwgaSkgPT4geyBvYmpbY29sXSA9IHJvd1tpXTsgfSk7CiAgcmV0dXJuIG9iajsKfSk7CgovLyDilIDilIAgU29ydCBhc2NlbmRpbmcgYnkgQXZlcmFnZSBFbnJvbGxtZW50IOKUgOKUgApjb25zdCBzb3J0ZWQgPSByb3dzCiAgLmZpbHRlcihkID0+IGRbUEhBU0VfRklFTERdICYmIGRbRU5ST0xMX0ZJRUxEXSAhPT0gbnVsbCkKICAuc29ydCgoYSwgYikgPT4gYVtFTlJPTExfRklFTERdIC0gYltFTlJPTExfRklFTERdKTsKCi8vIOKUgOKUgCBEeW5hbWljYWxseSBsb2FkIENoYXJ0LmpzIOKUgOKUgAovLyBUaG91Z2h0U3BvdDogUmVtb3ZlIHRoZSBkeW5hbWljIGxvYWRpbmcgYmxvY2sgYmVsb3cgYW5kIGFkZCB0aGUgQ0ROIFVSTCB0byB0aGUgSFRNTCB0YWIgaW5zdGVhZApjb25zdCBjanNTY3JpcHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTsKY2pzU2NyaXB0LnNyYyA9ICdodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2NoYXJ0LmpzQDQvZGlzdC9jaGFydC51bWQubWluLmpzJzsKYXdhaXQgbmV3IFByb21pc2UoKHJlc29sdmUsIHJlamVjdCkgPT4gewogIGNqc1NjcmlwdC5vbmxvYWQgPSByZXNvbHZlOwogIGNqc1NjcmlwdC5vbmVycm9yID0gcmVqZWN0OwogIGRvY3VtZW50LmhlYWQuYXBwZW5kQ2hpbGQoY2pzU2NyaXB0KTsKfSk7CgovLyDilIDilIAgTG9hZCBjaGFydGpzLXBsdWdpbi1hbm5vdGF0aW9uIGZvciB0aGUgYmVuY2htYXJrIGxpbmUg4pSA4pSACmNvbnN0IGFubm90U2NyaXB0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7CmFubm90U2NyaXB0LnNyYyA9ICdodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2NoYXJ0anMtcGx1Z2luLWFubm90YXRpb25AMy9kaXN0L2NoYXJ0anMtcGx1Z2luLWFubm90YXRpb24ubWluLmpzJzsKYXdhaXQgbmV3IFByb21pc2UoKHJlc29sdmUsIHJlamVjdCkgPT4gewogIGFubm90U2NyaXB0Lm9ubG9hZCA9IHJlc29sdmU7CiAgYW5ub3RTY3JpcHQub25lcnJvciA9IHJlamVjdDsKICBkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKGFubm90U2NyaXB0KTsKfSk7CgovLyDilIDilIAgUmVuZGVyIHdpdGggQ2hhcnQuanMg4pSA4pSACmNvbnN0IGN0eCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdlbnJvbGxtZW50Q2hhcnQnKS5nZXRDb250ZXh0KCcyZCcpOwoKY29uc3QgYmVuY2htYXJrVmFsdWUgPSBzb3J0ZWRbMF0/LltBVkdfTElORV9GSUVMRF0gPz8gNDAzOwoKbmV3IENoYXJ0KGN0eCwgewogIHR5cGU6ICdiYXInLAogIGRhdGE6IHsKICAgIGxhYmVsczogc29ydGVkLm1hcChkID0+IGRbUEhBU0VfRklFTERdKSwKICAgIGRhdGFzZXRzOiBbewogICAgICBsYWJlbDogRU5ST0xMX0ZJRUxELAogICAgICBkYXRhOiBzb3J0ZWQubWFwKGQgPT4gZFtFTlJPTExfRklFTERdKSwKICAgICAgYmFja2dyb3VuZENvbG9yOiBzb3J0ZWQubWFwKChfLCBpKSA9PiBDT0xPUl9QQUxFVFRFW2kgJSBDT0xPUl9QQUxFVFRFLmxlbmd0aF0pLAogICAgICBib3JkZXJSYWRpdXM6IDMsCiAgICAgIGJvcmRlclNraXBwZWQ6IGZhbHNlLAogICAgICBiYXJQZXJjZW50YWdlOiAwLjUsCiAgICAgIGNhdGVnb3J5UGVyY2VudGFnZTogMC44CiAgICB9XQogIH0sCiAgb3B0aW9uczogewogICAgaW5kZXhBeGlzOiAneScsCiAgICByZXNwb25zaXZlOiB0cnVlLAogICAgbWFpbnRhaW5Bc3BlY3RSYXRpbzogZmFsc2UsCiAgICBwbHVnaW5zOiB7CiAgICAgIGxlZ2VuZDogeyBkaXNwbGF5OiBmYWxzZSB9LAogICAgICB0b29sdGlwOiB7CiAgICAgICAgY2FsbGJhY2tzOiB7CiAgICAgICAgICBsYWJlbDogKGN0eCkgPT4gewogICAgICAgICAgICBjb25zdCB2YWwgPSBjdHgucGFyc2VkLng7CiAgICAgICAgICAgIHJldHVybiBgICR7dmFsID49IDEwMDAgPyAodmFsIC8gMTAwMCkudG9GaXhlZCgxKSArICdrJyA6IHZhbH0gYXZnIGVucm9sbG1lbnRgOwogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgYW5ub3RhdGlvbjogewogICAgICAgIGFubm90YXRpb25zOiB7CiAgICAgICAgICBiZW5jaG1hcmtMaW5lOiB7CiAgICAgICAgICAgIHR5cGU6ICdsaW5lJywKICAgICAgICAgICAgc2NhbGVJRDogJ3gnLAogICAgICAgICAgICB2YWx1ZTogYmVuY2htYXJrVmFsdWUsCiAgICAgICAgICAgIGJvcmRlckNvbG9yOiAnIzJGMzk0NycsCiAgICAgICAgICAgIGJvcmRlcldpZHRoOiAxLjUsCiAgICAgICAgICAgIGJvcmRlckRhc2g6IFs1LCA0XSwKICAgICAgICAgICAgbGFiZWw6IHsKICAgICAgICAgICAgICBkaXNwbGF5OiB0cnVlLAogICAgICAgICAgICAgIGNvbnRlbnQ6IGBBdmcgJHtiZW5jaG1hcmtWYWx1ZX1gLAogICAgICAgICAgICAgIHBvc2l0aW9uOiAnc3RhcnQnLAogICAgICAgICAgICAgIHlBZGp1c3Q6IC0xMCwKICAgICAgICAgICAgICBjb2xvcjogJyMyRjM5NDcnLAogICAgICAgICAgICAgIGZvbnQ6IHsgc2l6ZTogMTAsIHdlaWdodDogJzUwMCcsIGZhbWlseTogJ3N5c3RlbS11aScgfSwKICAgICAgICAgICAgICBiYWNrZ3JvdW5kQ29sb3I6ICd0cmFuc3BhcmVudCcsCiAgICAgICAgICAgICAgcGFkZGluZzogMAogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgc2NhbGVzOiB7CiAgICAgIHg6IHsKICAgICAgICBncmlkOiB7CiAgICAgICAgICBjb2xvcjogJ3JnYmEoMTQ4LDE2MywxODQsMC4xNSknLAogICAgICAgICAgbGluZVdpZHRoOiAwLjUKICAgICAgICB9LAogICAgICAgIGJvcmRlcjogeyBkaXNwbGF5OiBmYWxzZSB9LAogICAgICAgIHRpY2tzOiB7CiAgICAgICAgICBjb2xvcjogJyMyRjM5NDcnLAogICAgICAgICAgZm9udDogeyBzaXplOiAxMCwgZmFtaWx5OiAnc3lzdGVtLXVpJyB9LAogICAgICAgICAgY2FsbGJhY2s6ICh2YWwpID0+IHZhbCA+PSAxMDAwID8gKHZhbCAvIDEwMDApLnRvRml4ZWQoMSkgKyAnaycgOiB2YWwKICAgICAgICB9LAogICAgICAgIHRpdGxlOiB7CiAgICAgICAgICBkaXNwbGF5OiB0cnVlLAogICAgICAgICAgdGV4dDogJ0F2ZXJhZ2UgRW5yb2xsbWVudCBwZXIgU3R1ZHknLAogICAgICAgICAgY29sb3I6ICcjMkYzOTQ3JywKICAgICAgICAgIGZvbnQ6IHsgc2l6ZTogMTEsIGZhbWlseTogJ3N5c3RlbS11aScgfQogICAgICAgIH0KICAgICAgfSwKICAgICAgeTogewogICAgICAgIGdyaWQ6IHsKICAgICAgICAgIGNvbG9yOiAncmdiYSgxNDgsMTYzLDE4NCwwLjEpJywKICAgICAgICAgIGxpbmVXaWR0aDogMC41CiAgICAgICAgfSwKICAgICAgICBib3JkZXI6IHsgZGlzcGxheTogZmFsc2UgfSwKICAgICAgICB0aWNrczogewogICAgICAgICAgY29sb3I6ICcjMkYzOTQ3JywKICAgICAgICAgIGZvbnQ6IHsgc2l6ZTogMTEsIGZhbWlseTogJ3N5c3RlbS11aScgfQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgIGxheW91dDogewogICAgICBwYWRkaW5nOiB7IHRvcDogMTAsIHJpZ2h0OiAzMCwgYm90dG9tOiAxMCwgbGVmdDogMCB9CiAgICB9CiAgfQp9KTsKCi8vIFRob3VnaHRTcG90OiBVbmNvbW1lbnQgdGhlIGxpbmUgYmVsb3cgdG8gc2lnbmFsIHJlbmRlciBjb21wbGV0aW9uCiB2aXouZXZlbnRzLmVtaXRSZW5kZXJDb21wbGV0ZWRFdmVudCgpOw\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"I2NoYXJ0IHsKICB3aWR0aDogMTAwJTsKICBoZWlnaHQ6IGNhbGMoMTAwdmggLSAzMnB4KTsKICBiYWNrZ3JvdW5kOiAjZmZmZmZmOwp9CiNlbnJvbGxtZW50Q2hhcnQgewogIHdpZHRoOiAxMDAlOwogIGhlaWdodDogMTAwJTsKfQ\\u003d\\u003d\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPgogIDxjYW52YXMgaWQ9ImVucm9sbG1lbnRDaGFydCI+PC9jYW52YXM+CjwvZGl2Pg\\u003d\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[119.2883772452237,0.21493401305446014]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "Phase 3 and P1/P2 run longest (~3.1 years). Phase 1 shortest at 2.0 yrs. Duration drives site operating cost.",
+          "display_mode": "CHART_MODE",
+          "formulas": [
+            {
+              "expr": "group_average ( [Study Duration (Days)] )",
+              "id": "formula_Average Line",
+              "name": "Average Line",
+              "was_auto_generated": false
+            }
+          ],
+          "name": "Average Study Duration by Phase",
+          "search_query": "average [Study Duration (Days)] [Phase Label] [formula_Average Line] sort by [Phase Label]",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {}},{\"columnId\": \"Average Study Duration (Days)\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Phase Label",
+              "Average Study Duration (Days)",
+              "Average Line"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Average Line",
+                "headline_aggregation": "TABLE_AGGR"
+              },
+              {
+                "column_id": "Average Study Duration (Days)",
+                "headline_aggregation": "TABLE_AGGR"
+              },
+              {
+                "column_id": "Phase Label",
+                "headline_aggregation": "COUNT_DISTINCT"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_13",
+        "viz_guid": "ab5cf556-f08a-47e3-8146-9c457b77bf04"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Facility Country"
+            },
+            {
+              "name": "Study Count",
+              "sort_info": {
+                "category": "DEFAULT"
+              }
+            }
+          ],
+          "chart": {
+            "axis_configs": [
+              {
+                "x": [
+                  "Facility Country"
+                ],
+                "y": [
+                  "Study Count"
+                ]
+              }
+            ],
+            "chart_columns": [
+              {
+                "column_id": "Facility Country"
+              },
+              {
+                "column_id": "Study Count"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"mapviewport\": {\"center\": [-2733388.427067722,3569486.6032454316],\"zoomLevel\": 2.394425131656508,\"extent\": [-1.3958258163100187E7,-8414624.984958988,8491481.30896474,1.555359819144985E7]},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"stackedAsPercentFormat\": {\"category\": \"PERCENTAGE\",\"percentageFormatConfig\": {\"decimals\": 2.0,\"removeTrailingZeroes\": false},\"isCategoryEditable\": false},\"customProps\": \"{\\\"tileType\\\":null,\\\"advancedProperties\\\":{\\\"tooltip\\\":{\\\"enabled\\\":true,\\\"borderWidth\\\":\\\"1\\\",\\\"opacity\\\":\\\"\\\",\\\"label\\\":{},\\\"value\\\":{}},\\\"regression\\\":{\\\"lineWidth\\\":\\\"\\\"},\\\"gridlines\\\":{\\\"xAxis\\\":{},\\\"yAxis\\\":{}},\\\"answerLevelSettings\\\":{\\\"chart\\\":{\\\"backgroundStyle\\\":null},\\\"plotArea\\\":{\\\"backgroundStyle\\\":null},\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"\\\",\\\"connectingLines\\\":false},\\\"stackLabelStyles\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{}}},\\\"showLabel\\\":true,\\\"showComparison\\\":true,\\\"showSparkline\\\":true,\\\"showAnalyseChangeCta\\\":true,\\\"showAnomalies\\\":null,\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"dataFieldArea\": \"column\",\"pivotSummariesState\": {}},\"showStackedLabels\": true,\"allLabels\": true,\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Study Count\",\"columnProperty\": {\"dataLabels\": true,\"conditionalFormatting\": {\"rows\": [{\"backgroundFormatType\": \"GRADIENT\",\"gradientBackgroundAttrs\": {\"colors\": [\"#0EA5E9\",\"#14B8A6\",\"#6366F1\"],\"backgroundFormatRange\": [1.0,20392.5,40784.0],\"isAutoScaled\": true},\"solidBackgroundAttrs\": {}}]},\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null}}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Facility Country\",\"columnProperty\": {\"dataLabels\": true,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"dataLabels\\\":{\\\"align\\\":\\\"center\\\",\\\"backgroundColor\\\":\\\"\\\",\\\"borderColor\\\":\\\"\\\",\\\"borderWidth\\\":\\\"1\\\",\\\"filter\\\":null,\\\"maxCharacters\\\":\\\"\\\",\\\"style\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null}},\\\"enableMarkers\\\":null,\\\"lineStyle\\\":null,\\\"markerStyle\\\":null},\\\"customCompare\\\":\\\"PREV_AVAILABLE\\\"}\",\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"14ece6a5-1ada-4545-a03a-d534b3658052\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Study Count\"],\"isOpposite\": false,\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"893a8bd2-da4b-4494-aae5-a286da569c3e\\\",\\\"key\\\":\\\"nameTextStyle\\\"},\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":true,\\\"linkedTo\\\":{\\\"type\\\":\\\"AXIS\\\",\\\"id\\\":\\\"893a8bd2-da4b-4494-aae5-a286da569c3e\\\",\\\"key\\\":\\\"labelTextStyle\\\"},\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}},{\"id\": \"893a8bd2-da4b-4494-aae5-a286da569c3e\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Facility Country\",\"Facility Country\"],\"customProps\": \"{\\\"advancedProperties\\\":{\\\"axisSettings\\\":{\\\"visible\\\":true,\\\"axisName\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"isAxisNameVisible\\\":true}},\\\"labels\\\":{\\\"isLinked\\\":false,\\\"linkedTo\\\":null,\\\"enabled\\\":true,\\\"maxCharacters\\\":\\\"\\\"},\\\"ticks\\\":{\\\"showTicks\\\":false,\\\"tickWidth\\\":\\\"1\\\",\\\"tickLength\\\":\\\"5\\\",\\\"tickColor\\\":\\\"#5E5E5E\\\"}}}\"}}],\"systemMultiColorSeriesColors\": [{\"serieName\": \"Study Count\",\"colorMap\": [{\"serieName\": \"Facility Country\",\"color\": [\"#ffffb2\",\"#fddd87\",\"#fba35d\",\"#f75534\",\"#f9140a\",\"#d70315\",\"#b10026\"]}]}]}",
+            "type": "GEO_AREA"
+          },
+          "description": "US leads (32k). China at 19k is closing the gap (1.7x behind). Turkey is a surprising #3 at 11k. APAC expansion is accelerating.",
+          "display_mode": "CHART_MODE",
+          "name": "Geographic Reach — Top 15 Countries",
+          "search_query": "[Study Count] [Facility Country] sort by [Study Count] descending",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Facility Country\",\"columnProperty\": {}},{\"columnId\": \"Study Count\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Facility Country",
+              "Study Count"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Facility Country",
+                "headline_aggregation": "COUNT_DISTINCT"
+              },
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_14",
+        "viz_guid": "dde4fb48-2700-459b-a731-42fb4fa09ec8"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Enrollment Type"
+            },
+            {
+              "name": "Total Enrollment"
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Enrollment Type"
+              },
+              {
+                "column_id": "Total Enrollment"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"chartSpecific\": {\"pivotSummariesState\": {}},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Enrollment Type\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Enrollment\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"e12e1686-4ae5-4cc3-a6b8-929a28203317\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"d3edff96-1765-46eb-b43d-598332b42a16\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"e489b934-b974-4f24-9edb-8df6d9ed9c5b\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Enrollment\"],\"isOpposite\": false}},{\"id\": \"69275d65-46b9-49b1-9617-ab5426cda056\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Enrollment Type\"]}}],\"systemSeriesColors\": [{\"serieName\": \"{null}\",\"color\": \"#82C4E6\"},{\"serieName\": \"actual\",\"color\": \"#9978E5\"},{\"serieName\": \"estimated\",\"color\": \"#E1B171\"}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Enrollment Type",
+                      "Total Enrollment"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiRW5yb2xsbWVudCBUeXBlIgogKiAiVG90YWwgRW5yb2xsbWVudCIKICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAtLS0gRU5EIC0tLSAKICovCmNvbnN0IHsgbXV6ZSwgZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSB9ID0gdml6Owpjb25zdCBkYXRhID0gZ2V0RGF0YUZyb21TZWFyY2hRdWVyeSgpOwoKbXV6ZS5jYW52YXMoKQogIC5yb3dzKFsiVG90YWwgRW5yb2xsbWVudCJdKQogIC5jb2x1bW5zKFtdKQogIC5kYXRhKGRhdGEpCiAgLm1vdW50KCIjY2hhcnQiKTsKCmNvbnN0IHNjaGVtYSAgICA9IGRhdGEuZ2V0RGF0YSgpLnNjaGVtYTsKY29uc3Qgcm93cyAgICAgID0gZGF0YS5nZXREYXRhKCkuZGF0YTsKY29uc3QgZW5yb2xsSWR4ID0gc2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gJ1RvdGFsIEVucm9sbG1lbnQnKTsKY29uc3QgdHlwZUlkeCAgID0gc2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gJ0Vucm9sbG1lbnQgVHlwZScpOwoKbGV0IGFjdHVhbCA9IDAsIGVzdGltYXRlZCA9IDA7CnJvd3MuZm9yRWFjaChyb3cgPT4gewogIGNvbnN0IHR5cGUgPSBTdHJpbmcocm93W3R5cGVJZHhdKS50cmltKCkudG9VcHBlckNhc2UoKTsKICBpZiAodHlwZSA9PT0gJ0FDVFVBTCcpICAgIGFjdHVhbCAgICA9IE51bWJlcihyb3dbZW5yb2xsSWR4XSk7CiAgaWYgKHR5cGUgPT09ICdFU1RJTUFURUQnKSBlc3RpbWF0ZWQgPSBOdW1iZXIocm93W2Vucm9sbElkeF0pOwp9KTsKCmNvbnN0IHRvdGFsICA9IGFjdHVhbCArIGVzdGltYXRlZDsKY29uc3QgYWN0UGN0ID0gdG90YWwgPiAwID8gKChhY3R1YWwgLyB0b3RhbCkgKiAxMDApLnRvRml4ZWQoMSkgKyAnJScgOiAn4oCUJzsKY29uc3QgZXN0UGN0ID0gdG90YWwgPiAwID8gKChlc3RpbWF0ZWQgLyB0b3RhbCkgKiAxMDApLnRvRml4ZWQoMSkgKyAnJScgOiAn4oCUJzsKCmZ1bmN0aW9uIGZtdCh2KSB7CiAgaWYgKHYgPj0gMTAwMDAwMDAwMCkgcmV0dXJuICh2IC8gMTAwMDAwMDAwMCkudG9GaXhlZCgxKSArICdCJzsKICBpZiAodiA+PSAxMDAwMDAwKSAgICByZXR1cm4gKHYgLyAxMDAwMDAwKS50b0ZpeGVkKDEpICsgJ00nOwogIGlmICh2ID49IDEwMDApICAgICAgIHJldHVybiAodiAvIDEwMDApLnRvRml4ZWQoMSkgKyAnayc7CiAgcmV0dXJuIE1hdGgucm91bmQodikudG9Mb2NhbGVTdHJpbmcoKTsKfQoKZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2twaS12YWwnKS50ZXh0Q29udGVudCAgPSBhY3RQY3Q7CmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdrcGktc3ViJykudGV4dENvbnRlbnQgID0gZm10KGFjdHVhbCkgKyAnIGFjdHVhbCDCtyAnICsgZm10KGVzdGltYXRlZCkgKyAnIGVzdGltYXRlZCc7CmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdrcGktcGlsbCcpLnRleHRDb250ZW50ID0gZXN0UGN0ICsgJyBzdGlsbCBwcm9qZWN0ZWQnOw\\u003d\\u003d\\\",\\\"cssCodeBase64\\\":\\\"Ym9keSwgaHRtbCB7CiAgbWFyZ2luOiAwOwogIHBhZGRpbmc6IDA7CiAgaGVpZ2h0OiAxMDAlOwogIG92ZXJmbG93OiBoaWRkZW47Cn0KI2NoYXJ0IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgd2lkdGg6IDFweDsKICBoZWlnaHQ6IDFweDsKICBvdmVyZmxvdzogaGlkZGVuOwogIG9wYWNpdHk6IDA7CiAgcG9pbnRlci1ldmVudHM6IG5vbmU7Cn0KI2twaS1vdmVybGF5IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgdG9wOiAwOwogIGxlZnQ6IDA7CiAgcmlnaHQ6IDA7CiAgYm90dG9tOiAwOwogIGRpc3BsYXk6IGZsZXg7CiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7CiAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7CiAgcGFkZGluZzogOHB4IDIwcHg7CiAgYm94LXNpemluZzogYm9yZGVyLWJveDsKfQoua3BpLXZhbHVlIHsKICBmb250LXNpemU6IDQwcHg7CiAgZm9udC13ZWlnaHQ6IDYwMDsKICBsZXR0ZXItc3BhY2luZzogLTEuNXB4OwogIGNvbG9yOiAjOEI1Q0Y2OwogIGxpbmUtaGVpZ2h0OiAxOwogIG1hcmdpbi1ib3R0b206IDRweDsKfQoua3BpLXN1YiB7CiAgZm9udC1zaXplOiAxMXB4OwogIGNvbG9yOiAjNjQ3NDhCOwp9Ci5rcGktcGlsbCB7CiAgZGlzcGxheTogaW5saW5lLWJsb2NrOwogIG1hcmdpbi10b3A6IDZweDsKICBmb250LXNpemU6IDEwcHg7CiAgZm9udC13ZWlnaHQ6IDUwMDsKICBwYWRkaW5nOiAycHggOHB4OwogIGJvcmRlci1yYWRpdXM6IDIwcHg7CiAgYmFja2dyb3VuZDogcmdiYSgxMzksIDkyLCAyNDYsIDAuMTUpOwogIGNvbG9yOiAjOEI1Q0Y2Owp9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pgo8ZGl2IGlkPSJrcGktb3ZlcmxheSI+CiAgPGRpdiBjbGFzcz0ia3BpLXZhbHVlIiBpZD0ia3BpLXZhbCI+4oCUPC9kaXY+CiAgPGRpdiBjbGFzcz0ia3BpLXN1YiIgaWQ9ImtwaS1zdWIiPmFjdHVhbCB2cyBlc3RpbWF0ZWQ8L2Rpdj4KICA8ZGl2IGNsYXNzPSJrcGktcGlsbCIgaWQ9ImtwaS1waWxsIj7igJQ8L2Rpdj4KPC9kaXY+\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[70,30]}}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "Countries Active — Muze KPI tile.",
+          "display_mode": "CHART_MODE",
+          "dynamic_description": "Countries Active — Muze KPI tile.",
+          "dynamic_name": "Enrollment Coverage",
+          "name": "Enrollment Coverage",
+          "search_query": "[Enrollment] [Enrollment Type] [Start Date].'last 3 years' [Start Date].'this year'",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\"}",
+            "ordered_column_ids": [
+              "Enrollment Type",
+              "Total Enrollment"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Enrollment Type",
+                "headline_aggregation": "COUNT_DISTINCT"
+              },
+              {
+                "column_id": "Total Enrollment",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_15",
+        "viz_guid": "87038721-37b4-43e0-b857-903b6a00438f"
+      },
+      {
+        "answer": {
+          "answer_columns": [
+            {
+              "name": "Average Enrollment"
+            },
+            {
+              "name": "Completion Rate"
+            },
+            {
+              "name": "Phase Label"
+            },
+            {
+              "name": "Study Count"
+            },
+            {
+              "name": "Total Actual Duration"
+            }
+          ],
+          "chart": {
+            "chart_columns": [
+              {
+                "column_id": "Average Enrollment"
+              },
+              {
+                "column_id": "Completion Rate"
+              },
+              {
+                "column_id": "Phase Label"
+              },
+              {
+                "column_id": "Study Count"
+              },
+              {
+                "column_id": "Total Actual Duration"
+              }
+            ],
+            "client_state": "",
+            "client_state_v2": "{\"version\": \"V4DOT2\",\"chartProperties\": {\"gridLines\": {},\"responsiveLayoutPreference\": \"USER_PREFERRED_ON\",\"chartSpecific\": {\"dataFieldArea\": \"column\"},\"kpiDisplayProperties\": {\"showChange\": true,\"showChangeAs\": \"PERCENT\",\"changeInterpretation\": \"UPWARD_IS_GOOD\",\"linkChangeColorsWithAnomaly\": true}},\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Study Count\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Completion Rate\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Average Enrollment\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}},{\"columnId\": \"Total Actual Duration\",\"columnProperty\": {\"kpiColumnProperties\": {\"showAbbreviatedPreviousDate\": false,\"abbreviatedPreviousDate\": \"\",\"handleNullData\": \"ZERO\",\"showSparkline\": true,\"showComparisonDate\": true,\"showCurrentDateLabel\": true,\"showPreviousDateLabel\": true,\"showPreviousValue\": true}}}],\"axisProperties\": [{\"id\": \"170e8b91-0034-4e3a-aca0-97101aa0e95b\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Study Count\"],\"isOpposite\": false}},{\"id\": \"52ed8802-a358-48c9-ab0a-f46654be484d\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Completion Rate\"],\"isOpposite\": true}},{\"id\": \"975acb5d-9505-4051-a9c5-0c5824ff0e14\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Average Enrollment\"],\"isOpposite\": true}},{\"id\": \"6ccefd64-35de-422b-922f-137dae981b73\",\"properties\": {\"axisType\": \"Y\",\"linkedColumns\": [\"Total Actual Duration\"],\"isOpposite\": true}},{\"id\": \"b05cc8d1-0ab2-4909-9b79-8986a8c57d3b\",\"properties\": {\"axisType\": \"X\",\"linkedColumns\": [\"Phase Label\"]}}]}",
+            "custom_chart_config": [
+              {
+                "dimensions": [
+                  {
+                    "columns": [
+                      "Phase Label",
+                      "Study Count",
+                      "Completion Rate",
+                      "Average Enrollment",
+                      "Total Actual Duration"
+                    ],
+                    "key": "fields",
+                    "mode": "COLUMN_DRIVEN"
+                  }
+                ],
+                "key": "basic"
+              }
+            ],
+            "custom_visual_props": "{\"clientState\":\"{\\\"version\\\":1,\\\"playground\\\":{\\\"version\\\":\\\"v1\\\",\\\"code\\\":{\\\"jsCodeBase64\\\":\\\"LyoqCiAqIEF2YWlsYWJsZSBDb2x1bW5zOgogKiAiUGhhc2UgTGFiZWwiCiAqICJTdHVkeSBDb3VudCIKICogIkNvbXBsZXRpb24gUmF0ZSIKICogIkF2ZXJhZ2UgRW5yb2xsbWVudCIKICogIlRvdGFsIEFjdHVhbCBEdXJhdGlvbiIKICogIk1lYXN1cmUgbmFtZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAiTWVhc3VyZSB2YWx1ZXMiIC8vIElmICdtZWFzdXJlVmFsdWVzJyBpcyBlbmFibGVkLgogKiAtLS0gRU5EIC0tLSAKICovCgpjb25zdCB7IG11emUsIGdldERhdGFGcm9tU2VhcmNoUXVlcnkgfSA9IHZpejsKY29uc3QgZGF0YSA9IGdldERhdGFGcm9tU2VhcmNoUXVlcnkoKTsKCm11emUuY2FudmFzKCkKICAucm93cyhbJ1N0dWR5IENvdW50J10pCiAgLmNvbHVtbnMoW10pCiAgLmRhdGEoZGF0YSkKICAubW91bnQoJyNjaGFydCcpOwoKY29uc3Qgc2NoZW1hID0gZGF0YS5nZXREYXRhKCkuc2NoZW1hOwpjb25zdCByb3dzICAgPSBkYXRhLmdldERhdGEoKS5kYXRhOwoKY29uc3QgcGhhc2VJZHggID0gc2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gJ1BoYXNlIExhYmVsJyk7CmNvbnN0IGNvdW50SWR4ICA9IHNjaGVtYS5maW5kSW5kZXgocyA9PiBzLm5hbWUgPT09ICdTdHVkeSBDb3VudCcpOwpjb25zdCBjcklkeCAgICAgPSBzY2hlbWEuZmluZEluZGV4KHMgPT4gcy5uYW1lID09PSAnQ29tcGxldGlvbiBSYXRlJyk7CmNvbnN0IGVucm9sbElkeCA9IHNjaGVtYS5maW5kSW5kZXgocyA9PiBzLm5hbWUgPT09ICdBdmVyYWdlIEVucm9sbG1lbnQnKTsKY29uc3QgZHVySWR4ICAgID0gc2NoZW1hLmZpbmRJbmRleChzID0+IHMubmFtZSA9PT0gJ1RvdGFsIEFjdHVhbCBEdXJhdGlvbicpOwoKY29uc3QgY29sb3JNYXAgPSB7CiAgJ25vIHBoYXNlJzogICcjNjQ3NDhCJywKICAnZWFybHkgcDEnOiAgJyMwRUE1RTknLAogICdwaGFzZSAxJzogICAnIzE0QjhBNicsCiAgJ3AxIC8gcDInOiAgICcjMkRENEJGJywKICAncGhhc2UgMic6ICAgJyM2MzY2RjEnLAogICdwMiAvIHAzJzogICAnI0Y1OUUwQicsCiAgJ3BoYXNlIDMnOiAgICcjOEI1Q0Y2JywKICAncGhhc2UgNCc6ICAgJyNGNDNGNUUnCn07Cgpjb25zdCBwaGFzZU9yZGVyID0gWydwaGFzZSAxJywncGhhc2UgMicsJ3BoYXNlIDMnLCdwaGFzZSA0JywncDEgLyBwMicsJ3AyIC8gcDMnLCdlYXJseSBwMScsJ25vIHBoYXNlJ107Cgpjb25zdCBtYXBwZWQgPSByb3dzLm1hcChyID0+ICh7CiAgcGhhc2U6ICAgcltwaGFzZUlkeF0sCiAgY291bnQ6ICAgcltjb3VudElkeF0gICB8fCAwLAogIGNyOiAgICAgIHJbY3JJZHhdICAgICAgfHwgMCwKICBlbnJvbGw6ICByW2Vucm9sbElkeF0gIHx8IDAsCiAgZHVyOiAgICAgTWF0aC5hYnMocltkdXJJZHhdIHx8IDApCn0pKTsKCmNvbnN0IHNvcnRlZCA9IHBoYXNlT3JkZXIKICAubWFwKHAgPT4gbWFwcGVkLmZpbmQoZCA9PiBkLnBoYXNlID09PSBwKSkKICAuZmlsdGVyKEJvb2xlYW4pOwoKY29uc3QgbWF4Q291bnQgPSBNYXRoLm1heCguLi5zb3J0ZWQubWFwKGQgPT4gZC5jb3VudCkpOwoKZnVuY3Rpb24gZm10KHYpIHsKICBpZiAodiA+PSAxMDAwMDAwKSByZXR1cm4gKHYvMTAwMDAwMCkudG9GaXhlZCgxKSsnTSc7CiAgaWYgKHYgPj0gMTAwMCkgICAgcmV0dXJuICh2LzEwMDApLnRvRml4ZWQoMSkrJ2snOwogIHJldHVybiBNYXRoLnJvdW5kKHYpLnRvTG9jYWxlU3RyaW5nKCk7Cn0KCmZ1bmN0aW9uIHBjdCh2KSB7CiAgcmV0dXJuIHYgPCAxID8gKHYqMTAwKS50b0ZpeGVkKDEpKyclJyA6IHYudG9GaXhlZCgxKSsnJSc7Cn0KCmZ1bmN0aW9uIHlycyh2KSB7CiAgY29uc3QgZCA9IHYgLyBzb3J0ZWQubGVuZ3RoOwogIHJldHVybiBkID4gMCA/IChkLzM2NSkudG9GaXhlZCgxKSsnIHlyJyA6ICfigJQnOwp9CgpmdW5jdGlvbiBzcGFya2Jhcih2YWwsIG1heCwgY29sb3IpIHsKICBjb25zdCB3ID0gTWF0aC5tYXgoMiwgTWF0aC5yb3VuZCgodmFsL21heCkqODApKTsKICByZXR1cm4gYDxkaXYgc3R5bGU9ImRpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjZweCI+CiAgICA8ZGl2IHN0eWxlPSJ3aWR0aDoke3d9cHg7aGVpZ2h0OjZweDtiYWNrZ3JvdW5kOiR7Y29sb3J9O2JvcmRlci1yYWRpdXM6M3B4O2ZsZXgtc2hyaW5rOjAiPjwvZGl2PgogICAgPHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMXB4O2NvbG9yOiM0NzU1Njk7Zm9udC12YXJpYW50LW51bWVyaWM6dGFidWxhci1udW1zIj4ke2ZtdCh2YWwpfTwvc3Bhbj4KICA8L2Rpdj5gOwp9CgpmdW5jdGlvbiBjckJhcih2YWwsIGNvbG9yKSB7CiAgY29uc3QgcCA9IHZhbCA8IDEgPyB2YWwqMTAwIDogdmFsOwogIGNvbnN0IHcgPSBNYXRoLm1heCgyLCBNYXRoLnJvdW5kKHAvMzUqNjApKTsKICByZXR1cm4gYDxkaXYgc3R5bGU9ImRpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjZweCI+CiAgICA8ZGl2IHN0eWxlPSJ3aWR0aDoke3d9cHg7aGVpZ2h0OjZweDtiYWNrZ3JvdW5kOiR7Y29sb3J9O2JvcmRlci1yYWRpdXM6M3B4O2ZsZXgtc2hyaW5rOjA7b3BhY2l0eTowLjgiPjwvZGl2PgogICAgPHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMnB4O2ZvbnQtd2VpZ2h0OjYwMDtjb2xvcjojNDc1NTY5O2ZvbnQtdmFyaWFudC1udW1lcmljOnRhYnVsYXItbnVtcyI+JHtwY3QodmFsKX08L3NwYW4+CiAgPC9kaXY+YDsKfQoKY29uc3QgdGJvZHkgPSBzb3J0ZWQubWFwKGQgPT4gewogIGNvbnN0IGNvbG9yID0gY29sb3JNYXBbZC5waGFzZV0gfHwgJyM0NzU1NjknOwogIGNvbnN0IGF2Z0R1ciA9IGQuZHVyID4gMCA/IChkLmR1ciAvIGQuY291bnQgLyAzNjUpLnRvRml4ZWQoMSkrJyB5cicgOiAn4oCUJzsKICBjb25zdCBhdmdFbnJvbGwgPSBkLmVucm9sbCA+IDAgPyBmbXQoZC5lbnJvbGwpIDogJ+KAlCc7CiAgcmV0dXJuIGA8dHI+CiAgICA8dGQgc3R5bGU9InBhZGRpbmc6MTBweCAxNnB4O3doaXRlLXNwYWNlOm5vd3JhcCI+CiAgICAgIDxkaXYgc3R5bGU9ImRpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjhweCI+CiAgICAgICAgPGRpdiBzdHlsZT0id2lkdGg6MTBweDtoZWlnaHQ6MTBweDtib3JkZXItcmFkaXVzOjUwJTtiYWNrZ3JvdW5kOiR7Y29sb3J9O2ZsZXgtc2hyaW5rOjAiPjwvZGl2PgogICAgICAgIDxzcGFuIHN0eWxlPSJmb250LXNpemU6MTNweDtmb250LXdlaWdodDo2MDA7Y29sb3I6IzQ3NTU2OSI+JHtkLnBoYXNlfTwvc3Bhbj4KICAgICAgPC9kaXY+CiAgICA8L3RkPgogICAgPHRkIHN0eWxlPSJwYWRkaW5nOjEwcHggMTZweCI+JHtzcGFya2JhcihkLmNvdW50LCBtYXhDb3VudCwgY29sb3IpfTwvdGQ+CiAgICA8dGQgc3R5bGU9InBhZGRpbmc6MTBweCAxNnB4Ij4ke2NyQmFyKGQuY3IsIGNvbG9yKX08L3RkPgogICAgPHRkIHN0eWxlPSJwYWRkaW5nOjEwcHggMTZweDtmb250LXNpemU6MTJweDtjb2xvcjojNDc1NTY5O2ZvbnQtdmFyaWFudC1udW1lcmljOnRhYnVsYXItbnVtczt0ZXh0LWFsaWduOnJpZ2h0Ij4ke2F2Z0Vucm9sbH08L3RkPgogICAgPHRkIHN0eWxlPSJwYWRkaW5nOjEwcHggMTZweDtmb250LXNpemU6MTJweDtjb2xvcjojNDc1NTY5O2ZvbnQtdmFyaWFudC1udW1lcmljOnRhYnVsYXItbnVtczt0ZXh0LWFsaWduOnJpZ2h0Ij4ke2F2Z0R1cn08L3RkPgogIDwvdHI+YDsKfSkuam9pbignJyk7Cgpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndGFibGUtYm9keScpLmlubmVySFRNTCA9IHRib2R5Owo\\u003d\\\",\\\"cssCodeBase64\\\":\\\"Ym9keSwgaHRtbCB7CiAgbWFyZ2luOiAwOwogIHBhZGRpbmc6IDA7CiAgaGVpZ2h0OiAxMDAlOwogIG92ZXJmbG93OiBoaWRkZW47CiAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7Cn0KI2NoYXJ0IHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgd2lkdGg6IDFweDsKICBoZWlnaHQ6IDFweDsKICBvcGFjaXR5OiAwOwogIHBvaW50ZXItZXZlbnRzOiBub25lOwp9CiN0YWJsZS13cmFwIHsKICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgdG9wOiAwOyBsZWZ0OiAwOyByaWdodDogMDsgYm90dG9tOiAwOwogIG92ZXJmbG93OiBhdXRvOwogIHBhZGRpbmc6IDA7Cn0KdGFibGUgewogIHdpZHRoOiAxMDAlOwogIGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7CiAgZm9udC1mYW1pbHk6IHN5c3RlbS11aSwgc2Fucy1zZXJpZjsKfQp0aGVhZCB0ciB7CiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHJnYmEoNzEsODUsMTA1LDAuMik7Cn0KdGhlYWQgdGggewogIHBhZGRpbmc6IDhweCAxNnB4OwogIGZvbnQtc2l6ZTogMTBweDsKICBmb250LXdlaWdodDogNjAwOwogIGxldHRlci1zcGFjaW5nOiAwLjhweDsKICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOwogIGNvbG9yOiAjNDc1NTY5OwogIHRleHQtYWxpZ246IGxlZnQ7CiAgd2hpdGUtc3BhY2U6IG5vd3JhcDsKfQp0aGVhZCB0aC5yaWdodCB7IHRleHQtYWxpZ246IHJpZ2h0OyB9CnRib2R5IHRyIHsKICBib3JkZXItYm90dG9tOiAxcHggc29saWQgcmdiYSg3MSw4NSwxMDUsMC4xKTsKICB0cmFuc2l0aW9uOiBiYWNrZ3JvdW5kIDAuMTVzOwp9CnRib2R5IHRyOmhvdmVyIHsKICBiYWNrZ3JvdW5kOiByZ2JhKDcxLDg1LDEwNSwwLjA1KTsKfQp0Ym9keSB0cjpsYXN0LWNoaWxkIHsKICBib3JkZXItYm90dG9tOiBub25lOwp9\\\",\\\"htmlCodeBase64\\\":\\\"PGRpdiBpZD0iY2hhcnQiPjwvZGl2Pgo8ZGl2IGlkPSJ0YWJsZS13cmFwIj4KICA8dGFibGU+CiAgICA8dGhlYWQ+CiAgICAgIDx0cj4KICAgICAgICA8dGg+UGhhc2U8L3RoPgogICAgICAgIDx0aD5TdHVkeSBDb3VudDwvdGg+CiAgICAgICAgPHRoPkNvbXBsZXRpb24gUmF0ZTwvdGg+CiAgICAgICAgPHRoIGNsYXNzPSJyaWdodCI+QXZnIEVucm9sbG1lbnQ8L3RoPgogICAgICAgIDx0aCBjbGFzcz0icmlnaHQiPkF2ZyBEdXJhdGlvbjwvdGg+CiAgICAgIDwvdHI+CiAgICA8L3RoZWFkPgogICAgPHRib2R5IGlkPSJ0YWJsZS1ib2R5Ij48L3Rib2R5PgogIDwvdGFibGU+CjwvZGl2Pgo\\u003d\\\"},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[65.67844925883695,34.32155074116305]},\\\"splitSizes\\\":[55,45],\\\"editorConsoleSplitSizes\\\":[99,1]}\",\"axisVisualProps\":{},\"columnVisualProps\":{},\"dataLabelVisualProps\":{},\"tooltipVisualProps\":{},\"legendVisualProps\":{},\"displayVisualProps\":{}}",
+            "type": "MUZE_STUDIO"
+          },
+          "description": "Bold editorial spark table showing Study Count, Completion Rate, Avg Enrollment and Duration per phase with inline bar indicators.",
+          "display_mode": "CHART_MODE",
+          "name": "Phase Intelligence — Spark Table",
+          "search_query": "[Phase Label] [Study Count] [Completion Rate] [Average Enrollment] [Actual Duration]",
+          "table": {
+            "client_state": "",
+            "client_state_v2": "{\"tableVizPropVersion\": \"V1\",\"columnProperties\": [{\"columnId\": \"Phase Label\",\"columnProperty\": {}},{\"columnId\": \"Study Count\",\"columnProperty\": {}},{\"columnId\": \"Completion Rate\",\"columnProperty\": {}},{\"columnId\": \"Average Enrollment\",\"columnProperty\": {}},{\"columnId\": \"Total Actual Duration\",\"columnProperty\": {}}]}",
+            "ordered_column_ids": [
+              "Phase Label",
+              "Study Count",
+              "Completion Rate",
+              "Average Enrollment",
+              "Total Actual Duration"
+            ],
+            "table_columns": [
+              {
+                "column_id": "Average Enrollment",
+                "headline_aggregation": "TABLE_AGGR"
+              },
+              {
+                "column_id": "Completion Rate",
+                "headline_aggregation": "SUM"
+              },
+              {
+                "column_id": "Phase Label",
+                "headline_aggregation": "COUNT_DISTINCT"
+              },
+              {
+                "column_id": "Study Count",
+                "headline_aggregation": "SUM"
+              },
+              {
+                "column_id": "Total Actual Duration",
+                "headline_aggregation": "SUM"
+              }
+            ]
+          },
+          "tables": [
+            {
+              "id": "Study Overview",
+              "name": "Study Overview",
+              "obj_id": "StudyOverview-29b76499"
+            }
+          ]
+        },
+        "id": "Viz_16",
+        "viz_guid": "4eaf095c-7cdd-4302-a490-7232027d6b96"
+      }
+    ]
+  },
+  "obj_id": "data-41e28ff7"
+}
