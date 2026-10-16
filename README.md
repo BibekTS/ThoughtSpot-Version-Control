@@ -19,7 +19,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | Job | Stages | Environment | What happens |
 |---|---|---|---|
 | `extract` | 1–6 | `dev` | Validate config, authenticate, find tagged objects (and dependencies), export TML, export Spotter memory and NL instructions, sanitize, commit everything to `ts-dev` |
-| `promote` | 7 | – | Open a PR from `promote/<org>/<run_id>` into `ts-prod` with auto-merge enabled (on a dry run the PR is titled `[DRY RUN]` and auto-merge is **not** enabled) |
+| `promote` | 7 | – | Open a PR from `promote/<org>/<run_id>` into `ts-prod` holding only this run's files, and ask GitHub to auto-merge it (on a dry run the PR is titled `[DRY RUN]` and auto-merge is **not** requested) |
 | `import` | 8–9c | `prod` | Sync variables, check connections, validate, import TML, then import memory and NL instructions |
 | `untag_source` | 10 | `dev` | Confirm each object exists in the target, then remove the migration tag from the successes |
 | `report` | 11 | – | Write the summary and failure reports (runs even if earlier jobs failed) |
@@ -36,7 +36,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 4c | `stage4c_export_instructions` | Export NL instructions for each model |
 | 5 | `stage5_sanitize` | Strip GUIDs and the migration tag, find `ts_var(name)` references (quoted or not; built-in variables like `ts_user_timezone` are ignored) |
 | 6 | `stage6_commit` | Commit `orgs/<org>/` to `ts-dev` (retries on concurrent pushes) |
-| 7 | `stage7_promote` | PR into `ts-prod`, auto-merge enabled (not on dry runs) |
+| 7 | `stage7_promote` | PR into `ts-prod` with this run's files (those stamped with the run's `TIMESTAMP`), auto-merge requested (not on dry runs). If GitHub refuses auto-merge, for example because "Allow auto-merge" is off in the repository settings, the log shows a warning, the PR body says a person must merge it, and `stage7_promote.json` records `auto_merge: false` |
 | 8 | `stage8_prod_prep` | Create or check variables, check connections exist in the target, validate-only import |
 | 9 | `stage9_import` | Import TML in dependency order; substitute table db/schema values, then bind each table's database and schema to their own variables (by GUID). A failed bind is a warning on that table in `stage9_import.json` |
 | 9b | `stage9b_import_memory` | Import model memory |
@@ -100,7 +100,7 @@ Dispatch **Actions → ThoughtSpot Migration → Run workflow** with an `org` ke
 | | Dry run (`dry_run: true`) | Live run |
 |---|---|---|
 | Stages 1–6 (extract, export, commit to `ts-dev`) | Run, **including the commit to `ts-dev`** | Run |
-| Stage 7 (promote PR) | Runs and opens the PR titled `[DRY RUN]`, **without auto-merge** | Runs, auto-merge enabled |
+| Stage 7 (promote PR) | Runs and opens the PR titled `[DRY RUN]`, **without auto-merge** | Runs, auto-merge requested |
 | Stage 8 (variables, connections, validate) | Runs, **and can create variable definitions or set org values in the target** | Runs |
 | Stage 9 (TML import) | Skipped | Runs |
 | Stage 9b (memory) | Validates and logs counts, writes nothing | Validates, then applies |

@@ -130,3 +130,115 @@ def test_body_is_not_indented_so_github_does_not_render_a_code_block(calls, tmp_
     assert indented == [], indented
     assert "- ANSWER: 1" in lines and "- LIVEBOARD: 1" in lines and "- LOGICAL_TABLE: 2" in lines
     assert any(l.startswith("## ThoughtSpot TML Promotion") for l in lines)
+
+
+# ---------------------------------------------------------------- only this run's files
+LISTING = "\n".join([
+    "orgs/o/models/a__A-1__T1.table.tml",
+    "orgs/o/models/a__A-1__T0.table.tml",             # an older run
+    "orgs/o/memory/memory__T1.yaml",
+    "orgs/o/memory/memory__T0.yaml",
+    "orgs/o/instructions/instructions__T1.json",
+    "orgs/o/tables/t__T-1__T10.table.tml",            # T10 must not match T1
+])
+
+
+def test_run_files_picks_only_the_runs_timestamp():
+    assert s7.run_files(LISTING, "T1") == [
+        "orgs/o/models/a__A-1__T1.table.tml",
+        "orgs/o/memory/memory__T1.yaml",
+        "orgs/o/instructions/instructions__T1.json",
+    ]
+    assert s7.run_files(LISTING, "T9") == []
+    assert s7.run_files("", "T1") == []
+
+
+@pytest.fixture
+def stamped(calls, monkeypatch):
+    """Like `calls`, but the listing of ts-dev files is real-looking and TIMESTAMP is set."""
+    monkeypatch.setenv("TIMESTAMP", "T1")
+    inner = s7.run
+
+    def fake_run(cmd, check=True, capture=False, env=None):
+        if cmd[:3] == ["git", "ls-tree", "-r"]:
+            calls.append(cmd)
+            return SimpleNamespace(stdout=LISTING, returncode=0)
+        return inner(cmd, check=check, capture=capture, env=env)
+
+    monkeypatch.setattr(s7, "run", fake_run)
+    return calls
+
+
+def test_only_this_runs_files_are_checked_out_and_committed(stamped, tmp_path):
+    s7.promote("o", "run1", MANIFEST, str(tmp_path))
+    want = ["orgs/o/models/a__A-1__T1.table.tml", "orgs/o/memory/memory__T1.yaml",
+            "orgs/o/instructions/instructions__T1.json"]
+    checkout = next(c for c in stamped if c[:2] == ["git", "checkout"] and "--" in c)
+    assert checkout[checkout.index("--") + 1:] == want
+    add = next(c for c in stamped if c[:2] == ["git", "add"])
+    assert add[2:] == want
+    assert not any(c[:3] == ["git", "checkout", "origin/ts-dev"] and c[-1] == "orgs/o/" for c in stamped)
+
+
+def test_no_files_for_this_run_opens_no_pr(stamped, tmp_path, monkeypatch, capsys):
+    monkeypatch.setenv("TIMESTAMP", "T9")
+    assert s7.promote("o", "run1", MANIFEST, str(tmp_path)) == ""
+    assert _gh(stamped, "create") == []
+    assert "No files stamped T9" in capsys.readouterr().out
+
+
+def test_without_a_timestamp_the_whole_org_folder_is_used(calls, tmp_path, monkeypatch):
+    monkeypatch.delenv("TIMESTAMP", raising=False)
+    s7.promote("o", "run1", MANIFEST, str(tmp_path))
+    assert ["git", "checkout", "origin/ts-dev", "--", "orgs/o/"] in calls
+
+
+# ---------------------------------------------------------------- honest auto-merge reporting
+@pytest.fixture
+def refusing(monkeypatch, calls):
+    """gh pr merge --auto fails the way it did on the real run."""
+    inner = s7.run
+
+    def fake_run(cmd, check=True, capture=False, env=None):
+        if cmd[:3] == ["gh", "pr", "merge"]:
+            calls.append(cmd)
+            return SimpleNamespace(stdout="", returncode=1, stderr=(
+                "GraphQL: Auto merge is not allowed for this repository (enablePullRequestAutoMerge)\n"))
+        return inner(cmd, check=check, capture=capture, env=env)
+
+    monkeypatch.setattr(s7, "run", fake_run)
+    return calls
+
+
+def test_a_refused_auto_merge_is_reported_and_the_body_corrected(refusing, tmp_path, capsys):
+    result = {}
+    url = s7.promote("o", "run1", MANIFEST, str(tmp_path), result=result)
+    assert url == PR_URL                                        # the PR still exists
+    cap = capsys.readouterr()
+    assert "Could not enable auto-merge" in cap.err and "not allowed for this repository" in cap.err
+    assert "::warning::Stage 7 could not enable auto-merge" in cap.out
+    assert result["auto_merge"] is False and "not allowed" in result["auto_merge_error"]
+    edit = _gh(refusing, "edit")[0]
+    body = _arg(edit, "--body")
+    assert "Auto-merge could not be enabled" in body and "stays open until a person merges it" in body
+    assert "Auto-merge is enabled" not in body
+
+
+def test_a_successful_auto_merge_leaves_the_body_alone(calls, tmp_path, capsys):
+    result = {}
+    s7.promote("o", "run1", MANIFEST, str(tmp_path), result=result)
+    assert result == {"pr_url": PR_URL, "auto_merge": True}
+    assert _gh(calls, "edit") == []
+    assert "Auto-merge enabled on the promote PR" in capsys.readouterr().out
+
+
+def test_main_writes_the_promote_artifact(calls, tmp_path, monkeypatch):
+    mf = tmp_path / "manifest.json"
+    mf.write_text('[{"type":"LOGICAL_TABLE","folder":"models","name":"M","obj_id":"m1","source_guid":"g1"}]')
+    out = tmp_path / "stage7_promote.json"
+    for k, v in dict(ORG_KEY="o", RUN_ID="r", MANIFEST_OUT=str(mf), REPO_ROOT=str(tmp_path),
+                     PROMOTE_OUT=str(out)).items():
+        monkeypatch.setenv(k, v)
+    s7.main()
+    import json
+    assert json.loads(out.read_text()) == {"pr_url": PR_URL, "auto_merge": True}
