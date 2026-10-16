@@ -32,6 +32,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.secrets import resolve_secret
 from lib.ts_client import TSClient
 from lib.report import RunReport, ObjectRecord
 from lib.tml_utils import parse_tml, extract_refs
@@ -387,8 +388,8 @@ def main():
     cfg = json.loads(Path(cfg_path).read_text())
 
     src = cfg["source"]
-    username = os.environ["TS_SOURCE_USERNAME"]
-    secret_key = os.environ["TS_SOURCE_SECRET_KEY"]
+    username = resolve_secret("TS_SOURCE_USERNAME")
+    secret_key = resolve_secret("TS_SOURCE_SECRET_KEY")
     source_client = TSClient(src["base_url"], src["org_id"], username, secret_key)
     source_client.authenticate()
 
@@ -405,8 +406,8 @@ def main():
         tgt = cfg["target"]
         target_client = TSClient(
             tgt["base_url"], tgt["org_id"],
-            os.environ["TS_TARGET_USERNAME"],
-            os.environ["TS_TARGET_SECRET_KEY"],
+            resolve_secret("TS_TARGET_USERNAME"),
+            resolve_secret("TS_TARGET_SECRET_KEY"),
         )
         target_client.authenticate()
 

@@ -31,6 +31,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.artifacts import resolve_export_file
 from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
+from lib.secrets import resolve_secret
 from lib.ts_client import TSClient
 
 
@@ -162,8 +163,8 @@ def main():
     tgt = cfg["target"]
     target_client = TSClient(
         tgt["base_url"], tgt["org_id"],
-        os.environ["TS_TARGET_USERNAME"],
-        os.environ["TS_TARGET_SECRET_KEY"],
+        resolve_secret("TS_TARGET_USERNAME"),
+        resolve_secret("TS_TARGET_SECRET_KEY"),
     )
     target_client.authenticate()
 

@@ -20,6 +20,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.secrets import resolve_secret
 from lib.ts_client import TSClient
 from lib.spotter_results import load_json, spotter_outcome
 
@@ -225,8 +226,8 @@ def main():
     tgt = cfg["target"]
     target_client = TSClient(
         tgt["base_url"], tgt["org_id"],
-        os.environ["TS_TARGET_USERNAME"],
-        os.environ["TS_TARGET_SECRET_KEY"],
+        resolve_secret("TS_TARGET_USERNAME"),
+        resolve_secret("TS_TARGET_SECRET_KEY"),
     )
     target_client.authenticate()
 
@@ -242,8 +243,8 @@ def main():
     src = cfg["source"]
     source_client = TSClient(
         src["base_url"], src["org_id"],
-        os.environ["TS_SOURCE_USERNAME"],
-        os.environ["TS_SOURCE_SECRET_KEY"],
+        resolve_secret("TS_SOURCE_USERNAME"),
+        resolve_secret("TS_SOURCE_SECRET_KEY"),
     )
     source_client.authenticate()
 

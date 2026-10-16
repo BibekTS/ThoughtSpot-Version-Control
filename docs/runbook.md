@@ -113,7 +113,16 @@ The pipeline uses two GitHub Environments:
 | `TS_TARGET_SECRET_KEY` | Trusted Authentication secret key for the target cluster |
 | `GH_AUTOMATION_TOKEN` | (Optional) GitHub PAT with `repo` + `workflow` scopes, needed for auto-merging PRs |
 
-**Per-org secret overrides:** Stage 2 looks for secrets named `TS_SOURCE_SECRET_KEY_<ORG_KEY_UPPER>` (e.g. `TS_SOURCE_SECRET_KEY_SALES`), but the workflow only passes the four base secrets into the job environment, so overrides currently have no effect. All orgs use the base secrets.
+**Per-org secret overrides:** by default every org uses the four secrets above. To give one org its own credentials, add secrets with the org key as a suffix, in the same environments (`dev` for the source side, `prod` for the target side):
+
+| Secret name | Replaces, for that org only |
+|-------------|-----------------------------|
+| `TS_SOURCE_USERNAME_<ORG_KEY>` | `TS_SOURCE_USERNAME` |
+| `TS_SOURCE_SECRET_KEY_<ORG_KEY>` | `TS_SOURCE_SECRET_KEY` |
+| `TS_TARGET_USERNAME_<ORG_KEY>` | `TS_TARGET_USERNAME` |
+| `TS_TARGET_SECRET_KEY_<ORG_KEY>` | `TS_TARGET_SECRET_KEY` |
+
+For the org `sales` that is `TS_TARGET_SECRET_KEY_SALES`. Each one is optional and independent: set only what differs, and the rest fall back to the shared secret. GitHub secret names are case-insensitive, and may contain only letters, digits and underscores, so an org key with a hyphen cannot have overrides. Stage 2 prints which override it used (the name, never the value). The workflow reads the override with `secrets[format('TS_..._{0}', inputs.org_key)]`, which needs the caller's `secrets: inherit`; every stage that logs in goes through `scripts/lib/secrets.py`.
 
 **To configure environments:**
 1. Go to **Settings → Environments** in the GitHub repo

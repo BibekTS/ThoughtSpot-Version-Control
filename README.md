@@ -145,7 +145,7 @@ variables:                 # TABLE_MAPPING variables for table database / schema
 
 If `target_value` is blank, the variable must already exist in the target org. Stage 8 reports an error when it is missing or has a different type.
 
-Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, `TS_SOURCE_SECRET_KEY`, `TS_TARGET_USERNAME`, `TS_TARGET_SECRET_KEY`, and optionally `GH_AUTOMATION_TOKEN` for auto-merging promote PRs. See the runbook.
+Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, `TS_SOURCE_SECRET_KEY`, `TS_TARGET_USERNAME`, `TS_TARGET_SECRET_KEY`, optionally `GH_AUTOMATION_TOKEN` for auto-merging promote PRs, and optionally per-org overrides such as `TS_TARGET_SECRET_KEY_SALES`. See the runbook.
 
 ## Running a migration
 

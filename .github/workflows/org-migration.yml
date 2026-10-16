@@ -59,6 +59,10 @@ jobs:
       TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
       TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
       TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+      TS_SOURCE_USERNAME__OVERRIDE: ${{ secrets[format('TS_SOURCE_USERNAME_{0}', inputs.org_key)] }}
+      TS_SOURCE_SECRET_KEY__OVERRIDE: ${{ secrets[format('TS_SOURCE_SECRET_KEY_{0}', inputs.org_key)] }}
+      TS_TARGET_USERNAME__OVERRIDE: ${{ secrets[format('TS_TARGET_USERNAME_{0}', inputs.org_key)] }}
+      TS_TARGET_SECRET_KEY__OVERRIDE: ${{ secrets[format('TS_TARGET_SECRET_KEY_{0}', inputs.org_key)] }}
       # Stage output files land in workspace so artifact upload/download works across jobs
       CONFIG_OUT: config.json
       MANIFEST_OUT: manifest.json
@@ -220,6 +224,10 @@ jobs:
       TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
       TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
       TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+      TS_SOURCE_USERNAME__OVERRIDE: ${{ secrets[format('TS_SOURCE_USERNAME_{0}', inputs.org_key)] }}
+      TS_SOURCE_SECRET_KEY__OVERRIDE: ${{ secrets[format('TS_SOURCE_SECRET_KEY_{0}', inputs.org_key)] }}
+      TS_TARGET_USERNAME__OVERRIDE: ${{ secrets[format('TS_TARGET_USERNAME_{0}', inputs.org_key)] }}
+      TS_TARGET_SECRET_KEY__OVERRIDE: ${{ secrets[format('TS_TARGET_SECRET_KEY_{0}', inputs.org_key)] }}
       # Point to the downloaded artifact files (same cwd-relative names as extract job)
       CONFIG_OUT: config.json
       MANIFEST_OUT: manifest.json
@@ -299,6 +307,10 @@ jobs:
       TS_SOURCE_SECRET_KEY: ${{ secrets.TS_SOURCE_SECRET_KEY }}
       TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
       TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+      TS_SOURCE_USERNAME__OVERRIDE: ${{ secrets[format('TS_SOURCE_USERNAME_{0}', inputs.org_key)] }}
+      TS_SOURCE_SECRET_KEY__OVERRIDE: ${{ secrets[format('TS_SOURCE_SECRET_KEY_{0}', inputs.org_key)] }}
+      TS_TARGET_USERNAME__OVERRIDE: ${{ secrets[format('TS_TARGET_USERNAME_{0}', inputs.org_key)] }}
+      TS_TARGET_SECRET_KEY__OVERRIDE: ${{ secrets[format('TS_TARGET_SECRET_KEY_{0}', inputs.org_key)] }}
       CONFIG_OUT: config.json
       MANIFEST_OUT: manifest.json
       IMPORT_OUT: stage9_import.json

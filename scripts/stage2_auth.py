@@ -8,7 +8,8 @@ Aborts if there is any mismatch.
 
 Secrets: TS_SOURCE_USERNAME, TS_SOURCE_SECRET_KEY,
          TS_TARGET_USERNAME, TS_TARGET_SECRET_KEY
-         (read from environment; never logged)
+         (read from environment; never logged). An org can use its own credentials by
+         defining the same names with an _<ORG_KEY> suffix as GitHub secrets; see lib/secrets.py.
 """
 from __future__ import annotations
 
@@ -18,22 +19,27 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib.secrets import resolve_secret, secret_env_name
 from lib.ts_client import TSClient, AuthError
 
 TOKEN_TTL = 3600  # 1 hour — enough for a full GH Actions job
 
 
-def _get_secret(env_var: str) -> str:
-    value = os.environ.get(env_var, "")
-    if not value:
-        print(f"[ERROR] Required secret {env_var} is not set.", file=sys.stderr)
+def _get_secret(base: str, org_key: str) -> str:
+    """The secret for this org: its own override if one is set, else the shared one."""
+    name = secret_env_name(base, org_key)
+    if name is None:
+        print(f"[ERROR] Required secret {base} is not set.", file=sys.stderr)
         sys.exit(1)
-    return value
+    if name != base:
+        print(f"[STAGE 2] Using the per-org override {name} for {base}.")   # the name, never the value
+    return resolve_secret(base, org_key)
 
 
-def build_client(label: str, base_url: str, org_id: int, username_var: str, key_var: str) -> TSClient:
-    username = _get_secret(username_var)
-    secret_key = _get_secret(key_var)
+def build_client(label: str, base_url: str, org_id: int, username_var: str, key_var: str,
+                 org_key: str) -> TSClient:
+    username = _get_secret(username_var, org_key)
+    secret_key = _get_secret(key_var, org_key)
     client = TSClient(base_url, org_id, username, secret_key, token_ttl_sec=TOKEN_TTL)
     try:
         client.authenticate()
@@ -52,24 +58,13 @@ def main():
     src = cfg["source"]
     tgt = cfg["target"]
 
-    # Support per-org secret overrides: TS_SOURCE_SECRET_KEY_SALES takes precedence
-    def env_name(base: str) -> str:
-        specific = f"{base}_{org_key.upper()}"
-        return specific if os.environ.get(specific) else base
-
     source_client = build_client(
-        "source",
-        src["base_url"],
-        src["org_id"],
-        env_name("TS_SOURCE_USERNAME"),
-        env_name("TS_SOURCE_SECRET_KEY"),
+        "source", src["base_url"], src["org_id"],
+        "TS_SOURCE_USERNAME", "TS_SOURCE_SECRET_KEY", org_key,
     )
     target_client = build_client(
-        "target",
-        tgt["base_url"],
-        tgt["org_id"],
-        env_name("TS_TARGET_USERNAME"),
-        env_name("TS_TARGET_SECRET_KEY"),
+        "target", tgt["base_url"], tgt["org_id"],
+        "TS_TARGET_USERNAME", "TS_TARGET_SECRET_KEY", org_key,
     )
 
     # Tokens are kept in memory inside each client object.

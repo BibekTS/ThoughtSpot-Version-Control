@@ -26,6 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
+from lib.secrets import resolve_secret
 from lib.ts_client import TSClient
 
 MODEL_FOLDERS = {"models"}
@@ -123,8 +124,8 @@ def main():
     src = cfg["source"]
     source_client = TSClient(
         src["base_url"], src["org_id"],
-        os.environ["TS_SOURCE_USERNAME"],
-        os.environ["TS_SOURCE_SECRET_KEY"],
+        resolve_secret("TS_SOURCE_USERNAME"),
+        resolve_secret("TS_SOURCE_SECRET_KEY"),
     )
     source_client.authenticate()
 
