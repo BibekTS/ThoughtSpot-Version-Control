@@ -105,8 +105,8 @@ def test_reports_are_committed_and_pushed_to_ts_dev(repos, monkeypatch):
 
 
 def test_second_stage_11_invocation_does_not_create_a_second_folder(repos, monkeypatch):
-    # The workflow runs Stage 11 twice (the --check-only flag is ignored); with a fixed
-    # timestamp both runs write the same folder.
+    # Two report generations in one run (e.g. a manual re-run) with a fixed timestamp write
+    # the same folder.
     _write_report(repos, monkeypatch)
     before = sorted(p.name for p in (repos.work / "reports" / "o").iterdir())
     _write_report(repos, monkeypatch)

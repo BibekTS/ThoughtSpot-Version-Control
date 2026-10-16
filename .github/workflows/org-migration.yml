@@ -449,4 +449,7 @@ jobs:
           retention-days: 90
 
       - name: Check for failures (fail the job if any objects failed)
+        # Stage 11 above only writes the reports; this step turns the job red, after the
+        # reports have been committed and uploaded.
+        if: always()
         run: python -m scripts.stage11_report --check-only

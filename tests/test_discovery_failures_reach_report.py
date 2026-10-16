@@ -97,7 +97,7 @@ def test_build_report_tolerates_unknown_and_missing_fields():
     assert rep.failed[0].name == "X"
 
 
-def test_stage11_main_turns_red_and_writes_the_failure(tmp_path, monkeypatch):
+def test_stage11_writes_the_failure_and_check_only_turns_the_run_red(tmp_path, monkeypatch):
     (tmp_path / "cfg.json").write_text(json.dumps(CFG))
     (tmp_path / "discover.json").write_text(json.dumps([_discover_failure()]))
     for k, v in dict(ORG_KEY="o", RUN_ID="r1", TIMESTAMP="TS1", REPO_ROOT=str(tmp_path),
@@ -109,11 +109,12 @@ def test_stage11_main_turns_red_and_writes_the_failure(tmp_path, monkeypatch):
                      INSTRUCTIONS_IMPORT_OUT=str(tmp_path / "n9")).items():
         monkeypatch.setenv(k, v)
     monkeypatch.delenv("GITHUB_STEP_SUMMARY", raising=False)
-    with pytest.raises(SystemExit) as e:
-        s11.main()
-    assert e.value.code == 1
+    s11.main()                                    # writes the reports, does not fail the step
     failures = json.loads((tmp_path / "reports/o/TS1_r1/failures.json").read_text())
     assert [(f["obj_id"], f["stage"], f["error"]) for f in failures] == [("T-2", "discover", "not found")]
+    with pytest.raises(SystemExit) as e:          # the workflow's last step
+        s11.main(["--check-only"])
+    assert e.value.code == 1
 
 
 def test_stage11_main_is_green_without_a_discover_file(tmp_path, monkeypatch):

@@ -16,6 +16,7 @@ Writes the GitHub job summary.
 """
 from __future__ import annotations
 
+import argparse
 import dataclasses
 import json
 import os
@@ -183,7 +184,17 @@ def report_timestamp() -> str:
     return os.environ.get("TIMESTAMP") or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
-def main():
+def run_failures(report: RunReport) -> tuple[list, list]:
+    """Objects that make the run red: failures, plus skips whose reason names a failure."""
+    error_skipped = [
+        r for r in report.skipped
+        if "failed" in r.reason.lower() or "missing" in r.reason.lower()
+    ]
+    return report.failed, error_skipped
+
+
+def load_report() -> tuple[RunReport | None, Path, str, str]:
+    """Read this run's stage outputs and build the report (None when there is no config)."""
     org_key = os.environ["ORG_KEY"]
     run_id = os.environ.get("RUN_ID", "local")
     dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
@@ -223,14 +234,38 @@ def main():
         os.environ.get("DISCOVER_OUT", f"/tmp/ts_migration_{org_key}_discover_failures.json"), [])
 
     if not cfg:
-        print("[STAGE 11] No config found — cannot produce full report.", file=sys.stderr)
-        sys.exit(0)
+        return None, repo_root, org_key, run_id
 
     report = build_report(
         cfg, run_id, dry_run,
         manifest, export_results, import_results,
         postcheck_data, prod_prep_data, spotter, discover_failures,
     )
+    return report, repo_root, org_key, run_id
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Stage 11: reports")
+    parser.add_argument(
+        "--check-only", action="store_true",
+        help="Write nothing; exit 1 if the run had failures. The workflow runs this as its "
+             "last step, after the reports have been written, committed and uploaded.")
+    args = parser.parse_args(argv or [])      # the entry point passes sys.argv[1:]
+
+    report, repo_root, org_key, run_id = load_report()
+    if report is None:
+        print("[STAGE 11] No config found — cannot produce full report.", file=sys.stderr)
+        sys.exit(0)
+
+    failed, error_skipped = run_failures(report)
+
+    if args.check_only:
+        if failed or error_skipped:
+            print(f"[STAGE 11] Run ended with {len(failed)} failures and "
+                  f"{len(error_skipped)} error-skips.", file=sys.stderr)
+            sys.exit(1)
+        print("[STAGE 11] No failures.")
+        return
 
     ts = report_timestamp()
     out_dir = repo_root / "reports" / org_key / f"{ts}_{run_id}"
@@ -241,16 +276,12 @@ def main():
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY", "")
     write_job_summary(report, summary_path)
 
-    # Exit red if any object failed or was skipped for an error reason
-    error_skipped = [
-        r for r in report.skipped
-        if "failed" in r.reason.lower() or "missing" in r.reason.lower()
-    ]
-    if report.failed or error_skipped:
-        print(f"[STAGE 11] Run ended with {len(report.failed)} failures and "
-              f"{len(error_skipped)} error-skips.", file=sys.stderr)
-        sys.exit(1)
+    if failed or error_skipped:
+        # Not an exit code here: the commit and upload steps run next, and the workflow's
+        # final `--check-only` step turns the job red.
+        print(f"[STAGE 11] Run ended with {len(failed)} failures and "
+              f"{len(error_skipped)} error-skips; see the reports.", file=sys.stderr)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
