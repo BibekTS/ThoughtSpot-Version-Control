@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import sys
 import time
 from typing import Any
 
@@ -23,6 +24,19 @@ TOKEN_TTL_BUFFER_SEC = 60   # re-auth this many seconds before the token expires
 DEFAULT_TTL_SEC = 3600     # request long-lived tokens for GH Actions runs
 MAX_RETRIES = 4
 BASE_BACKOFF = 2.0
+
+
+def session_org_id(me: dict) -> int | None:
+    """
+    Org the session is in, from the GET /auth/session/user response (`current_org.id`).
+
+    None when the response does not say; the caller then cannot verify and only warns.
+    `orgs` is every org the user belongs to, so it is not used to guess the current one.
+    """
+    current = me.get("current_org")
+    if isinstance(current, dict) and current.get("id") is not None:
+        return current["id"]
+    return me.get("org_id")
 
 
 class AuthError(RuntimeError):
@@ -113,32 +127,35 @@ class TSClient:
         self._session.headers["X-Org-Id"] = str(self.org_id)
         log.debug("Set X-Org-Id=%s for session", self.org_id)
 
-        # Verify which org the session landed in — crucial for cluster-level keys.
+        # Verify which org the session landed in: a cluster-level key can land in another
+        # org than the one requested, and importing into the wrong org must never happen.
+        session_org, user = None, "?"
         try:
             me_resp = self._session.get(
                 f"{self.base_url}/api/rest/2.0/auth/session/user", timeout=15
             )
             if me_resp.status_code == 200:
                 me = me_resp.json()
-                session_org = (
-                    me.get("org_id")
-                    or (me.get("orgs") or [{}])[0].get("org_id")
-                    or "unknown"
-                )
-                log.info(
-                    "Session user=%s session_org=%s configured_org=%s",
-                    me.get("name") or me.get("username") or "?",
-                    session_org,
-                    self.org_id,
-                )
-                import sys as _sys
-                print(
-                    f"[AUTH] session_org={session_org} configured_org={self.org_id} "
-                    f"user={me.get('name') or me.get('username') or '?'}",
-                    file=_sys.stderr,
-                )
-        except Exception as _e:
-            log.debug("Session-user check failed (non-fatal): %s", _e)
+                session_org = session_org_id(me)
+                user = me.get("name") or me.get("username") or "?"
+            else:
+                print(f"[AUTH][WARN] Could not verify the session org (HTTP {me_resp.status_code}).",
+                      file=sys.stderr)
+        except Exception as e:
+            print(f"[AUTH][WARN] Could not verify the session org: {e}", file=sys.stderr)
+
+        print(
+            f"[AUTH] session_org={session_org if session_org is not None else 'unknown'} "
+            f"configured_org={self.org_id} user={user}",
+            file=sys.stderr,
+        )
+        if session_org is not None and str(session_org) != str(self.org_id):
+            self._token = None
+            raise AuthError(
+                f"Session is in org {session_org} but org {self.org_id} is configured for "
+                f"{self.base_url}. Refusing to continue: check the org_id in the config and "
+                "that the service account's key can act in that org."
+            )
 
     def _ensure_token(self) -> None:
         if self._token is None or time.time() >= self._token_expires_at:
