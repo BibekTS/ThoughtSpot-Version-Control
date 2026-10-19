@@ -12,7 +12,8 @@
 8. [Re-queuing a Failed Object](#re-queuing-a-failed-object)
 9. [Dry Run Mode](#dry-run-mode)
 10. [Redeploy and Rollback](#redeploy-and-rollback)
-11. [Troubleshooting](#troubleshooting)
+11. [Cleaning up promote branches](#cleaning-up-promote-branches)
+12. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -303,6 +304,18 @@ Rules it follows: the ref must be in `ts-prod`'s history (otherwise: `is not par
 - **`Cannot resolve '<ref>'`**: the workflow checks out the full history and tags of `ts-prod`; use a commit SHA or tag that exists there.
 - **`There is no content for org '<org>' at <sha>`**: nothing had been promoted for that org yet at that commit; pick a later one.
 - **`Safety gate` / validation errors**: same causes as in a migration; see below.
+
+---
+
+## Cleaning up promote branches
+
+Every run pushes a `promote/<org>/<run_id>` branch for its promote PR. They are removed automatically:
+
+- **Stage 7b** deletes the branch as soon as the PR merges or is closed without merging.
+- **`cleanup-promote-branches.yml`** deletes it when any promote PR is closed, which covers a `[DRY RUN]` PR you close by hand. A PR left open keeps its branch.
+- **One-off sweep** for branches left over from before this existed: *Actions → Clean up promote branches → Run workflow*. It starts as a **preview** (`dry_run` ticked) and only lists what it would delete; untick `dry_run` to delete.
+
+It only ever deletes branches named exactly `promote/<org>/<run_id>`, and never one that still has an open pull request. `ts-prod`, `ts-dev` and your own branches are never touched. Deleting a promote branch loses nothing: the exported TML is on `ts-dev`, and merged content is on `ts-prod`.
 
 ---
 

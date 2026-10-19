@@ -55,6 +55,7 @@ Import order for Stage 9 is tables, views, models, collections, answers, liveboa
 |---|---|
 | `ts-prod` | Default branch: pipeline scripts, config, and approved TML |
 | `ts-dev` | Exports only (TML, memory, instructions, reports). Scripts are overlaid from `ts-prod` at run time |
+| `promote/<org>/<run_id>` | One short-lived branch per run, the head of that run's promote PR. Deleted automatically once the PR merges or is closed (Stage 7b, and `cleanup-promote-branches.yml` for PRs closed by hand) |
 
 The `extract` and `report` jobs run scripts from the branch you dispatch the workflow from. The `promote` and `import` jobs always check out and run `ts-prod`. A script change therefore only takes full effect once it is merged to `ts-prod`. The `import` job runs the current `ts-prod` scripts but imports the org's TML exactly as it was at the promote PR's merge commit (`import_source.json` and the job summary say which commit), never a later run's files.
 

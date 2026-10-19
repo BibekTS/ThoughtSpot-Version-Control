@@ -192,6 +192,7 @@ def promote(org_key: str, run_id: str, manifest: list[dict], repo_root: str = ".
     pr_url = created.stdout.strip()
     print(f"[STAGE 7] PR created: {pr_url}")
     result["pr_url"] = pr_url
+    result["branch"] = promote_branch     # Stage 7b deletes it once the PR is finished with
 
     if dry_run:
         print("[STAGE 7] DRY_RUN=true — auto-merge NOT enabled on the promote PR.")

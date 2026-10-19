@@ -229,7 +229,7 @@ def test_a_refused_auto_merge_is_reported_and_the_body_corrected(refusing, tmp_p
 def test_a_successful_auto_merge_leaves_the_body_alone(calls, tmp_path, capsys):
     result = {}
     s7.promote("o", "run1", MANIFEST, str(tmp_path), result=result)
-    assert result == {"pr_url": PR_URL, "auto_merge": True}
+    assert result == {"pr_url": PR_URL, "branch": "promote/o/run1", "auto_merge": True}
     assert _gh(calls, "edit") == []
     assert "Auto-merge enabled on the promote PR" in capsys.readouterr().out
 
@@ -243,4 +243,5 @@ def test_main_writes_the_promote_artifact(calls, tmp_path, monkeypatch):
         monkeypatch.setenv(k, v)
     s7.main()
     import json
-    assert json.loads(out.read_text()) == {"pr_url": PR_URL, "auto_merge": True}
+    assert json.loads(out.read_text()) == {"pr_url": PR_URL, "branch": "promote/o/r",
+                                           "auto_merge": True}

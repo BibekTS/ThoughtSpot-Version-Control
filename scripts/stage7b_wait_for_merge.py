@@ -24,6 +24,9 @@ import time
 from pathlib import Path
 from typing import Callable
 
+sys.path.insert(0, str(Path(__file__).parent))
+from cleanup_promote_branch import delete_branch
+
 MAX_CONSECUTIVE_ERRORS = 10
 
 
@@ -115,6 +118,15 @@ def main() -> None:
 
     result = wait_for_merge(pr_url, timeout_min * 60, interval_s)
     out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+
+    # The PR is finished with once it merged or was closed; its branch is then just clutter.
+    # Best effort: a failure here must never fail the run (the cleanup workflow is the backstop).
+    branch = promote.get("branch", "")
+    if result["status"] in ("merged", "closed") and branch:
+        try:
+            delete_branch(os.environ.get("GITHUB_REPOSITORY", ""), branch)
+        except Exception as exc:
+            print(f"[STAGE 7b][WARN] Could not clean up {branch}: {exc}", file=sys.stderr)
 
     if result["status"] == "merged":
         sha = result.get("merge_commit") or ""

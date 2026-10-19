@@ -1,0 +1,51 @@
+# Deletes promote/<org>/<run_id> branches that are no longer needed.
+#
+# Stage 7 creates one branch per run for its promote PR. Stage 7b deletes it when the PR merges
+# or is closed; this workflow is the backstop for everything else:
+#   * a promote PR is closed by hand (typically a dry run's), or merged without Stage 7b watching;
+#   * "Run workflow" with mode=sweep clears branches left over from earlier runs.
+# It only ever deletes names of the form promote/<org>/<run_id>, and never a branch that still
+# has an open pull request.
+name: Clean up promote branches
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Preview only: list what the sweep would delete without deleting anything (default). Untick to delete.'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    name: Delete finished promote branches
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # For a closed PR: only same-repository PRs whose head is a promote branch.
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch'
+          || (github.event.pull_request.head.repo.full_name == github.repository
+              && startsWith(github.event.pull_request.head.ref, 'promote/')) }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      MODE: ${{ github.event_name == 'workflow_dispatch' && 'sweep' || 'delete' }}
+      BRANCH: ${{ github.event.pull_request.head.ref }}
+      DRY_RUN: ${{ inputs.dry_run }}
+    steps:
+      # The default checkout of a closed PR can point at a ref that no longer exists, so take
+      # the scripts from ts-prod instead.
+      - name: Checkout ts-prod
+        uses: actions/checkout@v4
+        with:
+          ref: ts-prod
+
+      - name: Delete the branch (or sweep)
+        run: python3 -m scripts.cleanup_promote_branch
