@@ -23,7 +23,7 @@ This pipeline migrates ThoughtSpot content (Tables, Models, Answers, Liveboards,
 The pipeline:
 - Exports tagged objects as TML into the `ts-dev` GitHub branch
 - Exports Spotter model memory and model NL instructions alongside the TML
-- Opens a PR into `ts-prod` with auto-merge enabled (not on dry runs), as a record of what was promoted. The `import` job does **not** wait for this PR to merge; the approval gate is the `prod` GitHub Environment's required reviewers (if configured)
+- Opens a PR into `ts-prod` with auto-merge enabled (not on dry runs) and **waits for it to be approved and merged** (Stage 7b). Nothing is imported until then; if the PR is closed without merging, the run fails and the migration tag stays
 - Imports TML, then model memory and NL instructions, into the target cluster
 - Removes the migration tag from successfully migrated objects
 - Produces a full report per run
@@ -134,11 +134,11 @@ For the org `sales` that is `TS_TARGET_SECRET_KEY_SALES`. Each one is optional a
 ### Branch protection
 
 Configure the `ts-prod` branch with:
-- **Require pull request reviews before merging** (at least 1 reviewer)
+- **Require pull request reviews before merging** (at least 1 approving review). This is the approval the pipeline waits for, so it is required, not optional. Also turn on **Allow auto-merge** in the repository settings so the PR merges itself once approved
 - **Require status checks to pass**: add `Tests` (the job in `ci.yml`). It runs on every PR, including the pipeline's own promote PRs, so it always reports. Do not require jobs from `ts-migration.yml`: that workflow is dispatched by hand and never reports on a PR, so requiring it would block every merge
 - **Restrict who can push**: only the `GH_AUTOMATION_TOKEN` user (for auto-merge) and admins
 
-**Auto-merge requirement:** The `GH_AUTOMATION_TOKEN` PAT must belong to a user with write access to the repo. Without it, the pipeline falls back to `GITHUB_TOKEN`, which cannot merge its own PRs — in that case the promote PR will not merge itself and a human must merge it. The `import` job does not wait for the PR either way.
+**Auto-merge requirement:** The `GH_AUTOMATION_TOKEN` PAT must belong to a user with write access to the repo. Without it, the pipeline falls back to `GITHUB_TOKEN`, which cannot merge its own PRs — in that case the promote PR will not merge itself and a human must merge it. The `import` job waits for the PR either way (Stage 7b polls every 30 seconds for up to 330 minutes, set by `MERGE_WAIT_TIMEOUT_MIN` on the `promote` job). The token's owner cannot approve their own PR, so use a bot or service account for `GH_AUTOMATION_TOKEN`, not a reviewer's personal account. If the wait times out, merge the PR and re-run: objects keep their tag, and a re-run exports and promotes again.
 
 ---
 
@@ -157,7 +157,7 @@ Each org runs in its own job with its own concurrency group (`ts-migration-<org_
 | Job | Stage | Environment | What it does |
 |-----|-------|-------------|-------------|
 | `extract` | 1–6 (incl. 4b, 4c) | `dev` | Config, auth, discover, export TML, export Spotter memory (4b) and NL instructions (4c), sanitize, commit to ts-dev |
-| `promote` | 7 | — | Create promote branch, open PR into ts-prod with auto-merge enabled (dry run: PR titled `[DRY RUN]`, no auto-merge) |
+| `promote` | 7, 7b | — | Create promote branch, open PR into ts-prod with auto-merge enabled, then wait for it to be approved and merged (dry run: PR titled `[DRY RUN]`, no auto-merge, no wait) |
 | `import` | 8–9c | `prod` | Sync variables, connection preflight, validate, import TML (9), import memory (9b), set NL instructions (9c) |
 | `untag_source` | 10 | `dev` | Post-check, remove migration tag from successes |
 | `report` | 11 | — | Generate all report files (runs even on failure) |
@@ -251,7 +251,7 @@ Because matching is done by `obj_id`, re-running **updates** the existing target
 A dry run runs Stages 1–8 and the read-only forms of 9b and 9c. It does **not** import objects, memory or instructions into the target, and it does not remove source tags. It is **not** write-free:
 
 - **Stage 6** still commits the exports to `ts-dev`.
-- **Stage 7** still pushes a `promote/<org>/<run_id>` branch and opens the PR, titled `[DRY RUN]`, but does **not** enable auto-merge. Close the PR when you are done inspecting it, or merge it only if you intend to promote that content.
+- **Stage 7** still pushes a `promote/<org>/<run_id>` branch and opens the PR, titled `[DRY RUN]`, but does **not** enable auto-merge. Nothing waits for this PR on a dry run (Stage 7b is skipped). Close the PR when you are done inspecting it, or merge it only if you intend to promote that content.
 - **Stage 8** still runs, but writes nothing to the target on a dry run: it logs `DRY RUN: would create variable ...` / `would set the org value ...` and still checks connections and runs the validate-only import. A validation failure is reported as a failure of the dry run.
 
 What is skipped or read-only:

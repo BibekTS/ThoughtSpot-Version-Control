@@ -157,12 +157,14 @@ jobs:
   # ============================================================ #
   # JOB 2: promote                                               #
   # Stage 7: open PR from promote/<org>/<run_id> into ts-prod   #
+  # Stage 7b: wait for the PR to be approved and merged          #
   # ============================================================ #
   promote:
     name: Promote (${{ inputs.org_key }})
     needs: extract
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Covers the review wait (Stage 7b); GitHub-hosted jobs are capped at 360 minutes.
+    timeout-minutes: 345
     permissions:
       contents: write
       pull-requests: write
@@ -171,6 +173,7 @@ jobs:
       TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
       GH_TOKEN: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
       MANIFEST_OUT: manifest.json
+      MERGE_WAIT_TIMEOUT_MIN: '330'
     steps:
       - name: Checkout ts-prod
         uses: actions/checkout@v4
@@ -196,12 +199,20 @@ jobs:
       - name: Stage 7 — Promote to ts-prod
         run: python -m scripts.stage7_promote
 
+      - name: Stage 7b — Wait for PR approval and merge
+        # The import job needs this job, so nothing reaches the target until a reviewer
+        # has approved the promote PR (required by branch protection on ts-prod) and it
+        # has merged. Skipped on dry runs and when Stage 7 opened no PR.
+        run: python -m scripts.stage7b_wait_for_merge
+
       - name: Upload promote artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: promote-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
-          path: stage7_promote.json
+          path: |
+            stage7_promote.json
+            stage7b_wait.json
           if-no-files-found: warn
           retention-days: 90
 
@@ -256,6 +267,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: extract-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
+
+      - name: Use the approved TML from ts-prod
+        # The artifact also carries the extracted orgs/<org>/ files, which would overwrite
+        # what was merged. Restore ts-prod's version so edits (or removals) made by the
+        # reviewer in the PR are what gets imported. On a dry run nothing is merged, so
+        # the artifact stays the source.
+        if: ${{ !inputs.dry_run }}
+        run: |
+          # Nothing to restore when the org folder is not on ts-prod (empty manifest).
+          git checkout -- "orgs/${{ inputs.org_key }}/" || true
+          git clean -fdq -- "orgs/${{ inputs.org_key }}/"
 
       - name: Stage 8 — Prod prep (variables, connections, validate)
         run: python -m scripts.stage8_prod_prep

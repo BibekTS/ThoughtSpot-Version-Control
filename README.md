@@ -19,8 +19,8 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | Job | Stages | Environment | What happens |
 |---|---|---|---|
 | `extract` | 1–6 | `dev` | Validate config, authenticate, find tagged objects (and dependencies), export TML, export Spotter memory and NL instructions, sanitize, commit everything to `ts-dev` |
-| `promote` | 7 | – | Open a PR from `promote/<org>/<run_id>` into `ts-prod` holding only this run's files, and ask GitHub to auto-merge it (on a dry run the PR is titled `[DRY RUN]` and auto-merge is **not** requested) |
-| `import` | 8–9c | `prod` | Sync variables, check connections, validate, import TML, then import memory and NL instructions |
+| `promote` | 7, 7b | – | Open a PR from `promote/<org>/<run_id>` into `ts-prod` holding only this run's files, ask GitHub to auto-merge it, then **wait until it is approved and merged**. On a dry run the PR is titled `[DRY RUN]`, auto-merge is **not** requested and nothing waits |
+| `import` | 8–9c | `prod` | Import the TML merged into `ts-prod`: sync variables, check connections, validate, import TML, then import memory and NL instructions |
 | `untag_source` | 10 | `dev` | Confirm each object exists in the target, then remove the migration tag from the successes |
 | `report` | 11 | – | Write the summary and failure reports (runs even if earlier jobs failed) |
 
@@ -37,6 +37,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 5 | `stage5_sanitize` | Strip GUIDs and the migration tag, find `ts_var(name)` references (quoted or not; built-in variables like `ts_user_timezone` are ignored) |
 | 6 | `stage6_commit` | Commit `orgs/<org>/` to `ts-dev` (retries on concurrent pushes) |
 | 7 | `stage7_promote` | PR into `ts-prod` with this run's files (those stamped with the run's `TIMESTAMP`), auto-merge requested (not on dry runs). If GitHub refuses auto-merge, for example because "Allow auto-merge" is off in the repository settings, the log shows a warning, the PR body says a person must merge it, and `stage7_promote.json` records `auto_merge: false` |
+| 7b | `stage7b_wait_for_merge` | Poll the promote PR until it is merged. Fails if the PR is closed unmerged or not merged within 330 minutes (`MERGE_WAIT_TIMEOUT_MIN`); the import is then skipped and the tag stays. Skipped on dry runs |
 | 8b | `stage8b_snapshot` | Before importing, save the target's current version of every object about to be overwritten (live runs only). Fails the run if a copy cannot be saved |
 | 8 | `stage8_prod_prep` | Create or check variables, check connections exist in the target, validate-only import |
 | 9 | `stage9_import` | Import TML in dependency order; substitute table db/schema values, then bind each table's database and schema to their own variables (by GUID). A failed bind is a warning on that table in `stage9_import.json` |

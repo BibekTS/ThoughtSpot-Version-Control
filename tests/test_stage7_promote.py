@@ -88,12 +88,14 @@ def _body(calls):
 
 
 @pytest.mark.parametrize("dry_run", [False, True])
-def test_body_does_not_claim_merging_triggers_import(calls, tmp_path, dry_run):
+def test_body_describes_whether_import_waits_for_the_pr(calls, tmp_path, dry_run):
     s7.promote("o", "run1", MANIFEST, str(tmp_path), dry_run=dry_run)
     body = _body(calls)
     assert "Merge this PR to trigger" not in body
-    assert "does **not** wait for this PR" in body
-    assert "`prod` environment's required reviewers" in body
+    if dry_run:
+        assert "Nothing waits for this PR on a dry run" in body
+    else:
+        assert "waits for this PR to be approved and merged" in body
 
 
 def test_live_body_describes_auto_merge_and_dry_body_does_not(calls, tmp_path):
