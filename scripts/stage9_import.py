@@ -25,6 +25,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from lib.secrets import resolve_secret
 from lib.ts_client import TSClient
 from lib.variables import variable_config
+from lib.prod_prep import blocked_objects, DEFAULT_VALIDATION_GATE
 from lib.tml_utils import (
     parse_tml, to_tml_string,
     path_b_substitute, get_table_db_schema, is_variable_bound, extract_refs,
@@ -90,7 +91,10 @@ def import_tier(
     cfg: dict,
     repo_root: Path,
     failed_obj_ids: set[str],
+    blocked: dict[str, str] | None = None,
 ) -> list[dict]:
+    """`blocked` maps obj_id -> message for objects Stage 8's validate-only import rejected."""
+    blocked = blocked or {}
     results = []
     db_cfg, schema_cfg = variable_config(cfg, "database"), variable_config(cfg, "schema")
     src_db, tgt_db = db_cfg["source_value"], db_cfg["target_value"]
@@ -107,6 +111,15 @@ def import_tier(
         if not tml_path_rel:
             results.append({"obj_id": obj_id, "name": name, "type": obj_type,
                             "status": "skipped", "reason": "no tml_path"})
+            continue
+
+        if obj_id in blocked:
+            # Same handling as a failed import: whatever depends on it is skipped too.
+            failed_obj_ids.add(obj_id)
+            reason = f"validation failed in Stage 8: {blocked[obj_id]}"
+            results.append({"obj_id": obj_id, "name": name, "type": obj_type,
+                            "status": "skipped", "reason": reason})
+            print(f"[STAGE 9] Skipping '{name}': {reason}", file=sys.stderr)
             continue
 
         tml_path = repo_root / tml_path_rel
@@ -346,6 +359,17 @@ def main():
     )
     target_client.authenticate()
 
+    # Objects Stage 8's validate-only import rejected are not imported (validation_gate: block,
+    # the default). validation_gate: warn imports them anyway and leaves the outcome to the API.
+    blocked: dict[str, str] = {}
+    if cfg.get("validation_gate", DEFAULT_VALIDATION_GATE) == "block":
+        prep_path = Path(os.environ.get("PROD_PREP_OUT", f"/tmp/ts_migration_{org_key}_prod_prep.json"))
+        if prep_path.exists():
+            blocked = blocked_objects(json.loads(prep_path.read_text()))
+            if blocked:
+                print(f"[STAGE 9] {len(blocked)} object(s) failed validation in Stage 8 and will "
+                      f"be skipped: {', '.join(sorted(blocked))}")
+
     failed_obj_ids: set[str] = set()
     all_results = []
 
@@ -363,7 +387,7 @@ def main():
         tier_entries = order_by_dependencies(tier_entries, repo_root)
         print(f"[STAGE 9] Importing tier '{folder}': {len(tier_entries)} objects...")
         tier_results = import_tier(
-            target_client, tier_entries, cfg, repo_root, failed_obj_ids
+            target_client, tier_entries, cfg, repo_root, failed_obj_ids, blocked
         )
         all_results.extend(tier_results)
 

@@ -5,6 +5,9 @@ import sys
 from pathlib import Path
 import yaml
 
+sys.path.insert(0, str(Path(__file__).parent))
+from lib.prod_prep import ALLOWED_VALIDATION_GATES
+
 
 class ConfigError(Exception):
     pass
@@ -55,6 +58,12 @@ def load_and_validate_config(config_path: str) -> dict:
         raise ConfigError(
             f"dependency_mode '{dep_mode}' is not valid; "
             f"must be one of: {sorted(ALLOWED_DEPENDENCY_MODES)}"
+        )
+
+    gate = cfg.get("validation_gate", "block")
+    if gate not in ALLOWED_VALIDATION_GATES:
+        raise ConfigError(
+            f"validation_gate '{gate}' is not valid; must be one of: {list(ALLOWED_VALIDATION_GATES)}"
         )
 
     # dependency_exclude: optional list of obj_ids that are never migrated as dependencies.

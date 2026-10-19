@@ -27,6 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.report import RunReport, ObjectRecord
 from lib.spotter_results import spotter_outcome
+from lib.prod_prep import blocked_objects
 
 
 def load_json(path: str, default):
@@ -61,6 +62,7 @@ def build_report(
         migration_tag=cfg["migration_tag"],
     )
 
+    validation_failed = blocked_objects(prod_prep_data)
     export_map = {r["obj_id"]: r for r in export_results}
     import_map = {r["obj_id"]: r for r in import_results}
 
@@ -98,6 +100,13 @@ def build_report(
             report.mark_skipped(rec)
         elif imp.get("status") == "success":
             report.mark_success(rec)
+        elif obj_id in validation_failed:
+            # Rejected by Stage 8's validate-only import and never imported (a dry run lands
+            # here too: it is where these show up before a live run).
+            rec.stage = "validation"
+            rec.error = validation_failed[obj_id] or "Validation failed in Stage 8"
+            rec.suggested_action = "Fix the validation error, then re-run."
+            report.mark_failed(rec)
         elif dry_run:
             # A dry run imports nothing, so a missing result is expected, not a problem.
             rec.stage = "dry_run"
@@ -108,18 +117,30 @@ def build_report(
             rec.reason = "No import result found"
             report.mark_skipped(rec)
 
-    # Collect discover failures (objects without obj_id)
+    # Stage 8 errors that name a connection or a variable, or that are not tied to one object
+    # (object-level validation failures were handled above, with their object).
     for item in prod_prep_data:
-        if item.get("severity") == "ERROR":
-            conn = item.get("connection", "")
-            if conn:
-                rec = ObjectRecord(
-                    obj_type="CONNECTION", name=conn, obj_id="",
-                    stage="prod_prep", status="failed",
-                    error=item.get("message", ""),
-                    suggested_action=f'Create connection "{conn}" in target org.',
-                )
-                report.mark_failed(rec)
+        severity = item.get("severity")
+        unattributed = severity == "VALIDATION_FAILED" and not item.get("obj_id")
+        if severity not in ("ERROR", "FATAL") and not unattributed:
+            continue
+        conn = item.get("connection", "")
+        if conn:
+            rec = ObjectRecord(
+                obj_type="CONNECTION", name=conn, obj_id="",
+                stage="prod_prep", status="failed",
+                error=item.get("message", ""),
+                suggested_action=f'Create connection "{conn}" in target org.',
+            )
+        else:
+            var = item.get("variable", "")
+            rec = ObjectRecord(
+                obj_type="VARIABLE" if var else "PROD_PREP", name=var or "Stage 8",
+                obj_id="", stage="prod_prep", status="failed",
+                error=item.get("message", ""),
+                suggested_action="Fix the cause in the target org or the org config, then re-run.",
+            )
+        report.mark_failed(rec)
 
     # Failures found while discovering objects (no obj_id, missing dependencies, ...).
     known = {f.name for f in dataclasses.fields(ObjectRecord)}

@@ -56,7 +56,7 @@ class TestMainOutput:
         assert "[STAGE 8] ERROR [bat_schema_var]: wrong type" in cap.err
         assert "[STAGE 8] INFO [f]: formula note" in cap.out      # INFO is not an alarm
         assert "will be excluded" not in cap.err                   # the old, false claim
-        assert "does not exclude objects" in cap.err
+        assert "reports them as failures of this run" in cap.err
         assert len(json.loads(out.read_text())) == 3               # artifact unchanged
 
     def test_no_issues_prints_no_warning(self, monkeypatch, tmp_path, capsys):

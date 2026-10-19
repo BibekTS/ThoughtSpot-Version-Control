@@ -103,15 +103,15 @@ Dispatch **Actions → ThoughtSpot Migration → Run workflow** with an `org` ke
 |---|---|---|
 | Stages 1–6 (extract, export, commit to `ts-dev`) | Run, **including the commit to `ts-dev`** | Run |
 | Stage 7 (promote PR) | Runs and opens the PR titled `[DRY RUN]`, **without auto-merge** | Runs, auto-merge requested |
-| Stage 8 (variables, connections, validate) | Runs, **and can create variable definitions or set org values in the target** | Runs |
+| Stage 8 (variables, connections, validate) | Runs, **writes nothing**: reports the variables it would create or set | Runs |
 | Stage 9 (TML import) | Skipped | Runs |
 | Stage 9b (memory) | Validates and logs counts, writes nothing | Validates, then applies |
 | Stage 9c (instructions) | Reads the target and logs `would replace`, writes nothing | Applies |
 | Stage 10 (untag source) | Skipped | Runs |
 
-A dry run does not import any objects, memory or instructions, but it is not write-free: Stages 6–7 write to this repository, and Stage 8 can create variable definitions and set org-scoped values in the target when your config calls for it.
+A dry run does not import any objects, memory or instructions, but it is not write-free: Stages 6–7 write to this repository. Stage 8 writes nothing to the target on a dry run; it logs `DRY RUN: would create variable ...` instead.
 
-Stage 8 prints one line per issue it finds, for example `[STAGE 8] ERROR [<variable>]: <message>`. It only records issues in `prod_prep.json`: it does not exclude objects or block the import, and Stage 11 treats only errors that name a connection as failures.
+Stage 8 prints one line per issue it finds, for example `[STAGE 8] ERROR [<variable>]: <message>`. It records them in `prod_prep.json`. An object that fails its validate-only import is **skipped** in Stage 9, together with whatever depends on it, and keeps its migration tag (`validation_gate: block`, the default; `warn` imports it anyway). Stage 11 reports every Stage 8 error, and every validation failure, as a failure of the run; on a dry run this is where a failure shows up before a live run. Variable and connection errors name no single object, so they fail the run but do not skip anything.
 
 ## Configuration
 
@@ -127,6 +127,7 @@ source: { base_url: https://dev-ts.example.com,  org_id: 12 }
 target: { base_url: https://prod-ts.example.com, org_id: 3 }   # same cluster, different org_id is fine
 
 dependency_mode: include   # include | skip_if_exists | require_tagged
+validation_gate: block     # block (default) | warn: what Stage 9 does with an object that failed Stage 8's validate-only import
 # dependency_exclude: [TSBIServer-eaab6de7]   # obj_ids never pulled in as dependencies
 
 variables:                 # TABLE_MAPPING variables for table database / schema

@@ -16,6 +16,9 @@ jobs:
   debug:
     name: List objects in source org
     runs-on: ubuntu-latest
+    # Same protection as the migration's extract job: the source credentials come from the
+    # `dev` environment, so its required reviewers and branch rules apply here too.
+    environment: dev
     env:
       ORG_KEY: ${{ inputs.org }}
       TS_SOURCE_USERNAME: ${{ secrets.TS_SOURCE_USERNAME }}

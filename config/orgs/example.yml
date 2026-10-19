@@ -32,6 +32,12 @@ dependency_mode: include
 # dependency_exclude:
 #   - TSBIServer-eaab6de7
 
+# validation_gate controls what Stage 9 does with an object that Stage 8's validate-only import
+# rejected:
+#   block  — skip it (and what depends on it); it keeps its tag and the run is reported red (default)
+#   warn   — import it anyway and let the real import decide
+# validation_gate: block
+
 # Variable mappings for database/schema parameterization.
 # source_value is used ONLY to detect Path B literals and for safety-gate checks.
 # target_value is the only value ever written to the target cluster.

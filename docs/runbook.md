@@ -252,7 +252,7 @@ A dry run runs Stages 1–8 and the read-only forms of 9b and 9c. It does **not*
 
 - **Stage 6** still commits the exports to `ts-dev`.
 - **Stage 7** still pushes a `promote/<org>/<run_id>` branch and opens the PR, titled `[DRY RUN]`, but does **not** enable auto-merge. Close the PR when you are done inspecting it, or merge it only if you intend to promote that content.
-- **Stage 8** still runs as normal. It can create missing variable definitions and set org-scoped values in the target when your config provides a `target_value` (or the variable is not a TABLE_MAPPING).
+- **Stage 8** still runs, but writes nothing to the target on a dry run: it logs `DRY RUN: would create variable ...` / `would set the org value ...` and still checks connections and runs the validate-only import. A validation failure is reported as a failure of the dry run.
 
 What is skipped or read-only:
 
@@ -309,7 +309,10 @@ The Variable API (beta) is not enabled on the cluster. Contact ThoughtSpot Suppo
 ### Stage 8 reports errors about variables
 Stage 8 prints one line per issue, e.g. `[STAGE 8] ERROR [bat_db_var]: ...`. A configured TABLE_MAPPING variable with a blank `target_value` raises an error when the variable is missing in the target org or exists with a different type. Create it in the target (Admin > Variables) with the right type, or set `target_value` in the org config so the pipeline creates it.
 
-Stage 8 only records issues in `prod_prep.json`. It does not exclude objects or block the import, and Stage 11 only treats errors that name a connection as failures. Variable errors matter when you migrate tables that depend on those variables.
+Stage 8 records its issues in `prod_prep.json`, and Stage 11 reports every error in it as a failure of the run. Variable errors do not skip objects by themselves, but they matter when you migrate tables that depend on those variables.
+
+### An object was skipped with "validation failed in Stage 8"
+Stage 8's validate-only import rejected it, so Stage 9 did not import it (or anything that depends on it) and it kept its migration tag. The reason is in the report and in the `[STAGE 8]` log. Fix it in the source and re-run. If the validate-only call is rejecting objects that would import fine (for example, on a first run where a dependency exists only in the same batch), set `validation_gate: warn` in the org config to import them anyway.
 
 ### Memory or NL instructions were not migrated
 Check the Stage 4b / 4c / 9b / 9c lines in the job logs and the FAILED section of the report. The usual reasons that are *not* failures (nothing to do):

@@ -22,6 +22,7 @@ from lib.spotter_results import ENDPOINT_UNAVAILABLE_STATUSES
 from lib.secrets import resolve_secret
 from lib.ts_client import TSClient
 from lib.tml_utils import parse_tml
+from lib.prod_prep import blocked_objects
 
 
 def _http_status(exc: Exception) -> int | None:
@@ -32,10 +33,12 @@ def _http_status(exc: Exception) -> int | None:
     return status
 
 
-def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -> list[dict]:
+def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str],
+                   dry_run: bool = False) -> list[dict]:
     """
     Ensure variable definitions exist in the target; set org-scoped values when provided.
     If target_value is blank, the variable must already exist in ThoughtSpot.
+    On a dry run nothing is written: what would be created or set is reported as INFO.
     Returns list of issues.
     """
     issues = []
@@ -119,16 +122,25 @@ def sync_variables(target_client: TSClient, cfg: dict, var_sync_set: set[str]) -
                                "ThoughtSpot or add target_value to config.",
                 })
                 continue
-            try:
-                target_client.create_variable(name, var_type, is_sensitive=is_sensitive)
-                print(f"[VARS] Created variable '{name}' ({var_type}) in target.")
-            except Exception as e:
-                issues.append({"severity": "ERROR", "variable": name,
-                                "message": f"Failed to create variable '{name}': {e}"})
-                continue
+            if dry_run:
+                issues.append({"severity": "INFO", "variable": name,
+                               "message": f"DRY RUN: would create variable '{name}' ({var_type}) "
+                                          "in the target."})
+            else:
+                try:
+                    target_client.create_variable(name, var_type, is_sensitive=is_sensitive)
+                    print(f"[VARS] Created variable '{name}' ({var_type}) in target.")
+                except Exception as e:
+                    issues.append({"severity": "ERROR", "variable": name,
+                                    "message": f"Failed to create variable '{name}': {e}"})
+                    continue
 
         # Set org-scoped value only when target_value is explicitly provided in config.
         if target_value and var_type in ("TABLE_MAPPING", "CONNECTION_PROPERTY"):
+            if dry_run:
+                issues.append({"severity": "INFO", "variable": name,
+                               "message": f"DRY RUN: would set the org value for '{name}'."})
+                continue
             try:
                 target_client.set_variable_org_value(name, target_value)
                 print(f"[VARS] Set org value for variable '{name}'.")
@@ -168,18 +180,28 @@ def connection_preflight(target_client: TSClient, connection_names: set[str]) ->
     return issues
 
 
-def validate_import(target_client: TSClient, tml_strings: list[str]) -> list[dict]:
-    """Run VALIDATE_ONLY import; return per-object validation issues."""
+def validate_import(target_client: TSClient, tml_strings: list[str],
+                    obj_ids: list[str] | None = None) -> list[dict]:
+    """Run VALIDATE_ONLY import; return per-object validation issues.
+
+    Each issue carries the object's obj_id so Stage 9 can skip it. The response normally names
+    it (obj_id_ref); when it does not, fall back to position, since results come back in the
+    order the TML was sent. `obj_ids` is the obj_id of each entry in `tml_strings`.
+    """
     try:
         result = target_client.import_tml(tml_strings, import_policy="VALIDATE_ONLY")
         objects = result if isinstance(result, list) else result.get("object", [])
         issues = []
-        for obj in objects:
+        by_position = obj_ids if obj_ids and len(obj_ids) == len(objects) else None
+        for idx, obj in enumerate(objects):
             status = obj.get("response", {}).get("status", {}).get("status_code", "")
             if status not in ("OK", "WARNING"):
+                obj_id = obj.get("response", {}).get("header", {}).get("obj_id_ref", "")
+                if not obj_id and by_position:
+                    obj_id = by_position[idx]
                 issues.append({
                     "severity": "VALIDATION_FAILED",
-                    "obj_id": obj.get("response", {}).get("header", {}).get("obj_id_ref", ""),
+                    "obj_id": obj_id,
                     "message": str(obj.get("response", {}).get("status", "")),
                 })
         return issues
@@ -221,20 +243,23 @@ def main():
     )
     target_client.authenticate()
 
-    var_issues = sync_variables(target_client, cfg, var_sync_set)
+    dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
+    var_issues = sync_variables(target_client, cfg, var_sync_set, dry_run=dry_run)
     conn_issues = connection_preflight(target_client, connection_names)
 
     # Collect TML strings for validate-only
     tml_strings = []
+    tml_obj_ids = []
     for res in export_results:
         if res.get("status") == "success" and res.get("tml_path"):
             tml_path = repo_root / res["tml_path"]
             if tml_path.exists():
                 tml_strings.append(tml_path.read_text(encoding="utf-8"))
+                tml_obj_ids.append(res.get("obj_id", ""))
 
     validation_issues = []
     if tml_strings:
-        validation_issues = validate_import(target_client, tml_strings)
+        validation_issues = validate_import(target_client, tml_strings, tml_obj_ids)
 
     all_issues = var_issues + conn_issues + validation_issues
     out_path = os.environ.get("PROD_PREP_OUT",
@@ -247,12 +272,21 @@ def main():
     for issue in all_issues:
         loud = issue.get("severity") != "INFO"
         print(format_issue(issue), file=sys.stderr if loud else sys.stdout)
+    blocked = blocked_objects(all_issues)
+    gate = cfg.get("validation_gate", "block")
+    if blocked:
+        if gate == "warn":
+            action = "they are NOT skipped (validation_gate: warn)"
+        elif dry_run:
+            action = "a dry run imports nothing"
+        else:
+            action = "Stage 9 will skip them"
+        print(f"[STAGE 8] {len(blocked)} object(s) failed validate-only: "
+              f"{', '.join(sorted(blocked))}. {action}.", file=sys.stderr)
     if fatal:
-        # Stage 8 only records issues in prod_prep.json. Stage 9 does not read it, so
-        # nothing is excluded here; Stage 11 reports only connection-related errors.
-        print(f"[WARN] {len(fatal)} error(s) recorded in {Path(out_path).name}. Stage 8 does "
-              "not exclude objects or block the import; Stage 11 reports only errors that "
-              "name a connection as failures.", file=sys.stderr)
+        # Stage 11 reports every error recorded here as a failure of the run.
+        print(f"[WARN] {len(fatal)} error(s) recorded in {Path(out_path).name}; Stage 11 "
+              "reports them as failures of this run.", file=sys.stderr)
 
 
 if __name__ == "__main__":
