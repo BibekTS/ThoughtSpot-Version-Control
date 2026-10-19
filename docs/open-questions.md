@@ -18,13 +18,13 @@ Items that require live verification or a decision before implementation proceed
 
 ---
 
-## 2. Sets Object Subtype
+## 2. Sets Object Subtype (resolved: not supported)
 
 **Question:** What is the `subtypes` value for Sets in `POST /api/rest/2.0/metadata/search`?
 
-**Suspected value:** `AGGR_WORKSHEET` (aggregate worksheet). Needs confirmation against a live cluster that has a Set object.
+**Answer:** There isn't one. The REST reference lists the `LOGICAL_TABLE` subtypes as `ONE_TO_ONE_LOGICAL`, `WORKSHEET`, `PRIVATE_WORKSHEET`, `USER_DEFINED`, `AGGR_WORKSHEET` and `SQL_VIEW`, and the searchable types as `LIVEBOARD`, `ANSWER`, `LOGICAL_TABLE`, `LOGICAL_COLUMN`, `CONNECTION`, `TAG`, `USER`, `USER_GROUP`, `LOGICAL_RELATIONSHIP`, `INSIGHT_SPEC` and `COLLECTION`. Sets are not among them, so Stage 3 cannot discover them and there is no import tier for them. `AGGR_WORKSHEET` is an aggregate worksheet and is imported with models.
 
-**Impact:** Stage 3 (Discover) uses the correct subtype to find Sets tagged for migration.
+**Impact:** Sets are not migrated. If that matters, it needs a live look at how a Set is stored and exported before any code is written.
 
 ---
 

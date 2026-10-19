@@ -70,6 +70,12 @@ def _folder_for_object(meta_type: str, obj: dict) -> str:
     if meta_type == "LOGICAL_TABLE":
         header = obj.get("metadata_header") or {}
         subtype = header.get("type", "")
+        if subtype and subtype not in _TABLE_SUBTYPE_FOLDER:
+            # Imported as a plain table (with db/schema substitution and variable binding),
+            # which is wrong for anything that is not one. Say so rather than guess silently.
+            print(f"[STAGE 3][WARN] '{obj.get('metadata_name', '')}' has table subtype "
+                  f"'{subtype}', which is not recognised; treating it as a table.",
+                  file=sys.stderr)
         return _TABLE_SUBTYPE_FOLDER.get(subtype, "tables")
     return {"ANSWER": "answers", "LIVEBOARD": "liveboards", "COLLECTION": "collections"}.get(meta_type, "misc")
 

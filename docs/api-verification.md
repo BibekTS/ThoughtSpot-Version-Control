@@ -46,7 +46,7 @@ Base path: `https://<cluster>/api/rest/2.0/`
 | Liveboards | `LIVEBOARD` | — |
 | Collections | `COLLECTION` | — |
 
-> **TODO(verify):** Sets object subtype — suspected `AGGR_WORKSHEET` but needs live confirmation. Custom sets (not aggregate worksheets) may have a different subtype.
+> **Sets:** the REST reference lists no Set type or subtype for `metadata/search` (see `open-questions.md` #2), so Sets are not discovered or migrated. `AGGR_WORKSHEET` is an aggregate worksheet, imported with models.
 
 ---
 

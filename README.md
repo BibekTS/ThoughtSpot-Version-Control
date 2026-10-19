@@ -44,7 +44,7 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 | 10 | `stage10_postcheck` | Post-check and remove the migration tag from successes |
 | 11 | `stage11_report` | Reports and job summary |
 
-Import order for Stage 9 is tables, views, models, sets, collections, answers, liveboards, then feedback.
+Import order for Stage 9 is tables, views, models, collections, answers, liveboards, then feedback. A tagged object that no step handles is reported as a failure and keeps its tag. Stage 9 fails closed: an import counts as successful only if every object in the response is OK or WARNING, and a table whose post-import read-back cannot be done is failed rather than trusted.
 
 ### Branches
 
@@ -63,6 +63,7 @@ The `extract` and `report` jobs run scripts from the branch you dispatch the wor
 | Variable definitions that the content references (`ts_var()`) | Per-user Spotter conversation history |
 | Model memory: rules and recipes (reference questions) | Schedules, custom actions, custom calendars, column security rules |
 | Model NL instructions | Deletions of any kind |
+| | Sets (the search API has no type for them, so they cannot be discovered) |
 
 ## Spotter memory and NL instructions
 
