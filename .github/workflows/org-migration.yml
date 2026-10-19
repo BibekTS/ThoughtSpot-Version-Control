@@ -29,6 +29,10 @@ on:
         required: true
       GH_AUTOMATION_TOKEN:
         required: false
+      # With the GH_APP_CLIENT_ID variable: a GitHub App's key, so the promote PRs are opened by
+      # the app (a different identity from you) and you can approve them. See docs/runbook.md.
+      GH_APP_PRIVATE_KEY:
+        required: false
 
 env:
   ORG_KEY: ${{ inputs.org_key }}
@@ -174,16 +178,29 @@ jobs:
     env:
       RUN_ID: ${{ needs.extract.outputs.run_id }}
       TIMESTAMP: ${{ needs.extract.outputs.timestamp }}
-      GH_TOKEN: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
       MANIFEST_OUT: manifest.json
       MERGE_WAIT_TIMEOUT_MIN: '330'
     steps:
+      - name: Create GitHub App token (promote PRs opened by the app)
+        # When the repository has the GH_APP_CLIENT_ID variable and GH_APP_PRIVATE_KEY secret,
+        # the promote branch and PR are created by the app, not by a person's token. GitHub does
+        # not let an author approve their own PR, so this is what lets one maintainer approve
+        # the pipeline's PRs. Without it the next steps fall back to GH_AUTOMATION_TOKEN, then
+        # the workflow's own token. The app token lasts about an hour, so it is only used to open
+        # the PR; Stage 7b's long wait uses the job token.
+        id: app
+        if: ${{ vars.GH_APP_CLIENT_ID != '' }}
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.GH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
       - name: Checkout ts-prod
         uses: actions/checkout@v4
         with:
           ref: ts-prod
           fetch-depth: 0
-          token: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+          token: ${{ steps.app.outputs.token || secrets.GH_AUTOMATION_TOKEN || github.token }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -200,6 +217,8 @@ jobs:
           name: extract-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
 
       - name: Stage 7 — Promote to ts-prod
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token || secrets.GH_AUTOMATION_TOKEN || github.token }}
         run: python -m scripts.stage7_promote
 
       - name: Stage 7b — Wait for PR approval and merge
@@ -207,6 +226,9 @@ jobs:
         # The import job needs this job, so nothing reaches the target until a reviewer
         # has approved the promote PR (required by branch protection on ts-prod) and it
         # has merged. Skipped on dry runs and when Stage 7 opened no PR.
+        # Only reads the PR, for hours: use the job's own token, which outlives an app token.
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: python -m scripts.stage7b_wait_for_merge
 
       - name: Upload promote artifact

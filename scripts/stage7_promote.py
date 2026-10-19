@@ -16,8 +16,11 @@ ts-prod unless a person merges it.
 Stage 7b (stage7b_wait_for_merge) then waits for the PR to be approved and merged before the
 import job starts. Approval is enforced by branch protection on ts-prod.
 
-Requires GH_AUTOMATION_TOKEN (PAT with contents:write + pull-requests:write).
-GITHUB_TOKEN cannot merge its own PRs — use GH_AUTOMATION_TOKEN.
+Needs a token with contents:write + pull-requests:write. The workflow passes it as GH_TOKEN: a
+GitHub App's token when the repository has GH_APP_CLIENT_ID / GH_APP_PRIVATE_KEY (so the PR is
+authored by the app and a person can approve it), else GH_AUTOMATION_TOKEN, else GITHUB_TOKEN.
+GITHUB_TOKEN cannot merge its own PRs, and nobody can approve a PR they authored; see
+docs/runbook.md, "Approving the promote PRs as a solo maintainer".
 """
 from __future__ import annotations
 

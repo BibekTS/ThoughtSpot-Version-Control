@@ -112,7 +112,8 @@ The pipeline uses two GitHub Environments:
 | `TS_SOURCE_SECRET_KEY` | Trusted Authentication secret key for the source cluster |
 | `TS_TARGET_USERNAME` | ThoughtSpot username for the target cluster |
 | `TS_TARGET_SECRET_KEY` | Trusted Authentication secret key for the target cluster |
-| `GH_AUTOMATION_TOKEN` | (Optional) GitHub PAT with `repo` + `workflow` scopes, needed for auto-merging PRs |
+| `GH_AUTOMATION_TOKEN` | (Optional) GitHub PAT with `repo` + `workflow` scopes, needed for auto-merging PRs. If it is *your own* PAT, you cannot approve the PRs it opens; see below |
+| `GH_APP_CLIENT_ID` (repository **variable**) and `GH_APP_PRIVATE_KEY` (secret) | (Optional) A GitHub App that opens the promote PRs, so one maintainer can approve them. Takes priority over `GH_AUTOMATION_TOKEN` |
 
 **Per-org secret overrides:** by default every org uses the four secrets above. To give one org its own credentials, add secrets with the org key as a suffix, in the same environments (`dev` for the source side, `prod` for the target side):
 
@@ -137,6 +138,21 @@ Configure the `ts-prod` branch with:
 - **Require pull request reviews before merging** (at least 1 approving review). This is the approval the pipeline waits for, so it is required, not optional. Also turn on **Allow auto-merge** in the repository settings so the PR merges itself once approved
 - **Require status checks to pass**: add `Tests` (the job in `ci.yml`). It runs on every PR, including the pipeline's own promote PRs, so it always reports. Do not require jobs from `ts-migration.yml`: that workflow is dispatched by hand and never reports on a PR, so requiring it would block every merge
 - **Restrict who can push**: only the `GH_AUTOMATION_TOKEN` user (for auto-merge) and admins
+
+### Approving the promote PRs as a solo maintainer
+
+GitHub never lets you approve a pull request you authored, and no branch-protection setting changes that. The promote PRs are authored by whoever owns the token that opens them, so if that is your own personal token you cannot approve them. The fix is to have a *different identity* open them: a GitHub App.
+
+1. **Create the app.** GitHub → your profile → *Settings → Developer settings → GitHub Apps → New GitHub App*. Name it (for example `ts-version-control-bot`), set any homepage URL, untick *Webhook → Active*, and under *Repository permissions* grant **Contents: Read and write**, **Pull requests: Read and write** (Metadata read-only is added automatically). Create it.
+2. **Generate a private key** on the app's page (a `.pem` file downloads) and note the app's **Client ID**.
+3. **Install the app** on this repository only (*Install App* in the app's sidebar).
+4. **Add them to the repository** (*Settings → Secrets and variables → Actions*): a **variable** `GH_APP_CLIENT_ID` with the Client ID, and a **secret** `GH_APP_PRIVATE_KEY` with the whole contents of the `.pem` file.
+5. **Branch protection on `ts-prod`**: require a pull request with **1 approval**, turn on *Allow auto-merge* in the repository settings, and do **not** add the app to any bypass list.
+6. **Check it**: run a migration. The promote PR's author is now `<app name>[bot]`, you can approve it, and auto-merge then merges it and the import continues. If the variable or secret is wrong the first step of the `promote` job fails loudly rather than falling back silently.
+
+You can then delete `GH_AUTOMATION_TOKEN`; with the app configured it is not used. Teams use the same setup (or a machine-user token) and simply have a teammate approve. The app token lasts about an hour, so it is only used to open the PR and request auto-merge; the long wait for the merge uses the job's own token.
+
+Code PRs (like the ones that change this repository) are authored by whoever opened them. Without a second account you cannot approve those either; leave "Require approvals" off for them, or merge as an administrator.
 
 **Auto-merge requirement:** The `GH_AUTOMATION_TOKEN` PAT must belong to a user with write access to the repo. Without it, the pipeline falls back to `GITHUB_TOKEN`, which cannot merge its own PRs — in that case the promote PR will not merge itself and a human must merge it. The `import` job waits for the PR either way (Stage 7b polls every 30 seconds for up to 330 minutes, set by `MERGE_WAIT_TIMEOUT_MIN` on the `promote` job). The token's owner cannot approve their own PR, so use a bot or service account for `GH_AUTOMATION_TOKEN`, not a reviewer's personal account. If the wait times out, merge the PR and re-run: objects keep their tag, and a re-run exports and promotes again.
 
