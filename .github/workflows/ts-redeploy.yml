@@ -1,0 +1,146 @@
+# Redeploy approved content from ts-prod to the target, without touching the source org.
+# Use it to roll the target back to an earlier approved state, or to redeploy after a failed run.
+#
+# It does not extract, open a promote PR or remove tags. It restores orgs/<org>/ exactly as it
+# was at <ref>, then runs the normal import stages (variables and connections, validate, import,
+# Spotter memory and instructions) and writes the usual report.
+#
+# <ref> must be part of ts-prod's history: only content that was reviewed and merged can be
+# redeployed. "State as of <ref>" is the newest file for each object at that ref. Nothing is
+# ever deleted in the target, so objects added after <ref> stay as they are.
+name: ThoughtSpot Redeploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      org:
+        description: 'Org key to redeploy (one org; a name from config/orgs/)'
+        required: true
+        type: string
+      ref:
+        description: 'Tag or commit on ts-prod to redeploy, e.g. a commit SHA from the ts-prod history'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run: validate only, nothing is written to the target (default). Untick to apply.'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  redeploy:
+    name: Redeploy ${{ inputs.org }} @ ${{ inputs.ref }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # The same GitHub Environment (and so the same required reviewers) as the migration import.
+    environment: prod
+    # Same group as ts-migration.yml, so a redeploy and a migration never run on one org at once.
+    concurrency:
+      group: ts-migration-${{ inputs.org }}
+      cancel-in-progress: false
+    env:
+      ORG_KEY: ${{ inputs.org }}
+      DRY_RUN: ${{ inputs.dry_run }}
+      TS_TARGET_USERNAME: ${{ secrets.TS_TARGET_USERNAME }}
+      TS_TARGET_SECRET_KEY: ${{ secrets.TS_TARGET_SECRET_KEY }}
+      TS_TARGET_USERNAME__OVERRIDE: ${{ secrets[format('TS_TARGET_USERNAME_{0}', inputs.org)] }}
+      TS_TARGET_SECRET_KEY__OVERRIDE: ${{ secrets[format('TS_TARGET_SECRET_KEY_{0}', inputs.org)] }}
+      CONFIG_OUT: config.json
+      MANIFEST_OUT: manifest.json
+      EXPORT_OUT: stage4_export.json
+      SANITIZE_OUT: sanitize_results.json
+      PROD_PREP_OUT: prod_prep.json
+      IMPORT_OUT: stage9_import.json
+      SNAPSHOT_OUT: stage8b_snapshot.json
+      MEMORY_IMPORT_OUT: stage9b_memory_import.json
+      INSTRUCTIONS_IMPORT_OUT: stage9c_instructions_import.json
+      REDEPLOY_OUT: redeploy_ref.json
+      # No TIMESTAMP on purpose: Spotter memory and instructions then come from the newest
+      # file at the ref (there is no extract run to stamp them), and Stage 11 stamps the report.
+    steps:
+      - name: Checkout ts-prod
+        uses: actions/checkout@v4
+        with:
+          ref: ts-prod
+          fetch-depth: 0       # full history and tags, so any ref on ts-prod can be resolved
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate run id
+        run: echo "RUN_ID=${{ github.run_id }}-${{ github.run_attempt }}" >> "$GITHUB_ENV"
+
+      - name: Stage 1 — Validate config
+        run: python -m scripts.stage1_config
+
+      - name: Rebuild the run from the ref
+        # Refuses a ref that is not on ts-prod, restores orgs/<org>/ as it was at the ref, and
+        # rebuilds the manifest and export results that the extract job normally produces.
+        env:
+          REF: ${{ inputs.ref }}
+        run: python -m scripts.redeploy_prepare
+
+      - name: Stage 5 — Collect variables and connections
+        run: python -m scripts.stage5_sanitize
+
+      - name: Stage 8b — Snapshot what the target holds now
+        if: ${{ !inputs.dry_run }}
+        run: python -m scripts.stage8b_snapshot
+
+      - name: Stage 8 — Prod prep (variables, connections, validate)
+        run: python -m scripts.stage8_prod_prep
+
+      - name: Stage 9 — Import to production
+        if: ${{ !inputs.dry_run }}
+        run: python -m scripts.stage9_import
+
+      - name: Stage 9 — Dry-run skip notice
+        if: ${{ inputs.dry_run }}
+        run: echo '::notice::DRY_RUN=true — Stage 9 import skipped, no writes to target'
+
+      - name: Stage 9b — Import Model Memory (Spotter)
+        run: python -m scripts.stage9b_import_memory
+
+      - name: Stage 9c — Import Model NL Instructions (Spotter)
+        run: python -m scripts.stage9c_import_instructions
+
+      - name: Stage 11 — Generate reports
+        if: always()
+        run: python -m scripts.stage11_report
+
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: redeploy-${{ inputs.org }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            redeploy_ref.json
+            config.json
+            manifest.json
+            stage4_export.json
+            sanitize_results.json
+            prod_prep.json
+            stage8b_snapshot.json
+            stage9_import.json
+            stage9b_memory_import.json
+            stage9c_instructions_import.json
+            snapshot/${{ inputs.org }}/
+            reports/${{ inputs.org }}/
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Check for failures (fail the job if any objects failed)
+        if: always()
+        run: python -m scripts.stage11_report --check-only

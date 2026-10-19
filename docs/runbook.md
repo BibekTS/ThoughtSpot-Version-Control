@@ -11,7 +11,8 @@
 7. [Reading the Reports](#reading-the-reports)
 8. [Re-queuing a Failed Object](#re-queuing-a-failed-object)
 9. [Dry Run Mode](#dry-run-mode)
-10. [Troubleshooting](#troubleshooting)
+10. [Redeploy and Rollback](#redeploy-and-rollback)
+11. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -264,6 +265,27 @@ Use dry runs to:
 - Validate TML before committing to a migration
 - Detect missing connections or variable mismatches
 - Preview what would be migrated (objects, memory, instructions) before anything is imported
+
+---
+
+## Redeploy and Rollback
+
+### What the snapshot is
+Every live migration saves, before Stage 9, the target's current version of each object it is about to overwrite. It is the `snapshot-<org>-<run_id>` artifact of the run: `snapshot/<org>/<folder>/<obj_id>.tml` plus `stage8b_snapshot.json`, which lists each object as `captured`, `new` (not in the target yet, so there is nothing to save), `skipped` or `failed`. A `failed` object stops the run before the import; set `SNAPSHOT_REQUIRED=false` on the step to import anyway. To undo one object by hand, import its snapshot file into the target with the TML import API (or the UI).
+
+### Redeploying an approved state
+1. Find the commit on `ts-prod` you want the target to match (for a rollback, the commit just before the bad run's promote PR was merged).
+2. *Actions → ThoughtSpot Redeploy → Run workflow*: set `org`, `ref` (commit SHA or tag) and leave `dry_run` ticked first.
+3. Read the log: `[REDEPLOY] '<ref>' = <sha>: N object(s) ...` shows what will be applied. Stage 8 shows variable, connection and validation problems as in a migration.
+4. Run it again with `dry_run` unticked. It waits for the `prod` environment's reviewers.
+5. Read the report (`redeploy-<org>-<run>` artifact, `reports/<org>/...`). Failed objects make the job red.
+
+Rules it follows: the ref must be in `ts-prod`'s history (otherwise: `is not part of origin/ts-prod's history`); the content is the newest file per object at that ref; nothing is deleted in the target, so objects created after the ref remain; Spotter memory and NL instructions are replaced with the newest files at the ref; the source org and the migration tags are never touched.
+
+### Troubleshooting a redeploy
+- **`Cannot resolve '<ref>'`**: the workflow checks out the full history and tags of `ts-prod`; use a commit SHA or tag that exists there.
+- **`There is no content for org '<org>' at <sha>`**: nothing had been promoted for that org yet at that commit; pick a later one.
+- **`Safety gate` / validation errors**: same causes as in a migration; see below.
 
 ---
 
