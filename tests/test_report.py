@@ -2,6 +2,7 @@
 import json
 import os
 import tempfile
+from pathlib import Path
 import pytest
 
 from scripts.lib.report import RunReport, ObjectRecord
@@ -12,8 +13,7 @@ def sample_run_report():
     report = RunReport(
         org_key="sales",
         run_id="12345-1",
-        timestamp="20240101T120000Z",
-        dry_run=False,
+        mode="LIVE",
         source_url="https://dev.example.com",
         source_org_id=12,
         target_url="https://prod.example.com",
@@ -24,12 +24,12 @@ def sample_run_report():
         obj_type="tables", name="Sales Fact", obj_id="obj_001",
         source_guid="guid-1", reason="tagged", other_tags=["finance"],
     ))
-    report.add_succeeded(ObjectRecord(
+    report.mark_success(ObjectRecord(
         obj_type="tables", name="Sales Fact", obj_id="obj_001",
         source_guid="guid-1", reason="tagged", other_tags=[],
-        stage="import", status="succeeded",
+        stage="import",
     ))
-    report.add_failed(ObjectRecord(
+    report.mark_failed(ObjectRecord(
         obj_type="liveboards", name="Broken LB", obj_id="obj_002",
         source_guid="guid-2", reason="tagged", other_tags=[],
         stage="import", status="failed",
@@ -41,7 +41,7 @@ def sample_run_report():
 class TestRunReport:
     def test_writes_all_report_files(self, sample_run_report):
         with tempfile.TemporaryDirectory() as tmp:
-            sample_run_report.write_all(tmp)
+            sample_run_report.write_all(Path(tmp))
             files = os.listdir(tmp)
         assert "migration_summary.txt" in files
         assert "failures_report.txt" in files
@@ -50,7 +50,7 @@ class TestRunReport:
 
     def test_failures_json_is_valid(self, sample_run_report):
         with tempfile.TemporaryDirectory() as tmp:
-            sample_run_report.write_all(tmp)
+            sample_run_report.write_all(Path(tmp))
             with open(os.path.join(tmp, "failures.json")) as f:
                 data = json.load(f)
         assert len(data) == 1
@@ -58,7 +58,7 @@ class TestRunReport:
 
     def test_no_secrets_in_summary(self, sample_run_report):
         with tempfile.TemporaryDirectory() as tmp:
-            sample_run_report.write_all(tmp)
+            sample_run_report.write_all(Path(tmp))
             with open(os.path.join(tmp, "migration_summary.txt")) as f:
                 content = f.read()
         # No token-like strings should appear
@@ -67,7 +67,7 @@ class TestRunReport:
 
     def test_summary_has_required_sections(self, sample_run_report):
         with tempfile.TemporaryDirectory() as tmp:
-            sample_run_report.write_all(tmp)
+            sample_run_report.write_all(Path(tmp))
             with open(os.path.join(tmp, "migration_summary.txt")) as f:
                 content = f.read()
         for section in ["PULLED", "SUCCEEDED", "FAILED", "SKIPPED",

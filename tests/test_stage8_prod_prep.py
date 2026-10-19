@@ -1,70 +1,55 @@
-"""Tests for Stage 8: variable sync, connection preflight, validate-only import."""
-import pytest
+"""Tests for Stage 8's connection preflight and its handling of existing variables.
+
+Variable creation, dry runs and validate-only are covered by test_stage8_variable_errors.py,
+test_missing_variables_config.py and test_validation_gate.py.
+"""
 from unittest.mock import MagicMock
 
-from scripts.stage8_prod_prep import (
-    sync_variable,
-    check_connection_exists,
-    SyncVariableResult,
-)
+from scripts.stage8_prod_prep import connection_preflight, sync_variables
+
+CFG = {"variables": {"database": {"ts_variable_name": "ts_db_name", "target_value": "PROD_DB"}}}
 
 
-class TestSyncVariable:
-    def _make_client(self, existing_vars=None):
+class TestConnectionPreflight:
+    def test_present_connection_has_no_issue(self):
         client = MagicMock()
-        client.search_variables.return_value = existing_vars or []
-        client.create_variable.return_value = {"id": "new-var-id", "name": "ts_db_name"}
-        client.set_variable_org_value.return_value = {}
-        return client
+        client.search_connections.return_value = [{"name": "Snowflake_Prod"}]
+        assert connection_preflight(client, {"Snowflake_Prod"}) == []
 
-    def test_creates_missing_variable(self):
-        client = self._make_client(existing_vars=[])
-        result = sync_variable(
-            client,
-            ts_variable_name="ts_db_name",
-            var_type="TABLE_MAPPING",
-            target_value="PROD_DB",
-            org_id=3,
-        )
-        assert result == SyncVariableResult.CREATED
-        client.create_variable.assert_called_once()
-        client.set_variable_org_value.assert_called_once()
-
-    def test_skips_existing_same_type(self):
-        existing = [{"id": "v1", "name": "ts_db_name", "type": "TABLE_MAPPING"}]
-        client = self._make_client(existing_vars=existing)
-        result = sync_variable(
-            client,
-            ts_variable_name="ts_db_name",
-            var_type="TABLE_MAPPING",
-            target_value="PROD_DB",
-            org_id=3,
-        )
-        assert result == SyncVariableResult.VALUE_SET
-        client.create_variable.assert_not_called()
-
-    def test_fails_on_type_mismatch(self):
-        existing = [{"id": "v1", "name": "ts_db_name", "type": "FORMULA_VARIABLE"}]
-        client = self._make_client(existing_vars=existing)
-        with pytest.raises(ValueError, match="type mismatch"):
-            sync_variable(
-                client,
-                ts_variable_name="ts_db_name",
-                var_type="TABLE_MAPPING",
-                target_value="PROD_DB",
-                org_id=3,
-            )
-
-
-class TestCheckConnectionExists:
-    def test_returns_true_when_found(self):
-        client = MagicMock()
-        client.search_connections.return_value = [
-            {"header": {"id": "conn-1", "name": "Snowflake_Prod"}}
-        ]
-        assert check_connection_exists(client, "Snowflake_Prod") is True
-
-    def test_returns_false_when_missing(self):
+    def test_missing_connection_is_an_error_naming_it(self):
         client = MagicMock()
         client.search_connections.return_value = []
-        assert check_connection_exists(client, "Missing_Conn") is False
+        issues = connection_preflight(client, {"Missing_Conn"})
+        assert [(i["severity"], i["connection"]) for i in issues] == [("ERROR", "Missing_Conn")]
+
+    def test_only_an_exact_name_match_counts(self):
+        client = MagicMock()
+        client.search_connections.return_value = [{"name": "Snowflake_Prod_Copy"}]
+        assert connection_preflight(client, {"Snowflake_Prod"})[0]["severity"] == "ERROR"
+
+    def test_lookup_failure_is_an_error(self):
+        client = MagicMock()
+        client.search_connections.side_effect = RuntimeError("boom")
+        issues = connection_preflight(client, {"C"})
+        assert issues[0]["severity"] == "ERROR" and "boom" in issues[0]["message"]
+
+
+class TestExistingVariables:
+    def _client(self, existing):
+        client = MagicMock()
+        client.search_variables.return_value = existing
+        return client
+
+    def test_type_mismatch_is_an_error_and_nothing_is_written(self):
+        client = self._client([{"name": "ts_db_name", "variable_type": "FORMULA_VARIABLE"}])
+        issues = sync_variables(client, CFG, set())
+        assert [i["severity"] for i in issues] == ["ERROR"]
+        assert "FORMULA_VARIABLE" in issues[0]["message"]
+        client.create_variable.assert_not_called()
+        client.set_variable_org_value.assert_not_called()
+
+    def test_existing_variable_of_the_right_type_only_gets_its_value_set(self):
+        client = self._client([{"name": "ts_db_name", "variable_type": "TABLE_MAPPING"}])
+        assert sync_variables(client, CFG, set()) == []
+        client.create_variable.assert_not_called()
+        client.set_variable_org_value.assert_called_once_with("ts_db_name", "PROD_DB")

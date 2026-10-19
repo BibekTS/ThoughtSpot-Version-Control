@@ -134,7 +134,7 @@ For the org `sales` that is `TS_TARGET_SECRET_KEY_SALES`. Each one is optional a
 
 Configure the `ts-prod` branch with:
 - **Require pull request reviews before merging** (at least 1 reviewer)
-- **Require status checks to pass** (add the `migrate` job from `ts-migration.yml`)
+- **Require status checks to pass**: add `Tests` (the job in `ci.yml`). It runs on every PR, including the pipeline's own promote PRs, so it always reports. Do not require jobs from `ts-migration.yml`: that workflow is dispatched by hand and never reports on a PR, so requiring it would block every merge
 - **Restrict who can push**: only the `GH_AUTOMATION_TOKEN` user (for auto-merge) and admins
 
 **Auto-merge requirement:** The `GH_AUTOMATION_TOKEN` PAT must belong to a user with write access to the repo. Without it, the pipeline falls back to `GITHUB_TOKEN`, which cannot merge its own PRs — in that case the promote PR will not merge itself and a human must merge it. The `import` job does not wait for the PR either way.

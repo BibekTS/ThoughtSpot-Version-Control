@@ -1,0 +1,43 @@
+# Runs the unit tests on every pull request and on pushes to ts-prod.
+# The tests never call ThoughtSpot or GitHub, so this job needs no secrets or environments.
+#
+# It runs for every PR, including the pipeline's own promote/<org>/<run_id> PRs (TML only), so it
+# can be made a required status check on ts-prod without blocking those: a check that is
+# skipped, for example by a path filter, would never report and would hold the PR forever.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ts-prod]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest -q

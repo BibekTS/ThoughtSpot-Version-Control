@@ -60,18 +60,11 @@ def _deep_strip_keys(obj: Any, keys: set) -> Any:
 
 
 def _remove_tag(tml_dict: dict, tag_name: str) -> dict:
-    """Remove a tag from top-level header.tags list if present."""
-    header = tml_dict.get("header") or tml_dict.get("liveboard", {}).get("header") or {}
-    tags = header.get("tags", [])
-    if tag_name in tags:
-        filtered = [t for t in tags if t != tag_name]
-        # rebuild dict preserving structure
-        import copy
-        result = copy.deepcopy(tml_dict)
-        # locate and patch tags regardless of nesting level
-        _patch_tags(result, tag_name)
-        return result
-    return tml_dict
+    """Return a copy of tml_dict with `tag_name` removed from every `tags` list, at any depth."""
+    import copy
+    result = copy.deepcopy(tml_dict)
+    _patch_tags(result, tag_name)
+    return result
 
 
 def _patch_tags(obj: Any, tag_name: str) -> None:

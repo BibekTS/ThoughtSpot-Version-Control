@@ -164,19 +164,19 @@ Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, 
 ## Repository layout
 
 ```
-.github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline)
+.github/workflows/   ts-migration.yml (entry point), org-migration.yml (per-org pipeline), ci.yml (tests)
 config/orgs/         one YAML per org
 scripts/             stage*.py and lib/ (ts_client, tml_utils, artifacts, report)
 orgs/<org>/          exported TML, memory/ and instructions/ (written by the pipeline)
 docs/                runbook, API verification notes, open questions
-tests/               pytest suite
+tests/               pytest suite (run by ci.yml)
 ```
 
 ## Development
 
 ```
-pip install -r requirements.txt pytest
+pip install -r requirements-dev.txt
 python -m pytest
 ```
 
-`tests/test_spotter_model_content.py` and `tests/test_stage8_issue_logging.py` cover the Spotter content and Stage 8 logging. Several older test modules currently fail to import and are unrelated to those.
+The tests are hermetic (no ThoughtSpot or GitHub calls). The `Tests` job in `.github/workflows/ci.yml` runs them on every pull request and on pushes to `ts-prod`.
