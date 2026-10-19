@@ -161,6 +161,7 @@ Each org runs in its own job with its own concurrency group (`ts-migration-<org_
 | `import` | 8–9c | `prod` | Sync variables, connection preflight, validate, import TML (9), import memory (9b), set NL instructions (9c) |
 | `untag_source` | 10 | `dev` | Post-check, remove migration tag from successes |
 | `report` | 11 | — | Generate all report files (runs even on failure) |
+| `release_tag` | — | — | Only after a live run with no failed object: tag the imported `ts-prod` commit `migrate/<org>/<run_id>` (restore point for `ts-redeploy.yml`) |
 
 ---
 
@@ -274,7 +275,7 @@ Use dry runs to:
 Every live migration saves, before Stage 9, the target's current version of each object it is about to overwrite. It is the `snapshot-<org>-<run_id>` artifact of the run: `snapshot/<org>/<folder>/<obj_id>.tml` plus `stage8b_snapshot.json`, which lists each object as `captured`, `new` (not in the target yet, so there is nothing to save), `skipped` or `failed`. A `failed` object stops the run before the import; set `SNAPSHOT_REQUIRED=false` on the step to import anyway. To undo one object by hand, import its snapshot file into the target with the TML import API (or the UI).
 
 ### Redeploying an approved state
-1. Find the commit on `ts-prod` you want the target to match (for a rollback, the commit just before the bad run's promote PR was merged).
+1. Find the ref you want the target to match: a restore-point tag `migrate/<org>/<run_id>` (the state after that run; list them with `git tag -l 'migrate/<org>/*'`), or any commit on `ts-prod`. For a rollback, use the tag of the run before the bad one, or the commit just before the bad run's promote PR was merged. Runs that had failures are not tagged.
 2. *Actions → ThoughtSpot Redeploy → Run workflow*: set `org`, `ref` (commit SHA or tag) and leave `dry_run` ticked first.
 3. Read the log: `[REDEPLOY] '<ref>' = <sha>: N object(s) ...` shows what will be applied. Stage 8 shows variable, connection and validation problems as in a migration.
 4. Run it again with `dry_run` unticked. It waits for the `prod` environment's reviewers.

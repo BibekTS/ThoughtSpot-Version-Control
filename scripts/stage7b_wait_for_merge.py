@@ -79,6 +79,14 @@ def wait_for_merge(
         sleep(interval_s)
 
 
+def write_output(name: str, value: str) -> None:
+    """Expose a step output to later jobs (the import pins its TML to the merge commit)."""
+    path = os.environ.get("GITHUB_OUTPUT")
+    if path:
+        with open(path, "a", encoding="utf-8") as fh:
+            fh.write(f"{name}={value}\n")
+
+
 def main() -> None:
     dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
     promote_path = Path(os.environ.get("PROMOTE_OUT", "stage7_promote.json"))
@@ -109,8 +117,9 @@ def main() -> None:
     out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
 
     if result["status"] == "merged":
-        print(f"[STAGE 7b] Merged ({result.get('merge_commit') or 'unknown commit'}) — "
-              "continuing to import.")
+        sha = result.get("merge_commit") or ""
+        print(f"[STAGE 7b] Merged ({sha or 'unknown commit'}) — continuing to import.")
+        write_output("merge_sha", sha)
         return
     reasons = {
         "closed": "was closed without merging",

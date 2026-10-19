@@ -165,6 +165,9 @@ jobs:
     runs-on: ubuntu-latest
     # Covers the review wait (Stage 7b); GitHub-hosted jobs are capped at 360 minutes.
     timeout-minutes: 345
+    outputs:
+      # The ts-prod commit the promote PR merged as; empty on a dry run or when nothing was promoted.
+      merge_sha: ${{ steps.wait.outputs.merge_sha }}
     permissions:
       contents: write
       pull-requests: write
@@ -200,6 +203,7 @@ jobs:
         run: python -m scripts.stage7_promote
 
       - name: Stage 7b — Wait for PR approval and merge
+        id: wait
         # The import job needs this job, so nothing reaches the target until a reviewer
         # has approved the promote PR (required by branch protection on ts-prod) and it
         # has merged. Skipped on dry runs and when Stage 7 opened no PR.
@@ -253,6 +257,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ts-prod
+          fetch-depth: 0       # the promote PR's merge commit must be reachable
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -268,16 +273,16 @@ jobs:
         with:
           name: extract-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
 
-      - name: Use the approved TML from ts-prod
-        # The artifact also carries the extracted orgs/<org>/ files, which would overwrite
-        # what was merged. Restore ts-prod's version so edits (or removals) made by the
-        # reviewer in the PR are what gets imported. On a dry run nothing is merged, so
-        # the artifact stays the source.
+      - name: Use the approved TML from the merge commit
+        # The artifact also carries the extracted orgs/<org>/ files, which are the copy from
+        # before review. Replace them with what ts-prod holds at the promote PR's merge commit,
+        # so edits (or removals) made by the reviewer are what gets imported. The scripts keep
+        # running from the current ts-prod. On a dry run nothing is merged, so the artifact
+        # stays the source.
         if: ${{ !inputs.dry_run }}
-        run: |
-          # Nothing to restore when the org folder is not on ts-prod (empty manifest).
-          git checkout -- "orgs/${{ inputs.org_key }}/" || true
-          git clean -fdq -- "orgs/${{ inputs.org_key }}/"
+        env:
+          MERGE_SHA: ${{ needs.promote.outputs.merge_sha }}
+        run: python -m scripts.restore_merged_tml
 
       - name: Stage 8 — Prod prep (variables, connections, validate)
         run: python -m scripts.stage8_prod_prep
@@ -322,6 +327,7 @@ jobs:
           name: import-${{ inputs.org_key }}-${{ needs.extract.outputs.run_id }}
           path: |
             prod_prep.json
+            import_source.json
             stage9_import.json
             stage9b_memory_import.json
             stage9c_instructions_import.json
@@ -506,3 +512,42 @@ jobs:
         # reports have been committed and uploaded.
         if: always()
         run: python -m scripts.stage11_report --check-only
+
+  # ============================================================ #
+  # JOB 6: release_tag                                           #
+  # Tag the ts-prod commit that was imported, as a restore point #
+  # for ts-redeploy.yml. Only after a fully clean live run.      #
+  # ============================================================ #
+  release_tag:
+    name: Tag restore point (${{ inputs.org_key }})
+    needs: [extract, promote, import, report]
+    # report succeeds only when Stage 11's check found no failed object, so a tag never
+    # marks content that did not fully reach the target.
+    if: >-
+      ${{ !inputs.dry_run
+          && needs.import.result == 'success'
+          && needs.report.result == 'success'
+          && needs.promote.outputs.merge_sha != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # A missing tag must not turn a finished migration red; it shows as a failed job instead.
+    continue-on-error: true
+    permissions:
+      contents: write
+    env:
+      ORG_KEY: ${{ inputs.org_key }}
+      RUN_ID: ${{ needs.extract.outputs.run_id }}
+      MERGE_SHA: ${{ needs.promote.outputs.merge_sha }}
+    steps:
+      - name: Checkout ts-prod
+        uses: actions/checkout@v4
+        with:
+          ref: ts-prod
+          fetch-depth: 0
+          token: ${{ secrets.GH_AUTOMATION_TOKEN || github.token }}
+
+      - name: Tag the imported ts-prod commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          python3 -m scripts.tag_release

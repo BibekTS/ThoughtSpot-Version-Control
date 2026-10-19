@@ -20,9 +20,10 @@ For setup (secrets, environments, branch protection) and troubleshooting, see [`
 |---|---|---|---|
 | `extract` | 1–6 | `dev` | Validate config, authenticate, find tagged objects (and dependencies), export TML, export Spotter memory and NL instructions, sanitize, commit everything to `ts-dev` |
 | `promote` | 7, 7b | – | Open a PR from `promote/<org>/<run_id>` into `ts-prod` holding only this run's files, ask GitHub to auto-merge it, then **wait until it is approved and merged**. On a dry run the PR is titled `[DRY RUN]`, auto-merge is **not** requested and nothing waits |
-| `import` | 8–9c | `prod` | Import the TML merged into `ts-prod`: sync variables, check connections, validate, import TML, then import memory and NL instructions |
+| `import` | 8–9c | `prod` | Take the org's TML from the promote PR's merge commit on `ts-prod` (so reviewer edits count), then sync variables, check connections, validate, import TML, then import memory and NL instructions |
 | `untag_source` | 10 | `dev` | Confirm each object exists in the target, then remove the migration tag from the successes |
 | `report` | 11 | – | Write the summary and failure reports (runs even if earlier jobs failed) |
+| `release_tag` | – | – | After a live run with no failures, tag the imported `ts-prod` commit `migrate/<org>/<run_id>`: a restore point for the redeploy workflow |
 
 ### Stages
 
@@ -55,7 +56,7 @@ Import order for Stage 9 is tables, views, models, collections, answers, liveboa
 | `ts-prod` | Default branch: pipeline scripts, config, and approved TML |
 | `ts-dev` | Exports only (TML, memory, instructions, reports). Scripts are overlaid from `ts-prod` at run time |
 
-The `extract` and `report` jobs run scripts from the branch you dispatch the workflow from. The `promote` and `import` jobs always check out and run `ts-prod`. A script change therefore only takes full effect once it is merged to `ts-prod`.
+The `extract` and `report` jobs run scripts from the branch you dispatch the workflow from. The `promote` and `import` jobs always check out and run `ts-prod`. A script change therefore only takes full effect once it is merged to `ts-prod`. The `import` job runs the current `ts-prod` scripts but imports the org's TML exactly as it was at the promote PR's merge commit (`import_source.json` and the job summary say which commit), never a later run's files.
 
 ## What is migrated
 
@@ -163,7 +164,7 @@ Secrets live in the `dev` and `prod` GitHub Environments: `TS_SOURCE_USERNAME`, 
 - Nothing is ever deleted: an object created after the ref stays in the target as it is, and a redeploy replaces Spotter memory and NL instructions with the ref's.
 - It shares the `ts-migration-<org>` concurrency group, so it never runs alongside a migration of the same org.
 
-To roll back one bad migration, redeploy the commit on `ts-prod` just before that run's promote PR. The snapshot artifact is the other route, for objects that were not in git yet or that someone edited by hand in the target: it is plain TML you can import yourself.
+Every live migration that finishes with no failed object is tagged `migrate/<org>/<run_id>` on the `ts-prod` commit it imported (a tag-creation problem shows as a failed `release_tag` job but does not fail the migration). Use such a tag as the redeploy `ref`. To roll back one bad migration, redeploy the tag of the run before it, or the commit on `ts-prod` just before that run's promote PR. The snapshot artifact is the other route, for objects that were not in git yet or that someone edited by hand in the target: it is plain TML you can import yourself.
 
 ## Running a migration
 
