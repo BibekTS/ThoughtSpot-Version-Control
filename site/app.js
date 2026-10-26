@@ -305,6 +305,14 @@ function bind(actions, root = app) {
   });
 }
 function errorBox(e) {
+  if (e.noPipeline) {
+    return h`<div class="notice"><div><b>No pipeline runs in ${state.repo}.</b> <code>${WF_MIGRATE}</code> has never run here, so GitHub doesn't know it yet.
+      Point the console at the repository that runs the pipeline.
+      <div class="row" style="margin-top:10px">
+        ${state.repo !== FALLBACK_REPO ? h`<button class="btn sm primary" data-act="use-repo" data-repo="${FALLBACK_REPO}">Use ${FALLBACK_REPO}</button>` : ''}
+        <button class="btn sm" data-act="connect">Choose a repository</button>
+      </div></div></div>`;
+  }
   const needsToken = !state.token && (e.status === 403 || e.status === 429 || e.status === 401);
   return h`<div class="notice bad"><div><b>Couldn't reach GitHub.</b> ${e.message}
     ${needsToken ? h` <button class="btn sm" data-act="connect">Connect a token</button>` : ''}</div></div>`;
@@ -328,7 +336,17 @@ function route() {
   mount(h`<div class="empty">Nothing here. <a href="#/">Go home</a>.</div>`);
 }
 window.addEventListener('hashchange', route);
-document.addEventListener('click', e => { if (e.target.closest('[data-act="connect"]')) openConnect(); });
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-act="connect"]')) openConnect();
+  const use = e.target.closest('[data-act="use-repo"]');
+  if (use) {
+    state.repo = use.dataset.repo;
+    state.orgs = null;
+    store.set('tsvc.repo', state.repo);
+    toast(`Using ${state.repo}`);
+    route();
+  }
+});
 
 // ------------------------------------------------------------------------------------------
 // Home
@@ -352,7 +370,11 @@ function runRow(run, org) {
 
 async function fetchRuns(limit = 15) {
   const [mig, red] = await Promise.all([
-    gh(`/actions/workflows/${WF_MIGRATE}/runs?per_page=${limit}`),
+    // GitHub only knows a workflow once it has run in that repo, e.g. not in a fresh fork.
+    gh(`/actions/workflows/${WF_MIGRATE}/runs?per_page=${limit}`).catch(e => {
+      if (e.status === 404) e.noPipeline = true;
+      throw e;
+    }),
     gh(`/actions/workflows/${WF_REDEPLOY}/runs?per_page=${Math.ceil(limit / 2)}`).catch(() => ({ workflow_runs: [] })),
   ]);
   return [...mig.workflow_runs, ...red.workflow_runs].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, limit);
