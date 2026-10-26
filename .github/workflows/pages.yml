@@ -1,7 +1,7 @@
 # Publishes the console in site/ to GitHub Pages whenever it changes on ts-prod.
 # One-time setup: Settings → Pages → Source: "GitHub Actions".
 # The page infers the repository from its own URL (<owner>.github.io/<repo>/), so a fork's
-# Pages site drives that fork's pipeline.
+# Pages site drives that fork's pipeline; change it under "connect" on the page.
 name: Console (GitHub Pages)
 
 on:
