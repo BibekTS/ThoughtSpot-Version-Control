@@ -10,6 +10,10 @@ It also carries over Spotter content that TML does not include: **model memory**
 
 For setup (secrets, environments, branch protection) and troubleshooting, see [`docs/runbook.md`](docs/runbook.md). For API details, see [`docs/api-verification.md`](docs/api-verification.md).
 
+## Console
+
+[`site/`](site/) is a browser UI for the same workflows: start a dry or live run, follow each stage live, review and approve the promote PR, read the run's report, roll back to a restore point, and build a new org's config file. It is a static page that calls the GitHub API with a fine-grained token kept in your browser; there is no backend. `pages.yml` publishes it to GitHub Pages (Settings → Pages → Source: GitHub Actions). To try it locally, run `python3 -m http.server -d site 8000`. **Demo** simulates a run without a token.
+
 ## How it works
 
 ```
