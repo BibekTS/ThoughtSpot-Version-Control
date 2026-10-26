@@ -311,6 +311,7 @@ function errorBox(e) {
       <div class="row" style="margin-top:10px">
         ${state.repo !== FALLBACK_REPO ? h`<button class="btn sm primary" data-act="use-repo" data-repo="${FALLBACK_REPO}">Use ${FALLBACK_REPO}</button>` : ''}
         <button class="btn sm" data-act="connect">Choose a repository</button>
+        <a class="btn sm ghost" href="#/setup">Set this one up</a>
       </div></div></div>`;
   }
   const needsToken = !state.token && (e.status === 403 || e.status === 429 || e.status === 401);
@@ -333,6 +334,7 @@ function route() {
   if (path === '/demo') return viewRun(new DemoSource());
   if (path === '/rollback') return viewRollback(q);
   if (path === '/orgs/new') return viewBuilder();
+  if (path === '/setup') return viewSetup();
   mount(h`<div class="empty">Nothing here. <a href="#/">Go home</a>.</div>`);
 }
 window.addEventListener('hashchange', route);
@@ -409,6 +411,7 @@ function viewHome() {
       <div class="row">
         <a class="btn primary" href="#/run">Start a migration</a>
         <a class="btn" href="#/demo">Watch a demo run</a>
+        <a class="btn ghost" href="#/setup">First-time setup</a>
       </div>
     </section>
 
@@ -1234,6 +1237,100 @@ function viewBuilder() {
     },
   };
   render();
+}
+
+// ------------------------------------------------------------------------------------------
+// First-time setup
+// ------------------------------------------------------------------------------------------
+const SECRETS = [
+  ['TS_SOURCE_USERNAME', 'ThoughtSpot user the pipeline logs in as on the dev cluster'],
+  ['TS_SOURCE_SECRET_KEY', 'Trusted authentication secret key of the dev cluster'],
+  ['TS_TARGET_USERNAME', 'ThoughtSpot user the pipeline logs in as on the prod cluster'],
+  ['TS_TARGET_SECRET_KEY', 'Trusted authentication secret key of the prod cluster'],
+];
+
+function viewSetup() {
+  const repo = state.repo;
+  const url = `https://github.com/${repo}`;
+  const cli = ['for env in dev prod; do', ...SECRETS.map(([n]) => `  gh secret set ${n} --env $env -R ${repo}`), 'done'].join('\n');
+  const step = (n, check, title, body) => h`<div class="card"><div class="rule"><span class="mark">${n}</span><div class="stack" style="--gap:10px;flex:1;min-width:0">
+    <div class="row"><h3>${title}</h3><span class="spacer"></span><span data-check="${check || ''}"></span></div>${body}</div></div></div>`;
+
+  mount(h`<div class="stack" style="--gap:16px;max-width:820px">
+    <div><h2>First-time setup</h2><p class="muted" style="margin-top:6px">Everything a repository needs before its first migration, in order. The checks on the right read <code>${repo}</code> live.</p>
+      <div class="row" style="margin-top:10px"><button class="btn sm ghost" data-act="connect">Use a different repository</button></div></div>
+    <div class="notice"><div><b>Credentials never go through this page.</b> You type them into GitHub, which encrypts them. The console can't read them, and neither can anyone who can read the repository.</div></div>
+
+    ${step(1, 'actions', 'Get your own copy of the repository', h`
+      <p class="muted">Fork it, keeping <code>${BRANCH}</code> as the default branch. In a fork, open the <b>Actions</b> tab once and turn workflows on.</p>
+      <div class="row"><a class="btn sm" href="${url}/actions" target="_blank" rel="noopener">Actions tab ↗</a></div>`)}
+
+    ${step(2, 'branch', 'Create the ts-dev branch', h`
+      <p class="muted">Exports are committed here before they're promoted. A fork only copies the default branch, so create it from <code>${BRANCH}</code>.</p>
+      <pre>git push origin ${BRANCH}:ts-dev</pre>
+      <div class="row"><a class="btn sm" href="${url}/branches" target="_blank" rel="noopener">Branches ↗</a></div>`)}
+
+    ${step(3, '', 'Prepare ThoughtSpot', h`
+      <ul class="muted small" style="margin:0;padding-left:18px">
+        <li>On each cluster, a cluster admin turns on <b>Trusted authentication</b> (Develop → Security settings) and copies the <b>secret key</b>.</li>
+        <li>Pick a service user that can export and edit content in the dev org and import into the prod org. Setting variables in prod needs admin rights.</li>
+        <li>Make sure <b>Object ID</b> (<code>obj_id</code>) is turned on for both clusters. ThoughtSpot Support can enable it.</li>
+        <li>In the dev org, create the migration tag you'll put in the org config.</li>
+      </ul>`)}
+
+    ${step(4, 'envs', 'Create the dev and prod environments', h`
+      <p class="muted">In <b>Settings → Environments</b>, add <code>dev</code> (used by the export) and <code>prod</code> (used by the import). On <code>prod</code>, add <b>required reviewers</b> so nobody can import without approval.</p>
+      <div class="row"><a class="btn sm" href="${url}/settings/environments/new" target="_blank" rel="noopener">New environment ↗</a></div>`)}
+
+    ${step(5, '', 'Add the ThoughtSpot secrets to both environments', h`
+      <div class="tbl-wrap"><table class="cmp"><tr><th>Secret</th><th>Value</th></tr>
+        ${SECRETS.map(([n, d]) => h`<tr><td class="mono small">${n}</td><td>${d}</td></tr>`)}</table></div>
+      <p class="muted small">Add all four to <code>dev</code> <b>and</b> <code>prod</code>. If dev and prod are orgs on the same cluster, the source and target values are the same.
+        To give one org its own login, add the same name with <code>_&lt;ORG_KEY&gt;</code> on the end, for example <code>TS_TARGET_SECRET_KEY_SALES</code>.</p>
+      <p class="muted small">Or use the GitHub CLI, which asks for each value instead of taking it on the command line:</p>
+      <pre>${cli}</pre>
+      <div class="row"><a class="btn sm" href="${url}/settings/environments" target="_blank" rel="noopener">Environments ↗</a><button class="btn sm ghost" data-act="copy-cli">Copy commands</button></div>`)}
+
+    ${step(6, '', 'Protect ts-prod and choose who opens the PRs', h`
+      <ul class="muted small" style="margin:0;padding-left:18px">
+        <li>Add a rule for <code>${BRANCH}</code> that requires a pull request with <b>1 approval</b> and the <b>Tests</b> check.</li>
+        <li>Turn on <b>Allow auto-merge</b> in the repository settings, so a promote PR merges itself once it's approved.</li>
+        <li>GitHub won't let you approve a PR you opened. If you're the only reviewer, set up a GitHub App: repository variable <code>GH_APP_CLIENT_ID</code> and secret <code>GH_APP_PRIVATE_KEY</code>. A team can have a teammate approve instead.</li>
+      </ul>
+      <div class="row"><a class="btn sm" href="${url}/settings/branches" target="_blank" rel="noopener">Branch rules ↗</a><a class="btn sm" href="${url}/settings" target="_blank" rel="noopener">General settings ↗</a>
+        <a class="btn sm ghost" href="${url}/blob/${BRANCH}/docs/runbook.md#approving-the-promote-prs-as-a-solo-maintainer" target="_blank" rel="noopener">GitHub App steps ↗</a></div>`)}
+
+    ${step(7, 'orgs', 'Add an org', h`
+      <p class="muted">An org config says which dev org moves to which prod org, and which tag selects the content.</p>
+      <div class="row"><a class="btn sm primary" href="#/orgs/new">Add an org</a></div>`)}
+
+    ${step(8, 'ran', 'Connect this console and do a dry run', h`
+      <p class="muted">Connect a fine-grained token scoped to this repository, then start a dry run. It exports and validates against prod, but imports nothing and removes no tags.</p>
+      <div class="row"><button class="btn sm" data-act="connect">${state.token ? 'Change token' : 'Connect a token'}</button><a class="btn sm primary" href="#/run">Start a dry run</a></div>`)}
+
+    ${step(9, 'pages', 'Optional: host your own console', h`
+      <p class="muted">In <b>Settings → Pages</b>, set the source to <b>GitHub Actions</b>. A console at <code>&lt;owner&gt;.github.io/&lt;repo&gt;/</code> works with that repository on its own.</p>
+      <div class="row"><a class="btn sm" href="${url}/settings/pages" target="_blank" rel="noopener">Pages settings ↗</a></div>`)}
+  </div>`);
+  bind({ 'copy-cli': () => copyText(cli) });
+
+  // Each check reads public metadata only. A failed check (rate limit, no access) shows nothing.
+  const mark = (key, ok) => {
+    const el = $(`[data-check="${key}"]`);
+    if (el) el.innerHTML = ok == null ? '' : show(h`<span class="pill ${ok ? 'ok' : ''}">${ok ? 'done' : 'to do'}</span>`);
+  };
+  const exists = p => gh(p).then(() => true, e => (e.status === 404 ? false : null));
+  ['actions', 'branch', 'envs', 'orgs', 'ran', 'pages'].forEach(k => { const el = $(`[data-check="${k}"]`); if (el) el.innerHTML = '<span class="spin"></span>'; });
+  gh('/actions/workflows').then(r => mark('actions', r.total_count > 0 && r.workflows.some(w => w.state === 'active')), () => mark('actions', null));
+  exists('/branches/ts-dev').then(ok => mark('branch', ok));
+  gh('/environments').then(r => {
+    const names = (r.environments || []).map(e => e.name);
+    mark('envs', names.includes('dev') && names.includes('prod'));
+  }, e => mark('envs', e.status === 404 ? false : null));
+  loadOrgs().then(o => mark('orgs', o.length > 0), () => mark('orgs', null));
+  gh(`/actions/workflows/${WF_MIGRATE}/runs?per_page=1`).then(r => mark('ran', r.total_count > 0), e => mark('ran', e.status === 404 ? false : null));
+  // /pages answers 404 without a token even when Pages is on; the repo's has_pages does not.
+  gh('').then(r => mark('pages', !!r.has_pages), () => mark('pages', null));
 }
 
 // ------------------------------------------------------------------------------------------
